@@ -1,4 +1,5 @@
 import React from 'react';
+import './styles.css';
 
 class Signup extends React.Component {
     render() {
@@ -15,7 +16,7 @@ class Signup extends React.Component {
                     <label>Confirm Password</label><br/>
                     <input type="text" id="SignupPasswordConfirm" placeholder="Re-enter Password"></input><br/>
                     <label>Email</label><br/>
-                    <input type="text" id="SignupEmail" placeholder="Email"></input><br/>
+                    <input type="text" id="SignupEmail" placeholder="Email"></input><br/><br/>
                     <input type="submit" value="Lets Start Cooking!"></input>
                 </form>
             </div>
