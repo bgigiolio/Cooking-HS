@@ -1,23 +1,31 @@
 import React from 'react';
+import { Button, TextField } from '@mui/material';
 import './styles.css';
 
 class Signup extends React.Component {
     render() {
+        const {sUsername, sPassword, sName, sValid, password2, sEmail, recieveInput, validSignup} = this.props
         return(
             <div id='Signup' className="tabcontent">
                 <h2>New user? Sign up!</h2>
                 <form>
-                    <label>Full Name</label><br/>
-                    <input type="text" id="SignupName" placeholder="Name"></input><br/>
-                    <label>Username</label><br/>
-                    <input type="text" id="SignupUsername" placeholder="Username"></input><br/>
-                    <label>Password</label><br/>
-                    <input type="text" id="SignupPassword" placeholder="Password"></input><br/>
-                    <label>Confirm Password</label><br/>
-                    <input type="text" id="SignupPasswordConfirm" placeholder="Re-enter Password"></input><br/>
-                    <label>Email</label><br/>
-                    <input type="text" id="SignupEmail" placeholder="Email"></input><br/><br/>
-                    <input type="submit" value="Lets Start Cooking!"></input>
+                    Full Name<br/>
+                    <TextField id="sName" label="Full Name" name="sName" placeholder="Name" value={sName} onInput={recieveInput}></TextField><br/>
+                    Username<br/>
+                    <TextField id="sUsername" label="Username" name="sUsername" placeholder="Username" value={sUsername} onInput={recieveInput}></TextField><br/>
+                    Password<br/>
+                    <TextField id="sPassword" label="Password" name="sPassword" placeholder="Password" value={sPassword} onInput={recieveInput}></TextField><br/>
+                    Re-enter Password<br/>
+                    <TextField id="password2" label="Re-enter" name="password2" placeholder="Password" value={password2} onInput={recieveInput}></TextField><br/>
+                    Email<br/>
+                    <TextField id="sEmail" label="Email" name="sEmail" placeholder="Email" value={sEmail} onInput={recieveInput}></TextField><br/><br/>
+                    <Button variant="contained"
+                            onClick={validSignup}>
+                            Sign Up
+                    </Button>
+                    {sValid == -1 ? <h4 id="failedLogin"> Username is in use </h4> : null}
+                    {sValid == -2 ? <h4 id="failedLogin"> Passwords do not match </h4> : null}
+                    {sValid == 1 ? <h4 id="successLogin"> Account successfully created </h4> : null}
                 </form>
             </div>
         )

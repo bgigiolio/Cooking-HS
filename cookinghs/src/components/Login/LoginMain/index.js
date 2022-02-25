@@ -12,9 +12,19 @@ import './styles.css';
 class LoginMain extends React.Component {
     state = {
         tabVal: 0,
+        //Login
         valid: false,
         username: "",
         password: "",
+        //Signup
+        sUsername: "",
+        sPassword: "",
+        sEmail: "",
+        sName: "",
+        password2: "",
+        sValid: 0, // -2 is confirm password dont match, -1 is username in use, 1 is seen true, 0 is never seen (potentially add more for specific issues)
+
+
         validUsers: [
             {username: "user", password: "user", email: "user@user.com", name: "Mr. User"},
             {username: "admin", password: "admin", email: "admin@admin.com", name: "Ms. Admin"}
@@ -54,30 +64,44 @@ class LoginMain extends React.Component {
         console.log("valid: {}", this.state.valid)
     };
 
-    // checkLogin = () => {
-    //     console.log("Login Checked")
-    //     const users = this.state.validUsers
-    //     const user = {
-    //         username: this.state.username,
-    //         password: this.state.password
-    //     }
-    //     console.log(user.username)
-    //     console.log(user.password)
-    //     for (let index = 0; index < users.length; index++) {
-    //         const entry = Object.entries(users[index])
-    //         if (entry[0][1] == user.username && entry[1][1] == user.password) {
-    //                 console.log("login valid")
-    //                 this.state.valid = true;
-    //         }
-    //     }
-    // }
-
-
     change = (event, val) => {
         if (this.state.tabVal === 0){
             this.setState({tabVal: 1});
         } else{
             this.setState({tabVal: 0});
+        }
+    }
+
+    validateSignup = () => {
+        let valid = 1
+        const sUsers = this.state.validUsers
+        const sUser = {
+            username: this.state.sUsername,
+            password: this.state.sPassword,
+            password2: this.state.password2
+        }
+        
+        for (let index = 0; index < sUsers.length; index++) {
+            const entry = Object.entries(sUsers[index])
+            if (entry[0][1] == sUser.username){
+                valid = -1
+            }else if( sUser.password != sUser.password2){
+                valid = -2
+            }
+            
+        }
+        this.setState({
+            sValid: valid
+        }, () =>console.log(this.state.sValid));
+
+        if (this.state.sValid) {
+            const newUser = {
+                username: this.state.sUsername,
+                password: this.state.sPassword,
+                email: this.state.sEmail,
+                name: this.state.sName
+            }
+            this.state.validUsers.push(newUser)
         }
     }
 
@@ -100,7 +124,15 @@ class LoginMain extends React.Component {
                         valid={this.state.valid}/> : null}
                 </TabPanel>
                 <TabPanel value={this.state.tabVal} index={1}>
-                    {this.state.tabVal ? <Signup/> : null}
+                    {this.state.tabVal ? <Signup
+                                            sUsername={this.state.sUsername}
+                                            sPassword={this.state.sPassword}
+                                            sName={this.state.sName}
+                                            sEmail={this.state.sEmail}
+                                            password2={this.state.password2}
+                                            sValid={this.state.sValid}
+                                            recieveInput={this.recieveInputLogin}
+                                            validSignup={this.validateSignup}/> : null}
                 </TabPanel>
                 </TabContext>
             </div>
