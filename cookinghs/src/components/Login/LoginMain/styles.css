@@ -17,13 +17,13 @@
     background-color: #69c5ff;
 }
 
-body{
+/* body{
     background-image: url("background.jpeg");
     background-color: #cccccc;
     background-repeat: no-repeat;
     background-size: cover;
 
-}
+} */
 #TabsHolder{
     background-color: #ffffff;
     float: right;

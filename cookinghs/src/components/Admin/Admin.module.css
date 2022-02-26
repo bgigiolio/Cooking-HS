@@ -1,0 +1,31 @@
+.body{
+    background-image: none !important;
+}
+
+.h4{
+    margin-left: 40px;
+   
+}
+
+.h3{
+    margin-top: 50px;
+    text-align: center;
+}
+
+.card_row{
+    margin: 0 auto;
+}
+
+.user_card_group{
+    margin: 0 auto;
+}
+
+.recipe_card_group{
+    margin: 0 auto;
+}
+
+.flag_table{
+    margin: 0 auto;
+    width: 75%;
+    margin-bottom: 20px;
+}

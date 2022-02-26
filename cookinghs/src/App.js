@@ -5,9 +5,11 @@ import { Navbar, NavbarBrand, Nav, NavItem, NavLink, NavbarToggler, Collapse } f
 import './App.css';
 
 import LoginMain from './components/Login/LoginMain/index';
+import AdminPage from './components/Admin/index';
 import Landing from './components/Landing';
 import Recipes from './components/Recipes';
 import Users from './components/Users';
+// import Admin from './components/Admin/Admin';
 
 class App extends React.Component {
   state = {
@@ -32,10 +34,14 @@ class App extends React.Component {
                         <NavItem>
                             <NavLink><Link to="/users">Users</Link></NavLink>
                         </NavItem>
+                        <NavItem>
+                            <NavLink><Link to="/admin">Admin</Link></NavLink>
+                        </NavItem>
                     </Nav>
                 </Collapse>
           </Navbar>
           <Routes>
+            <Route exact path="/admin" element={<AdminPage />}/>   
             <Route exact path="/login" element={<LoginMain />}/>
             <Route exact path="/recipes" element={<Recipes />}/>
             <Route exact path="/users" element={<Users />}/>
