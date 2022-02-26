@@ -1,19 +1,61 @@
 export const RECIPES = 
 {
     "1" : {
-    name: 'Mongolian Chicken',
+    title: 'Mongolian Chicken',
     ingredients: [
-        ['Boneless Skinless Chicken Breast', 1.25, 'pounds'],
-        ['Cornstarch', 0.25, 'cup'],
-        ['Vegetable Oil', 3, 'tablespoons'],
-        ['Minced Garlic', 1.5, 'teaspoons'],
-        ['Minced Ginger', 1, 'teaspoon'],
-        ['Sesame Oil', 1, 'teaspoon'],
-        ['Low Sodium Soy Sauce', 1/2, 'cup'],
-        ['Water', 1/3, 'cup'],
-        ['Dark Brown Sugar', 1/2, 'cup'],
-        ['Green Onions cut into 1 inch pieces', 1/2, 'cup'],
-        ['Salt & Pepper to Taste']
+        {
+            name: 'boneless skinless chicken breast',
+            quantity: 1.25,
+            unit: 'pounds'
+        },
+        {
+            name: 'cornstarch',
+            quantity: 0.25,
+            unit: 'cup'
+        },
+        {
+            name: 'Vegetable Oil',
+            quantity: 3,
+            unit: 'tablespoons'
+        },
+        {
+            name: 'minced garlic',
+            quantity: 1.5,
+            unit: 'teaspoons'
+        },
+        {
+            name: 'minced ginger',
+            quantity: 1.5,
+            unit: 'teaspoons'
+        },
+        {
+            name: 'sesame oil',
+            quantity: 1,
+            unit: 'teaspoon'
+        },
+        {
+            name: 'low sodium soy sauce',
+            quantity: 1/2,
+            unit: 'cup'
+        },
+        {
+            name: 'water',
+            quantity: 1/3,
+            unit: 'cup'
+        },
+        {
+            name: 'dark brown sugar',
+            quantity: 1/2,
+            unit: 'cup'
+        },
+        {
+            name: 'green onions cut into 1 inch pieces',
+            quantity: 1/2,
+            unit: 'cup'
+        },
+        {
+            name: 'salt & pepper to taste'
+        }
     ],
     steps: [
         'Place the chicken and 1/4 cup cornstarch in a resealable plastic bag, shake to coat evenly.',
@@ -36,14 +78,36 @@ export const RECIPES =
     },
 
     "2" : {
-    name: 'Fried Chicken',
+    title: 'Fried Chicken',
     ingredients: [
-        ['Chicken thighs', 6],
-        ['Chicken drumsticks', 6],
-        ['Buttermilk', 3, 'cups'],
-        ['Buffalo Hot Sauce', 1/2, 'cup'],
-        ['Salt', 2, 'teaspoons'],
-        ['Pepper', 1, 'teaspoon'] 
+        {
+            name: 'chicken thighs',
+            quantity: 6
+        },
+        {
+            name: 'chicken drumsticks',
+            quantity: 6
+        },
+        {
+            name: 'buttermilk',
+            quantity: 3,
+            unit: 'cups'
+        },
+        {
+            name: 'buffalo hot sauce',
+            quantity: 1/2,
+            unit: 'cup'
+        },
+        {
+            name: 'salt',
+            quantity: 2,
+            unit: 'teaspoons'
+        },
+        {
+            name: 'pepper',
+            quantity: 1,
+            unit: 'teaspoon'
+        }
     ],
     steps: [
         'In a large mixing bowl, whisk together buttermilk, hot sauce (optional, for added flavor), salt, and pepper in a mixing bowl. Add in chicken pieces. Cover the bowl with plastic wrap and refrigerate 4 hours.',
@@ -62,23 +126,70 @@ export const RECIPES =
     },
 
     "3" : {
-    name: 'Spaghetti Bolognese',
+    title: 'Spaghetti Bolognese',
     ingredients: [
-        ['Olive Oil', 1.5, 'tablespoons'],
-        ['Garlic Cloves', 2, 'minced'],
-        ['Finely Chopped Onion', 1],
-        ['Ground Beef', 500, 'g'],
-        ['Dry Red Wine', 1/2, 'cup'],
-        ['Beef Bouillon Cubes', 2],
-        ['Crushed Tomato', 800, 'g'],
-        ['Tomato Paste', 2, 'tablespoons'],
-        ['White Sugar', 2, 'teaspoons'],
-        ['Worcestershire Sauce', 2, 'teaspoons'],
-        ['Dried Bay Leaves', 2],
-        ['Fresh Thyme', 2, 'sprigs'],
-        ['Salt & Pepper to taste'],
-        ['Spaghetti', 400, 'g'],
-        ['Parmesan Cheese']
+        {
+            name: 'olive oil',
+            quantity: 1.5,
+            unit: 'tablespoons'
+        },
+        {
+            name: 'minced garlic cloves',
+            quantity: 2
+        },
+        {
+            name: 'finely chopped onion',
+            quantity: 1
+        },
+        {
+            name: 'ground beef',
+            quantity: 500,
+            unit: 'grams'
+        },
+        {
+            name: 'dry red wine',
+            quantity: 1/2,
+            unit: 'cup'
+        },
+        {
+            name: 'beef bouillon cubes',
+            quantity: 2
+        },
+        {
+            name: 'crushed tomato',
+            quantity: 800,
+            unit: 'g'
+        },
+        {
+            name: 'white sugar',
+            quantity: 2,
+            unit: 'teaspoons'
+        },
+        {
+            name: 'worcestershire sauce',
+            quantity: 2,
+            unit: 'teaspoons'
+        },
+        {
+            name: 'dried bay leaves',
+            quantity: 2
+        },
+        {
+            name: 'fresh thyme',
+            quantity: 2,
+            unit: 'sprigs'
+        },
+        {
+            name: 'salt & pepper to taste'
+        },
+        {
+            name: 'spaghetti',
+            quantity: 400,
+            unit: 'g'
+        },
+        {
+            name: 'parmesan cheese'
+        }
     ],
     steps: [
         'Heat oil in a large pot or deep skillet over medium high heat. Add onion and garlic, cook for 3 minutes or until light golden and softened.',
@@ -101,14 +212,36 @@ export const RECIPES =
     },
 
     "4" : {
-    name: 'Fried Chicken',
+    title: 'Fried Chicken',
     ingredients: [
-        ['Chicken thighs', 6],
-        ['Chicken drumsticks', 6],
-        ['Buttermilk', 3, 'cups'],
-        ['Buffalo Hot Sauce', 1/2, 'cup'],
-        ['Salt', 2, 'teaspoons'],
-        ['Pepper', 1, 'teaspoon'] 
+        {
+            name: 'chicken thighs',
+            quantity: 6
+        },
+        {
+            name: 'chicken drumsticks',
+            quantity: 6
+        },
+        {
+            name: 'buttermilk',
+            quantity: 3,
+            unit: 'cups'
+        },
+        {
+            name: 'buffalo hot sauce',
+            quantity: 1/2,
+            unit: 'cup'
+        },
+        {
+            name: 'salt',
+            quantity: 2,
+            unit: 'teaspoons'
+        },
+        {
+            name: 'pepper',
+            quantity: 1,
+            unit: 'teaspoon'
+        }
     ],
     steps: [
         'In a large mixing bowl, whisk together buttermilk, hot sauce (optional, for added flavor), salt, and pepper in a mixing bowl. Add in chicken pieces. Cover the bowl with plastic wrap and refrigerate 4 hours.',
@@ -127,14 +260,36 @@ export const RECIPES =
     },
 
     "5" : {
-        name: 'Fried Chicken',
+        title: 'Fried Chicken',
         ingredients: [
-            ['Chicken thighs', 6],
-            ['Chicken drumsticks', 6],
-            ['Buttermilk', 3, 'cups'],
-            ['Buffalo Hot Sauce', 1/2, 'cup'],
-            ['Salt', 2, 'teaspoons'],
-            ['Pepper', 1, 'teaspoon'] 
+            {
+                name: 'chicken thighs',
+                quantity: 6
+            },
+            {
+                name: 'chicken drumsticks',
+                quantity: 6
+            },
+            {
+                name: 'buttermilk',
+                quantity: 3,
+                unit: 'cups'
+            },
+            {
+                name: 'buffalo hot sauce',
+                quantity: 1/2,
+                unit: 'cup'
+            },
+            {
+                name: 'salt',
+                quantity: 2,
+                unit: 'teaspoons'
+            },
+            {
+                name: 'pepper',
+                quantity: 1,
+                unit: 'teaspoon'
+            }
         ],
         steps: [
             'In a large mixing bowl, whisk together buttermilk, hot sauce (optional, for added flavor), salt, and pepper in a mixing bowl. Add in chicken pieces. Cover the bowl with plastic wrap and refrigerate 4 hours.',
@@ -153,14 +308,36 @@ export const RECIPES =
     },
 
     "6" : {
-        name: 'Fried Chicken',
+        title: 'Fried Chicken',
         ingredients: [
-            ['Chicken thighs', 6],
-            ['Chicken drumsticks', 6],
-            ['Buttermilk', 3, 'cups'],
-            ['Buffalo Hot Sauce', 1/2, 'cup'],
-            ['Salt', 2, 'teaspoons'],
-            ['Pepper', 1, 'teaspoon'] 
+            {
+                name: 'chicken thighs',
+                quantity: 6
+            },
+            {
+                name: 'chicken drumsticks',
+                quantity: 6
+            },
+            {
+                name: 'buttermilk',
+                quantity: 3,
+                unit: 'cups'
+            },
+            {
+                name: 'buffalo hot sauce',
+                quantity: 1/2,
+                unit: 'cup'
+            },
+            {
+                name: 'salt',
+                quantity: 2,
+                unit: 'teaspoons'
+            },
+            {
+                name: 'pepper',
+                quantity: 1,
+                unit: 'teaspoon'
+            }
         ],
         steps: [
             'In a large mixing bowl, whisk together buttermilk, hot sauce (optional, for added flavor), salt, and pepper in a mixing bowl. Add in chicken pieces. Cover the bowl with plastic wrap and refrigerate 4 hours.',
@@ -179,14 +356,36 @@ export const RECIPES =
     },
 
     "7" : {
-        name: 'Fried Chicken',
+        title: 'Fried Chicken',
         ingredients: [
-            ['Chicken thighs', 6],
-            ['Chicken drumsticks', 6],
-            ['Buttermilk', 3, 'cups'],
-            ['Buffalo Hot Sauce', 1/2, 'cup'],
-            ['Salt', 2, 'teaspoons'],
-            ['Pepper', 1, 'teaspoon'] 
+            {
+                name: 'chicken thighs',
+                quantity: 6
+            },
+            {
+                name: 'chicken drumsticks',
+                quantity: 6
+            },
+            {
+                name: 'buttermilk',
+                quantity: 3,
+                unit: 'cups'
+            },
+            {
+                name: 'buffalo hot sauce',
+                quantity: 1/2,
+                unit: 'cup'
+            },
+            {
+                name: 'salt',
+                quantity: 2,
+                unit: 'teaspoons'
+            },
+            {
+                name: 'pepper',
+                quantity: 1,
+                unit: 'teaspoon'
+            }
         ],
         steps: [
             'In a large mixing bowl, whisk together buttermilk, hot sauce (optional, for added flavor), salt, and pepper in a mixing bowl. Add in chicken pieces. Cover the bowl with plastic wrap and refrigerate 4 hours.',
