@@ -1,23 +1,30 @@
 import React from 'react';
-import { Form, FormGroup, Label, Input, Col, Button } from 'reactstrap';
+import { Form, FormGroup, Label, Input, FormText, Col, Button } from 'reactstrap';
+import '../styles/writerecipe.css';
 
 class WriteRecipe extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            title: '',
+            ingredients: [{
+                name: 'chicken thigh',
+                quantity: 500,
+                unit: 'grams'},
+                {
+
+                }
+            ],
+            steps: [''],
+            course: 'Main',
+            cuisine: '',
+            preptime: 0,
+            cooktime: 0,
+            servings: 1,                                                  
+            image: ''
+        }
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-    }
-    
-    state = {
-        name: '',
-        ingredients: [['', 1, '']],
-        steps: [''],
-        course: '',
-        cuisine: '',
-        preptime: 0,
-        cooktime: 0,
-        servings: 1,                                                  
-        image: ''
     }
 
     handleInputChange(event) {
@@ -26,7 +33,20 @@ class WriteRecipe extends React.Component {
         const name = target.name;
         this.setState({
             [name]: value
-        });
+        }); 
+    }
+
+    handleIngredientChange(index, e) {
+        const target = e.target;
+        const value = target.value;
+        const name = target.name;
+        let ingredients = [...this.state.ingredients]
+        let ingredient = {
+            ...this.state.ingredients[index],
+            [name] : value
+        }
+        ingredients[index] = ingredient;
+        this.setState({ingredients})
     }
 
     checkForm() {
@@ -34,32 +54,108 @@ class WriteRecipe extends React.Component {
     }
 
     handleSubmit(event) {
-        if (this.state.option !== ''){
-            this.props.addTask(this.state.option);
-        };
-        this.setState({option: ''});
+        // if (this.state.option !== ''){
+        //     this.props.addTask(this.state.option);
+        // };
+        // this.setState({option: ''});
+        console.log(this.state)
         event.preventDefault();
+    }
+
+    ingredientsForm()  {
+        let ingredientInput = this.state.ingredients.map((ingredient, index) => {
+            return(
+                <FormGroup row>
+                    <Label
+                    for="ingredients"
+                    md={2}
+                    style={{textAlign:"right"}}
+                    >
+                        {index + 1}.
+                    </Label>
+                    <Col md={4}>
+                    <Input
+                        id="ingredientname"
+                        name='name'
+                        type="text"
+                        placeholder='Ingredient'
+                        value={ingredient.name}
+                        onChange={(e) => this.handleIngredientChange(index, e)}
+                    />
+                    </Col>
+                    <Col md={2}>
+                    <Input
+                        id="quantity"
+                        name="quantity"
+                        type="text"
+                        placeholder='Quantity'
+                        value={ingredient.quantity}
+                        onChange={(e) => this.handleIngredientChange(index, e)}
+                    />
+                    </Col>
+                    <Col md={2}>
+                    <Input
+                        id="unit"
+                        name="unit"
+                        type="text"
+                        placeholder='Unit'
+                        value={ingredient.unit}
+                        onChange={(e) => this.handleIngredientChange(index, e)}
+                    />
+                    </Col>
+                    <Col md={2}>
+                    {
+                        index ?
+                        <Button 
+                            type="button"
+                            className="float-end"
+                            onClick={this.removeIngredient}
+                        >
+                            Remove
+                        </Button>
+                        : null
+                    }
+                    
+                    </Col>
+                </FormGroup>
+            )
+        })
+        return (
+            <>
+                <FormGroup row>
+                    <Label md={2}>Ingredients</Label>
+                    <Col>
+                        <Button type="button"
+                            onClick={this.addIngredient}
+                            className="float-end">
+                            Add Ingredient
+                        </Button>
+                    </Col>
+                </FormGroup>
+                {ingredientInput}
+            </>
+        )
     }
     
     render() {
         return(
-            <div className='container'>
-                <h1>Create a new recipe</h1>
+            <div className='container' id='formContainer'>
+                <h1> + Add a Recipe</h1>
                 <Form style={{position: "relative"}}>
                     <FormGroup row>
                         <Label
-                            for="name"
+                            for="title"
                             md={2}
                         >
                             Recipe Name
                         </Label>
                         <Col md={10}>
                             <Input
-                                id="name"
-                                name="name"
-                                placeholder="Recipe Name"
+                                id="title"
+                                name="title"
+                                placeholder="Give your recipe a title"
                                 type="text"
-                                value={this.state.name}
+                                value={this.state.title}
                                 onChange={this.handleInputChange}
                             />
                         </Col>
@@ -168,22 +264,23 @@ class WriteRecipe extends React.Component {
                     </FormGroup>
                     <FormGroup row>
                         <Label
-                        for="ingredients"
+                        for="image"
                         md={2}
                         >
-                        Ingredients
+                        Dish Picture
                         </Label>
                         <Col md={10}>
                         <Input
-                            id="ingredients"
-                            name="ingredients"
-                            type="textarea"
-                            value={this.state.ingredients}
-                            onChange={this.handleInputChange}
-                            rows="10"
+                            id="image"
+                            name="image"
+                            type="file"
                         />
+                        <FormText>
+                            Give us the tastiest image of your recipe!
+                        </FormText>
                         </Col>
                     </FormGroup>
+                    {this.ingredientsForm()}
                     <FormGroup row>
                         <Label
                         for="steps"
