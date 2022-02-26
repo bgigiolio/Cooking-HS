@@ -18,8 +18,8 @@ function Recipes() {
         return(
             <Col lg={4} md={6}>
                 <Link to={key} className="article">
-                    <img src={value.image} alt={value.name} className="articleimage"></img>
-                    <h4 className="articlename">{value.name}</h4>
+                    <img src={value.image} alt={value.title} className="articleimage"></img>
+                    <h4 className="articlename">{value.title}</h4>
                 </Link>
                 <br></br>
             </Col>
@@ -33,10 +33,8 @@ function Recipes() {
                 <Link to="/writerecipe">
                     <img src='../plus.png'
                         alt=""
-                        style={{position: "absolute",
-                            top: 0,
-                            right: 0,
-                            height: 50}}/>
+                        id="newRecipeButton"
+                        />
                 </Link>
                 <Row>
                     {recipeButtons}
@@ -49,16 +47,16 @@ function Recipes() {
     const recipeView = function() {
         const ingredientView = chosenRecipe.ingredients.map((ingredient) => {
             let amount;
-            if (ingredient[1]) {
-                if (ingredient[1]%1 === 0){
-                    amount = new Fraction(ingredient[1]).toString();
+            if (ingredient.quantity) {
+                if (ingredient.quantity%1 === 0){
+                    amount = new Fraction(ingredient.quantity).toString();
                 }
-                else if (ingredient[1]*3%1 === 0) {
-                    amount = (ingredient[1] * 3).toString();
+                else if (ingredient.quantity*3%1 === 0) {
+                    amount = (ingredient.quantity * 3).toString();
                     amount = amount.concat('/3');
                 }
                 else {
-                    amount = new Fraction(ingredient[1]).toString();
+                    amount = new Fraction(ingredient.quantity).toString();
                 }
                 amount = amount.concat(' ');
             }
@@ -67,7 +65,7 @@ function Recipes() {
                 <li>
                     <input type="checkbox" />
                     <> </>
-                    {amount} {ingredient[2] ? ingredient[2] + " " + ingredient[0].toLowerCase() : ingredient[0].toLowerCase()}
+                    {amount} {ingredient.unit ? ingredient.unit + " " + ingredient.name.toLowerCase() : ingredient.name.toLowerCase()}
                 </li>
             );
         });
@@ -75,7 +73,7 @@ function Recipes() {
         const stepsView = chosenRecipe.steps.map((step) => {
             return (
                 <li>
-                    {step}
+                    <span>{step}</span>
                 </li>
             )
         });
@@ -87,7 +85,7 @@ function Recipes() {
                         {[...Array(5)].map((star, index) => {
                             index += 1;
                             return (
-                                <span className="star" className={index <= comment.rating ? "on" : "off"}>&#9733;</span>
+                                <span className={index <= comment.rating ? 'on' : 'off'}>&#9733;</span>
                             );
                         })}
                     </div>
@@ -108,8 +106,8 @@ function Recipes() {
 
         return(
             <div>
-                <h1>{chosenRecipe.name}</h1>
-                <img className="recipeimage" src={chosenRecipe.image} alt={chosenRecipe.name}></img>
+                <h1>{chosenRecipe.title}</h1>
+                <img className="recipeimage" src={chosenRecipe.image} alt={chosenRecipe.title}></img>
                 <ListGroup horizontal>
                     {chosenRecipe.course ? <ListGroupItem className='flex-fill'>{chosenRecipe.course}</ListGroupItem> : <></>}
                     {chosenRecipe.cuisine ? <ListGroupItem className='flex-fill'>{chosenRecipe.cuisine}</ListGroupItem> : <></>}
