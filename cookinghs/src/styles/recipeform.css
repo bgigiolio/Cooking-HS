@@ -1,0 +1,8 @@
+#formContainer {
+    max-width: 640px;
+}
+
+.spacer {
+    border-top: 1px solid grey;
+    height: 10px;
+}
