@@ -16,7 +16,8 @@ import Login from './components/Login';
 
 class App extends React.Component {
   state = {
-    isOpen: false
+    isOpen: false,
+    currentUser: {username: null, password: null, email: null, name: null, admin: false}
   };
   
   render() {
@@ -43,7 +44,8 @@ class App extends React.Component {
           <ScrollToTop>
             <Routes>
               <Route exact path="/admin" element={<AdminPage />}/>  
-              <Route exact path="/login" element={<Login />}/>
+              <Route exact path="/login" element={<LoginMain
+                                                  currentUser={this.state.currentUser}/>}/>
               <Route exact path="/recipes/:id" element={<RecipeBrowser />}/>
               <Route exact path="/recipes" element={<RecipeBrowser />}/>
               <Route exact path="/writerecipe" element={<WriteRecipe />}/>
