@@ -5,6 +5,7 @@ import { Navbar, NavbarBrand, Nav, NavItem, NavLink, NavbarToggler, Collapse } f
 import './App.css';
 
 import LoginMain from './components/Login/LoginMain/index';
+import AdminPage from './components/Admin/index';
 import Landing from './components/Landing';
 import Users from './components/Users';
 import ScrollToTop from './components/ScrolltoTop';
@@ -35,11 +36,15 @@ class App extends React.Component {
                         <NavItem>
                             <NavLink><Link to="/users">Users</Link></NavLink>
                         </NavItem>
+                        <NavItem>
+                            <NavLink><Link to="/admin">Admin</Link></NavLink>
+                        </NavItem>
                     </Nav>
                 </Collapse>
           </Navbar>
           <ScrollToTop>
             <Routes>
+              <Route exact path="/admin" element={<AdminPage />}/>  
               <Route exact path="/login" element={<LoginMain />}/>
               <Route exact path="/recipes/:id" element={<RecipeBrowser />}/>
               <Route exact path="/recipes" element={<RecipeBrowser />}/>
@@ -49,6 +54,7 @@ class App extends React.Component {
               <Route exact path="/" element={<Landing />}/>
             </Routes>
           </ScrollToTop>
+
         </BrowserRouter>
         <footer style={{position: "absolute", bottom: 0}}>
           
