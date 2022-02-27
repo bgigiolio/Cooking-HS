@@ -6,10 +6,10 @@ import './App.css';
 
 import Login from './components/Login';
 import Landing from './components/Landing';
-import Recipes from './components/RecipesComponent';
 import Users from './components/Users';
 import ScrollToTop from './components/ScrolltoTop';
 import WriteRecipe from './components/WriteRecipeComponent';
+import RecipeBrowser from './components/RecipeBrowserComponent';
 
 class App extends React.Component {
   state = {
@@ -40,8 +40,8 @@ class App extends React.Component {
           <ScrollToTop>
             <Routes>
               <Route exact path="/login" element={<Login />}/>
-              <Route exact path="/recipes/:id" element={<Recipes />}/>
-              <Route exact path="/recipes" element={<Recipes />}/>
+              <Route exact path="/recipes/:id" element={<RecipeBrowser />}/>
+              <Route exact path="/recipes" element={<RecipeBrowser />}/>
               <Route exact path="/writerecipe" element={<WriteRecipe />}/>
               <Route exact path="/users" element={<Users />}/>
               <Route exact path="/" element={<Landing />}/>

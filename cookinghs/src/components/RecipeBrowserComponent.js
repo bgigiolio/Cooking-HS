@@ -7,7 +7,7 @@ import { COMMENTS } from '../shared/RecipeComments';
 import '../styles/recipes.css';
 
 
-function Recipes() {
+function RecipeBrowser() {
     const { id } = useParams();
     let [recipes, setRecipes] = useState(RECIPES);
     let [comments, setComments] = useState(COMMENTS);
@@ -145,4 +145,4 @@ function Recipes() {
     )
 }
 
-export default Recipes;
+export default RecipeBrowser;
