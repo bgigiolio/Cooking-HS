@@ -13,3 +13,19 @@
 .color-quad {
     color: #EAE7C6
 }
+
+.color-primary-bg{
+    background-color: #D1E8E4;
+}
+
+.color-secondary-bg {
+    background-color: #C37B89;
+}
+
+.color-tertiary-bg {
+    background-color: #BCCC9A;
+}
+
+.color-quad-bg {
+    background-color: #EAE7C6
+}
