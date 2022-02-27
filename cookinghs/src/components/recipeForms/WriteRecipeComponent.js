@@ -1,6 +1,6 @@
 import React from 'react';
-import '../styles/recipeform.css';
-import RecipeForm from './recipeForms/RecipeFormComponent';
+import '../../styles/recipeform.css';
+import RecipeForm from './RecipeFormComponent';
 
 class WriteRecipe extends React.Component {
     constructor(props) {

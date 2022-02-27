@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { List, ListGroup, ListGroupItem, Row, Col, Card, CardBody, CardHeader } from 'reactstrap';
 import { Fraction } from 'fractional';
 import { useParams, Link } from 'react-router-dom';
-import { RECIPES } from '../shared/RecipeList';
-import { COMMENTS } from '../shared/RecipeComments';
-import '../styles/recipes.css';
+import { RECIPES } from '../../shared/RecipeList';
+import { COMMENTS } from '../../shared/RecipeComments';
+import '../../styles/recipes.css';
 
 
 function RecipeBrowser() {
     const { id } = useParams();
     let [recipes, setRecipes] = useState(RECIPES);
     let [comments, setComments] = useState(COMMENTS);
-    const chosenRecipe = recipes[id] ? recipes[id] : 'Recipe';
-    const chosenComment = comments[id] ? comments[id] : 'Comments';
+    const chosenRecipe = recipes[id] ? recipes[id] : null;
+    const chosenComment = comments[id] ? comments[id] : null;
 
     const recipeButtons = Object.entries(recipes).map(([key, value]) => {
         return(
@@ -107,6 +107,14 @@ function RecipeBrowser() {
         return(
             <div>
                 <h1>{chosenRecipe.title}</h1>
+                <Link to="/forkrecipe"
+                    state={{chosenRecipe: chosenRecipe}}
+                    >
+                    <img src='../fork.png'
+                        alt=""
+                        id="newRecipeButton"
+                        />
+                </Link>
                 <img className="recipeimage" src={chosenRecipe.image} alt={chosenRecipe.title}></img>
                 <ListGroup horizontal>
                     {chosenRecipe.course ? <ListGroupItem className='flex-fill'>{chosenRecipe.course}</ListGroupItem> : <></>}

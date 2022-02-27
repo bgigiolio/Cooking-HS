@@ -8,8 +8,9 @@ import Login from './components/Login';
 import Landing from './components/Landing';
 import Users from './components/Users';
 import ScrollToTop from './components/ScrolltoTop';
-import WriteRecipe from './components/WriteRecipeComponent';
-import RecipeBrowser from './components/RecipeBrowserComponent';
+import RecipeBrowser from './components/recipeView/RecipeBrowserComponent';
+import WriteRecipe from './components/recipeForms/WriteRecipeComponent';
+import ForkRecipe from './components/recipeForms/ForkRecipeComponent'
 
 class App extends React.Component {
   state = {
@@ -43,6 +44,7 @@ class App extends React.Component {
               <Route exact path="/recipes/:id" element={<RecipeBrowser />}/>
               <Route exact path="/recipes" element={<RecipeBrowser />}/>
               <Route exact path="/writerecipe" element={<WriteRecipe />}/>
+              <Route exact path="/forkrecipe" element={<ForkRecipe />}/>
               <Route exact path="/users" element={<Users />}/>
               <Route exact path="/" element={<Landing />}/>
             </Routes>
