@@ -4,7 +4,7 @@ import { Navbar, NavbarBrand, Nav, NavItem, NavLink, NavbarToggler, Collapse } f
 
 import './App.css';
 
-import Login from './components/Login';
+import LoginMain from './components/Login/LoginMain/index';
 import Landing from './components/Landing';
 import Users from './components/Users';
 import ScrollToTop from './components/ScrolltoTop';
@@ -40,7 +40,7 @@ class App extends React.Component {
           </Navbar>
           <ScrollToTop>
             <Routes>
-              <Route exact path="/login" element={<Login />}/>
+              <Route exact path="/login" element={<LoginMain />}/>
               <Route exact path="/recipes/:id" element={<RecipeBrowser />}/>
               <Route exact path="/recipes" element={<RecipeBrowser />}/>
               <Route exact path="/writerecipe" element={<WriteRecipe />}/>

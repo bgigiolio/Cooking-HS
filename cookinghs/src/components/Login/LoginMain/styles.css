@@ -1,0 +1,39 @@
+.tabs {
+    overflow: hidden;
+    border: 1px solid #69c5ff;
+    background-color: azure;
+}
+.tab button{
+    background-color: inherit;
+    float: right;
+    padding: 14px 16px;
+}
+
+.tab button:hover{
+    background-color: #b6e3ff;
+}
+
+.tab button.active {
+    background-color: #69c5ff;
+}
+
+body{
+    background-image: url("background.jpeg");
+    background-color: #cccccc;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+#TabsHolder{
+    background-color: #ffffff;
+    float: right;
+    margin-top: 50px;
+    /* margin-bottom: 100px; */
+    height: 80%;
+    min-height: 550px;
+    margin-right: 50px;
+    min-width: 400px;
+
+    /* width: 50%; */
+    border: 1px solid grey;
+}
