@@ -36,9 +36,6 @@ class App extends React.Component {
                         <NavItem>
                             <NavLink><Link to="/users">Users</Link></NavLink>
                         </NavItem>
-                        <NavItem>
-                            <NavLink><Link to="/admin">Admin</Link></NavLink>
-                        </NavItem>
                     </Nav>
                 </Collapse>
           </Navbar>
