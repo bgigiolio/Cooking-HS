@@ -17,13 +17,13 @@
     background-color: #69c5ff;
 }
 
-body{
-    background-image: url("background.jpeg");
-    background-color: #cccccc;
+/* body{
+    /* background-image: url("background.jpeg"); */
+    /* background-color: #cccccc;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: cover; */
 
-}
+/* } */
 #TabsHolder{
     background-color: #ffffff;
     float: right;
@@ -36,4 +36,9 @@ body{
 
     /* width: 50%; */
     border: 1px solid grey;
+}
+
+#LoginMain{
+    overflow: auto;
+    background-image: url("background.jpeg");
 }
