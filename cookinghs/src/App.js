@@ -11,7 +11,8 @@ import Users from './components/Users';
 import ScrollToTop from './components/ScrolltoTop';
 import RecipeBrowser from './components/recipeView/RecipeBrowserComponent';
 import WriteRecipe from './components/recipeForms/WriteRecipeComponent';
-import ForkRecipe from './components/recipeForms/ForkRecipeComponent'
+import ForkRecipe from './components/recipeForms/ForkRecipeComponent';
+import Login from './components/Login';
 
 class App extends React.Component {
   state = {
@@ -42,7 +43,7 @@ class App extends React.Component {
           <ScrollToTop>
             <Routes>
               <Route exact path="/admin" element={<AdminPage />}/>  
-              <Route exact path="/login" element={<LoginMain />}/>
+              <Route exact path="/login" element={<Login />}/>
               <Route exact path="/recipes/:id" element={<RecipeBrowser />}/>
               <Route exact path="/recipes" element={<RecipeBrowser />}/>
               <Route exact path="/writerecipe" element={<WriteRecipe />}/>

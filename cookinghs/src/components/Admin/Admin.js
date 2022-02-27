@@ -7,7 +7,7 @@ import Flags from "./Flags";
 class Admin extends React.Component {
     render() {
         return(
-            <div className={styles.container}>
+            <div className={styles.AdminContainer}>
                 <h3 className={styles.h3}>Admin Profile</h3>
                 <h4 className={styles.h4}>Users</h4>
                 <UserCardGroup className={styles.user_card_group}/>
