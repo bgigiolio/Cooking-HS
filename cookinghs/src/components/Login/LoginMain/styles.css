@@ -39,6 +39,6 @@
 }
 
 #LoginMain{
-    overflow: auto;
+    overflow: hidden;
     background-image: url("background.jpeg");
 }
