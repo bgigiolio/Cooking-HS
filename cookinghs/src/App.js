@@ -6,8 +6,11 @@ import './App.css';
 
 import LoginMain from './components/Login/LoginMain/index';
 import Landing from './components/Landing';
-import Recipes from './components/Recipes';
 import Users from './components/Users';
+import ScrollToTop from './components/ScrolltoTop';
+import RecipeBrowser from './components/recipeView/RecipeBrowserComponent';
+import WriteRecipe from './components/recipeForms/WriteRecipeComponent';
+import ForkRecipe from './components/recipeForms/ForkRecipeComponent'
 
 class App extends React.Component {
   state = {
@@ -16,12 +19,12 @@ class App extends React.Component {
   
   render() {
     return(
-      <div>
+      <div style={{position: "relative", minHeight: "100vh"}}>
         <BrowserRouter>
           <Navbar color="light" light expand="md">
             <NavbarBrand><Link to="/">CookingHS</Link></NavbarBrand>
-            <NavbarToggler onClick={() => { this.setState(this.isOpen = !this.isOpen) }} />
-            <Collapse isOpen={this.isOpen} navbar>
+            <NavbarToggler onClick={() => { this.setState({isOpen: !this.state.isOpen}) }} />
+            <Collapse isOpen={this.state.isOpen} navbar>
                     <Nav className="mr-auto" navbar>
                         <NavItem>
                             <NavLink><Link to="/login">Login</Link></NavLink>
@@ -35,17 +38,24 @@ class App extends React.Component {
                     </Nav>
                 </Collapse>
           </Navbar>
-          <Routes>
-            <Route exact path="/login" element={<LoginMain />}/>
-            <Route exact path="/recipes" element={<Recipes />}/>
-            <Route exact path="/users" element={<Users />}/>
-            <Route exact path="/" element={<Landing />}/>
-          </Routes>
+          <ScrollToTop>
+            <Routes>
+              <Route exact path="/login" element={<LoginMain />}/>
+              <Route exact path="/recipes/:id" element={<RecipeBrowser />}/>
+              <Route exact path="/recipes" element={<RecipeBrowser />}/>
+              <Route exact path="/writerecipe" element={<WriteRecipe />}/>
+              <Route exact path="/forkrecipe" element={<ForkRecipe />}/>
+              <Route exact path="/users" element={<Users />}/>
+              <Route exact path="/" element={<Landing />}/>
+            </Routes>
+          </ScrollToTop>
         </BrowserRouter>
+        <footer style={{position: "absolute", bottom: 0}}>
+          
+        </footer>
       </div>
     )
   }
-
 }
 
 export default App;
