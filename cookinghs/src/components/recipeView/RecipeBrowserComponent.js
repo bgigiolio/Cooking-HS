@@ -14,7 +14,7 @@ function RecipeBrowser() {
     const chosenRecipe = recipes[id] ? recipes[id] : null;
     const chosenComment = comments[id] ? comments[id] : null;
 
-    const recipeButtons = Object.entries(recipes).map(([key, value]) => {
+    const recipeCards = Object.entries(recipes).map(([key, value]) => {
         return(
             <Col lg={4} md={6}>
                 <Link to={key} className="article">
@@ -37,7 +37,7 @@ function RecipeBrowser() {
                         />
                 </Link>
                 <Row>
-                    {recipeButtons}
+                    {recipeCards}
                 </Row>
             </>
         )
@@ -122,8 +122,8 @@ function RecipeBrowser() {
                     {chosenRecipe.servings ? <ListGroupItem className='flex-fill'>{chosenRecipe.servings} Servings</ListGroupItem> : <></>}
                 </ListGroup>
                 <ListGroup horizontal>
-                    {chosenRecipe.preptime ? <ListGroupItem className='flex-fill'>Preptime: {chosenRecipe.preptime}</ListGroupItem> : <></>}
-                    {chosenRecipe.cooktime ? <ListGroupItem className='flex-fill'>Cooktime: {chosenRecipe.cooktime}</ListGroupItem> : <></>}
+                    {chosenRecipe.preptime ? <ListGroupItem className='flex-fill'>Preptime: {chosenRecipe.preptime} minutes</ListGroupItem> : <></>}
+                    {chosenRecipe.cooktime ? <ListGroupItem className='flex-fill'>Cooktime: {chosenRecipe.cooktime} minutes</ListGroupItem> : <></>}
                 </ListGroup>
                 <ListGroup>
                     <ListGroupItem>

@@ -20,12 +20,14 @@ class WriteRecipe extends React.Component {
                 }
             ],
             steps: [
+                '',
+                '',
                 ''
             ],
             course: 'Main',
             cuisine: '',
-            preptime: 0,
-            cooktime: 0,
+            preptime: '',
+            cooktime: '',
             servings: 1,                                                  
             image: ''
         }

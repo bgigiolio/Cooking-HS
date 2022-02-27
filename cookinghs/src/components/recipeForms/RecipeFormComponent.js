@@ -6,15 +6,15 @@ function RecipeForm(props) {
     const ingredientsForm = function()  {
         let ingredientInput = props.ingredients.map((ingredient, index) => {
             return(
-                <FormGroup row>
+                <FormGroup row key={index}>
                     <Label
                     for="ingredient"
                     md={2}
-                    style={{textAlign:"right"}}
+                    className='numberedLabel'
                     >
                         {index + 1}.
                     </Label>
-                    <Col md={4}>
+                    <Col md={5}>
                     <Input
                         id="ingredientname"
                         name='name'
@@ -44,7 +44,7 @@ function RecipeForm(props) {
                         onChange={(e) => props.handleIngredientChange(index, e)}
                     />
                     </Col>
-                    <Col md={2}>
+                    <Col md={1}>
                     {
                         index ?
                         <Button 
@@ -53,8 +53,8 @@ function RecipeForm(props) {
                             color="transparent"
                             onClick={(e) => props.removeIngredient(index, e)}
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" style={{width: '24px', height: '24px'}}>
-                            <path fill="000" fill-opacity=".65" d="M14.59 8L12 10.59 9.41 8 8 9.41 10.59 12 8 14.59 9.41 16 12 13.41 14.59 16 16 14.59 13.41 12 16 9.41 14.59 8zM12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
+                            <svg xmlns="http://www.w3.org/2000/svg" className="removeButton">
+                            <path d="M14.59 8L12 10.59 9.41 8 8 9.41 10.59 12 8 14.59 9.41 16 12 13.41 14.59 16 16 14.59 13.41 12 16 9.41 14.59 8zM12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
                             </svg>
                         </Button>
                         : null
@@ -85,24 +85,24 @@ function RecipeForm(props) {
     const stepsForm = function() {
         let stepsInput = props.steps.map((step, index) => {
             return(
-                <FormGroup row>
+                <FormGroup row key={index}>
                     <Label
                         for="steps"
                         md={2}
-                        style={{textAlign:"right"}}
+                        className='numberedLabel'
                     >
                         {index+1}. 
                     </Label>
-                    <Col md={8}>
+                    <Col md={9}>
                     <Input
                         id="steps"
                         name="steps"
-                        type="text"
+                        type="textarea"
                         value={step}
                         onChange={(e) => props.handleStepChange(index, e)}
                     />
                     </Col>
-                    <Col md={2}>
+                    <Col md={1}>
                     {
                         index ?
                         <Button 
@@ -111,8 +111,8 @@ function RecipeForm(props) {
                             color="transparent"
                             onClick={(e) => props.removeStep(index, e)}
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" style={{width: '24px', height: '24px'}}>
-                            <path fill="000" fill-opacity=".65" d="M14.59 8L12 10.59 9.41 8 8 9.41 10.59 12 8 14.59 9.41 16 12 13.41 14.59 16 16 14.59 13.41 12 16 9.41 14.59 8zM12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
+                            <svg xmlns="http://www.w3.org/2000/svg" className='removeButton'>
+                            <path d="M14.59 8L12 10.59 9.41 8 8 9.41 10.59 12 8 14.59 9.41 16 12 13.41 14.59 16 16 14.59 13.41 12 16 9.41 14.59 8zM12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
                             </svg>
                         </Button>
                         : null
