@@ -32,7 +32,7 @@ function ReviewModal(props) {
                                         name="rating"
                                         type="select"
                                         value={rating}
-                                        onChange={(e) => {setRating(e.value)}}
+                                        onChange={(e) => {setRating(e.target.value)}}
                                     >
                                         <option>
                                         1
@@ -62,7 +62,7 @@ function ReviewModal(props) {
                                     type="textarea"
                                     rows="6"
                                     value={content}
-                                    onChange={(e)=>{setContent(e.value)}}
+                                    onChange={(e)=>{setContent(e.target.value)}}
                                     placeholder="What did you think of this recipe? Did you make any changes or notes?"
                                 />
                             </FormGroup>
