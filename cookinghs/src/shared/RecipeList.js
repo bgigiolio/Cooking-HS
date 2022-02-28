@@ -1,7 +1,9 @@
 export const RECIPES = 
 {
     "1" : {
+    author: 'Archer',
     title: 'Mongolian Chicken',
+    description: 'If Mongolian beef is your go to when it comes to Chinese take-out, I challenge you to try this version made with chicken instead. The chicken is melt-in-your-mouth tender and requires no marinating time as beef would. Serve over rice.',
     ingredients: [
         {
             name: 'boneless skinless chicken breast',
@@ -14,7 +16,7 @@ export const RECIPES =
             unit: 'cup'
         },
         {
-            name: 'Vegetable Oil',
+            name: 'vegetable oil',
             quantity: 3,
             unit: 'tablespoons'
         },
@@ -78,7 +80,9 @@ export const RECIPES =
     },
 
     "2" : {
+    author: 'Lana',
     title: 'Fried Chicken',
+    description: "As simple, as easy, as tasty as it gets! With this classic fried chicken recipe, you can't go wrong - so go right and fry up some chicken tonight!",
     ingredients: [
         {
             name: 'chicken thighs',
@@ -126,7 +130,9 @@ export const RECIPES =
     },
 
     "3" : {
+    author: 'Mallory',
     title: 'Spaghetti Bolognese',
+    description: 'Recipe passed on from my Italian grandfather. The ultimate comfort food. Leftovers freeze nicely!',
     ingredients: [
         {
             name: 'olive oil',
