@@ -1,12 +1,12 @@
 import React, { useState} from 'react';
 import { useLocation } from 'react-router-dom';
-import '../../styles/recipeform.css';
 import RecipeForm from './RecipeFormComponent';
+
+import '../../styles/recipeform.css';
 
 function ForkRecipe() {
     const location=useLocation()
     const [recipe, setRecipe] = useState(location.state.chosenRecipe)
-    console.log(recipe);
 
     const handleInputChange = e => {
         const target = e.target;
@@ -99,7 +99,7 @@ function ForkRecipe() {
     
     return(
         <div className='container' id='formContainer'>
-            <h1> Y Fork a Recipe</h1>
+            <h1> <img src='../fork.png' alt='' id='formIcon'></img> Fork a Recipe</h1>
             <p>Forking a recipe is easy! Share your own unique spin on a recipe with friends, family, and the CookingHS community.</p>
             <RecipeForm 
                 {...recipe} 

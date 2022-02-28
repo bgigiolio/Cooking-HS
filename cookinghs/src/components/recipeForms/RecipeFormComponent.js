@@ -8,41 +8,41 @@ function RecipeForm(props) {
             return(
                 <FormGroup row key={index}>
                     <Label
-                    for="ingredient"
-                    md={2}
-                    className='numberedLabel'
+                        for="ingredient"
+                        md={2}
+                        className='numberedLabel'
                     >
                         {index + 1}.
                     </Label>
                     <Col md={5}>
-                    <Input
-                        id="ingredientname"
-                        name='name'
-                        type="text"
-                        placeholder='Ingredient'
-                        value={ingredient.name}
-                        onChange={(e) => props.handleIngredientChange(index, e)}
-                    />
+                        <Input
+                            id="ingredientname"
+                            name='name'
+                            type="text"
+                            placeholder='Ingredient e.g. Chicken Wings'
+                            value={ingredient.name}
+                            onChange={(e) => props.handleIngredientChange(index, e)}
+                        />
                     </Col>
                     <Col md={2}>
-                    <Input
-                        id="quantity"
-                        name="quantity"
-                        type="text"
-                        placeholder='Quantity'
-                        value={ingredient.quantity}
-                        onChange={(e) => props.handleIngredientChange(index, e)}
-                    />
+                        <Input
+                            id="quantity"
+                            name="quantity"
+                            type="text"
+                            placeholder='Amount'
+                            value={ingredient.quantity}
+                            onChange={(e) => props.handleIngredientChange(index, e)}
+                        />
                     </Col>
                     <Col md={2}>
-                    <Input
-                        id="unit"
-                        name="unit"
-                        type="text"
-                        placeholder='Unit'
-                        value={ingredient.unit}
-                        onChange={(e) => props.handleIngredientChange(index, e)}
-                    />
+                        <Input
+                            id="unit"
+                            name="unit"
+                            type="text"
+                            placeholder='Unit'
+                            value={ingredient.unit}
+                            onChange={(e) => props.handleIngredientChange(index, e)}
+                        />
                     </Col>
                     <Col md={1}>
                     {
@@ -69,7 +69,7 @@ function RecipeForm(props) {
                     <Label md={2}>Ingredients</Label>
                     <Col>
                         <Button type="button"
-                            className="float-end"
+                            className="float-end color-tertiary-bg"
                             color="success"
                             onClick={(e) => props.addIngredient(e)}
                         >
@@ -98,6 +98,8 @@ function RecipeForm(props) {
                         id="steps"
                         name="steps"
                         type="textarea"
+                        rows="3"
+                        placeholder='e.g. Preheat oven to 350 degrees F...'
                         value={step}
                         onChange={(e) => props.handleStepChange(index, e)}
                     />
@@ -127,7 +129,7 @@ function RecipeForm(props) {
                     <Label md={2}>Steps</Label>
                     <Col>
                         <Button type="button"
-                            className="float-end"
+                            className="float-end color-tertiary-bg"
                             color="success"
                             onClick={(e) => props.addStep(e)}
                         >
@@ -144,41 +146,69 @@ function RecipeForm(props) {
         <Form>
             <div className="spacer" />
             <FormGroup row>
-                <Label
-                    for="title"
-                    md={2}
-                >
-                    Recipe Title
-                </Label>
-                <Col md={10}>
-                    <Input
-                        id="title"
-                        name="title"
-                        placeholder="Give your recipe a title"
-                        type="text"
-                        value={props.title}
-                        onChange={props.handleInputChange}
-                    />
+                <Col md={8}>
+                    <FormGroup row>
+                        <Label
+                            for="title"
+                        >
+                            Title
+                        </Label>
+                        <Col>
+                            <Input
+                                id="title"
+                                name="title"
+                                placeholder="Give your recipe a title"
+                                type="text"
+                                value={props.title}
+                                onChange={props.handleInputChange}
+                            />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                        <Label
+                            for="description"
+                        >
+                            Description
+                        </Label>
+                        <Col>
+                            <Input
+                                id="description"
+                                name="description"
+                                placeholder="Share the story behind your recipe and what makes it so special"
+                                type="textarea"
+                                rows='4'
+                                value={props.description}
+                                onChange={props.handleInputChange}
+                            />
+                        </Col>
+                    </FormGroup>
+                </Col>
+                <Col md={4}>
+                    <FormGroup row>
+                        <Label
+                        for="image"
+                        >
+                        <img src='../upload.jpg' 
+                            alt=''
+                            id='uploadImage'
+                        />
+                        </Label>
+                        <Col>
+                        <Input
+                            id="image"
+                            name="image"
+                            type="file"
+                            accept="image/*"
+                            style={{display: 'none'}}
+                        />
+                        <FormText>
+                            Give us the tastiest image of your recipe! Use JPEG or PNG.
+                        </FormText>
+                        </Col>
+                    </FormGroup>
                 </Col>
             </FormGroup>
-            <FormGroup row>
-                <Label
-                for="image"
-                md={2}
-                >
-                Photo
-                </Label>
-                <Col md={10}>
-                <Input
-                    id="image"
-                    name="image"
-                    type="file"
-                />
-                <FormText>
-                    Give us the tastiest image of your recipe! Use JPEG or PNG.
-                </FormText>
-                </Col>
-            </FormGroup>
+            <div className="spacer" />
             <FormGroup row>
                 <Label
                     for="courseSelect"
@@ -218,7 +248,7 @@ function RecipeForm(props) {
                     <Input
                         id="cuisine"
                         name="cuisine"
-                        placeholder="Cuisine"
+                        placeholder="e.g. Canadian"
                         type="text"
                         value={props.cuisine}
                         onChange={props.handleInputChange}
@@ -234,7 +264,7 @@ function RecipeForm(props) {
                     <Input
                         id="servings"
                         name="servings"
-                        placeholder="Servings"
+                        placeholder="e.g. 5"
                         type="number"
                         value={props.servings}
                         onChange={props.handleInputChange}
@@ -252,7 +282,7 @@ function RecipeForm(props) {
                     <Input
                         id="preptime"
                         name="preptime"
-                        placeholder="Preparation Time"
+                        placeholder="0"
                         type="number"
                         value={props.preptime}
                         onChange={props.handleInputChange}
@@ -271,7 +301,7 @@ function RecipeForm(props) {
                     <Input
                         id="cooktime"
                         name="cooktime"
-                        placeholder="Cooking Time"
+                        placeholder="0"
                         type="number"
                         value={props.cooktime}
                         onChange={props.handleInputChange}
@@ -286,10 +316,11 @@ function RecipeForm(props) {
             <div className="spacer" />
             {stepsForm()}
             <div className="spacer" />
-            <Button type="button" 
+            <Button type="button"
+                    className="color-primary-bg"
                     color="info"
                     onClick={props.handleSubmit}>
-                Create
+                Post Recipe
             </Button>
         </Form>
     )

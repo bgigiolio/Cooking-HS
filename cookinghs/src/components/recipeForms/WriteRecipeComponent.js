@@ -28,7 +28,7 @@ class WriteRecipe extends React.Component {
             cuisine: '',
             preptime: '',
             cooktime: '',
-            servings: 1,                                                  
+            servings: '',                                                  
             image: ''
         }
         this.handleSubmit = this.handleSubmit.bind(this);
