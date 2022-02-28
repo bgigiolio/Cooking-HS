@@ -1,0 +1,74 @@
+.recipeimage {
+    height: 200px;
+    width: 100%;
+    object-fit: cover
+}
+
+.article {
+    color: black;
+    text-decoration: none !important;
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+
+.articleimage {
+    height: 200px;
+    width: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+#landingheader {
+    text-align: center;
+}
+
+.on {
+    color: #000;
+}
+.off {
+    color: #ccc;
+}
+
+.card-body {
+    padding-top: 0.3rem;
+}
+
+.relativeContainer {
+    position: relative;
+}
+
+#newRecipeButton {
+    position: absolute;
+    top: 7px;
+    right: 10px;
+    height: max(32px,3vw);
+}
+
+#recipeContainer {
+    padding-left: var(--bs-gutter-x, 2rem);
+    padding-right: var(--bs-gutter-x, 2rem);
+    border-radius: 10px;
+    padding-bottom: 50px;
+}
+
+#recipeViewContainer {
+    max-width: 720px;
+    margin: auto;
+    position: relative;
+}
+
+h1 {
+    font-size: max(32px,3vw);
+}
+
+#ratingButton {
+    position: absolute;
+    top: 10px;
+    right: 16px
+}
+
+.userLink {
+    color: blue;
+    text-decoration: underline;
+}
