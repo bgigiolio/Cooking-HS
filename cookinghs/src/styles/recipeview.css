@@ -72,3 +72,18 @@ h1 {
     color: blue;
     text-decoration: underline;
 }
+
+#servingInput {
+    margin-bottom: 0px !important;
+}
+
+#servingInputContainer {
+    max-width: 34%; 
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.starIcon {
+    height: 20px;
+    width: 20px;
+}
