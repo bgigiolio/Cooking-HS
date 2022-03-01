@@ -7,7 +7,7 @@ import './App.css';
 import LoginMain from './components/Login/LoginMain/index';
 import AdminPage from './components/Admin/index';
 import Landing from './components/Landing';
-import Users from './components/Users';
+import Users from './components/Users/Users';
 import ScrollToTop from './components/ScrolltoTop';
 import RecipeBrowser from './components/recipeView/RecipeBrowserComponent';
 import WriteRecipe from './components/recipeForms/WriteRecipeComponent';
