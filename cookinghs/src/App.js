@@ -13,6 +13,7 @@ import RecipeBrowser from './components/recipeView/RecipeBrowserComponent';
 import WriteRecipe from './components/recipeForms/WriteRecipeComponent';
 import ForkRecipe from './components/recipeForms/ForkRecipeComponent';
 import Login from './components/Login';
+import FlagDesc from './components/Admin/FlagDesc';
 
 class App extends React.Component {
   state = {
@@ -45,6 +46,7 @@ class App extends React.Component {
               <Route exact path="/admin" element={<AdminPage />}/>  
               <Route exact path="/login" element={<Login />}/>
               <Route exact path="/recipes/:id" element={<RecipeBrowser />}/>
+              <Route exact path="/admin/:id" element={<FlagDesc />}/>
               <Route exact path="/recipes" element={<RecipeBrowser />}/>
               <Route exact path="/writerecipe" element={<WriteRecipe />}/>
               <Route exact path="/forkrecipe" element={<ForkRecipe />}/>
