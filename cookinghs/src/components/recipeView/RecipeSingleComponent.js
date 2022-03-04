@@ -44,7 +44,7 @@ function RecipeSingle(props) {
 
         return(
             <>
-                {line.length ? 
+                {line.length !== 1 ? 
                     <>
                     <strong>Timeline:</strong>
                     <br></br>
