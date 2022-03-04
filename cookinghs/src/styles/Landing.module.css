@@ -2,8 +2,8 @@
     background: url('landingbg.png') no-repeat center fixed;
     background-size: cover;
     overflow: hidden;
-    min-height: 100rem;
     max-width: 100%;
+    min-height: 100vh;
 
 }
 
