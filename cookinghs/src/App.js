@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Link} from 'react-router-dom';
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink, NavbarToggler, Collapse } from 'reactstrap';
 
+
 import './App.css';
 
 import LoginMain from './components/Login/LoginMain/index';
@@ -24,11 +25,11 @@ class App extends React.Component {
     return(
       <div style={{position: "relative", minHeight: "100vh"}}>
         <BrowserRouter>
-          <Navbar color="light" light expand="md">
+          <Navbar light expand="md" className='navBar'>
             <NavbarBrand><Link to="/">CookingHS</Link></NavbarBrand>
             <NavbarToggler onClick={() => { this.setState({isOpen: !this.state.isOpen}) }} />
-            <Collapse isOpen={this.state.isOpen} navbar>
-                    <Nav className="mr-auto" navbar>
+            <Collapse className='navItems' isOpen={this.state.isOpen} navbar>
+                    <Nav  navbar>
                         <NavItem>
                             <NavLink><Link to="/login">Login</Link></NavLink>
                         </NavItem>
