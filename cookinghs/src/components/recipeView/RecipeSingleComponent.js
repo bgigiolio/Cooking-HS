@@ -26,18 +26,18 @@ function RecipeSingle(props) {
 
     const timeline = (par) => {
         let parent = par;
-        let line = [];
+        let line = [props.id];
         while (parent !== '') {
             line.push(parent);
             parent = recipes[parent].parent;
         }
         line.reverse()
-        const timelineView = line.map((step) => {
+        const timelineView = line.map((step, index) => {
             const parentTitle = recipes[step].title
             const link = '../recipes/' + step
             return (
                 <li>
-                    <Link to={link}>{parentTitle}</Link>
+                    {index !== line.length - 1 ? <Link to={link}>{parentTitle}</Link> : <>{parentTitle} (Current)</>}
                 </li>
             )
         })
@@ -46,13 +46,14 @@ function RecipeSingle(props) {
             <>
                 {line.length ? 
                     <>
-                    Timeline:
+                    <strong>Timeline:</strong>
                     <br></br>
                     <ol>
                         {timelineView}
                     </ol>
                     </> 
-                : null}
+                : 
+                <strong>Original Recipe!</strong>}
 
             </>
         )
@@ -148,7 +149,7 @@ function RecipeSingle(props) {
 
     const commentsView = chosenComment.slice(0,commentCount).map((comment, index) => {
         const rating = comment.rating;
-        const reportId = 'reportButton' + (index + 1);
+        const reportId = 'reportIcon' + (index + 1);
         return (
             <>
                 <Card>
@@ -165,9 +166,8 @@ function RecipeSingle(props) {
                             className='reportButton'
                             onClick={toggleReport}
                             color="transparent"
-                            style={{height: '20px', padding: '0px', position:'absolute', top: '10px', right:'10px'}}
                         >
-                            <img src='../report.png' alt='' id={reportId} style={{height:'16px', verticalAlign:'top'}}/>
+                            <img src='../report.png' alt='' id={reportId} className='reportIcon'/>
                         </Button>
                     </CardBody>
                 </Card>
@@ -196,15 +196,17 @@ function RecipeSingle(props) {
             />
             {/* <img src='../report.png' alt=''></img> */}
             <ListGroup>
-                <ListGroupItem>
-                <h1>{chosenRecipe.title}</h1>
+                <ListGroupItem row>
+                <Col md={11}>
+                    <h1>{chosenRecipe.title}</h1>
+                </Col>
                 <Button 
                     className='reportButton'
                     onClick={toggleReport}
                     color="transparent"
-                    style={{height: '20px', padding: '0px', position:'absolute', top: '15px', right:'40px'}}
+                    id='topReportButton' 
                 >
-                    <img src='../report.png' alt='' id='reportButton0' style={{height:'20px', verticalAlign:'top'}}/>
+                    <img src='../report.png' alt='' id='reportIcon0' className='reportIcon'/>
                 </Button>
                 <Link to="/forkrecipe"
                     state={{chosenRecipe: chosenRecipe}}
@@ -220,7 +222,9 @@ function RecipeSingle(props) {
                 {/* link to author user profile here */}
                     {chosenRecipe.author ? <span> By <span className='userLink'>{chosenRecipe.author}</span></span> : null}
                 </ListGroupItem>
-                {timeline(chosenRecipe.parent)}
+                <ListGroupItem>
+                    {timeline(chosenRecipe.parent)}
+                </ListGroupItem>
                 <img className="recipeimage" src={chosenRecipe.image} alt={chosenRecipe.title}></img>
                 <ListGroupItem>
                     {chosenRecipe.description ? <span>{chosenRecipe.description}</span> : null}
@@ -238,7 +242,6 @@ function RecipeSingle(props) {
                                     name="servingSize"
                                     type="number"
                                     min='1'
-                                    style={{width:'60px'}}
                                     value={servingSize}
                                     onChange={(e) => {setServingSize(e.target.value);
                                         setScale(e.target.value/chosenRecipe.servings)}}

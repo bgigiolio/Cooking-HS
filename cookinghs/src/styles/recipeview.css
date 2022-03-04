@@ -59,7 +59,7 @@
 }
 
 h1 {
-    font-size: max(32px,3vw);
+    font-size: max(32px,2.8vw);
 }
 
 #ratingButton {
@@ -100,4 +100,33 @@ h1 {
 #averageRating {
     margin-top: -10px;
     margin-bottom: 5px;
+}
+
+.reportButton {
+    height: 20px;
+    padding: 0px;
+    position: absolute; 
+    top: 10px; 
+    right: 10px
+}
+
+.reportIcon {
+    height: 16px;
+    vertical-align:top
+}
+
+#topReportButton {
+    height: max(20px,2.8vw);
+    padding: 0px;
+    position:absolute;
+    top: 7px;
+    right:40px;
+}
+
+#reportIcon0 {
+    height: max(20px,2.8vw)
+}
+
+#servingSize {
+    width:60px
 }
