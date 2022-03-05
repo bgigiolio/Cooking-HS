@@ -3,7 +3,7 @@
     background-size: cover;
     overflow: hidden;
     max-width: 100%;
-    min-height: 100vh;
+    min-height: calc(100vh - 56px);
 
 }
 
@@ -40,4 +40,10 @@ display: flex;
     background-color: white;
     color: grey;
     border-radius: 20px;
+}
+
+.search{
+  max-width: 300px;
+  margin-left: 19%;
+  color: rgb(119, 119, 119);
 }
