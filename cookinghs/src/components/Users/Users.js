@@ -10,6 +10,12 @@ class Users extends React.Component {
     render() {
         return(
             <div id='container'>
+                <Button 
+                    id="editProfileButton" 
+                    color="success"
+                >
+                    Edit Profile
+                </Button>
                 <img id="profilePic" src={profilePic}/>
                 <img id="foodBanner" src={foodBanner}/>
                 <h1 id="name">Ali Syed</h1>
@@ -17,7 +23,7 @@ class Users extends React.Component {
                 <Progress id="progressBar"
                     value={50}
                 />
-                <p id="skillLevel">Intermediate</p>
+                <p id="skillLevel"><span class="bold">Skill Level:</span> Intermediate</p>
 
                 {/* <Card id="infoCard">
                     <CardBody>
