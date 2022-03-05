@@ -29,6 +29,7 @@
     float: right;
     margin-top: 20px;
     /* margin-bottom: 100px; */
+    margin-bottom: 100px;
     height: 80%;
     min-height: 550px;
     margin-right: 50px;
@@ -42,6 +43,7 @@
 }
 
 #LoginMain{
+    height: 100%;
     overflow: hidden;
     background-image: url("background.jpeg");
     background-repeat: no-repeat;
