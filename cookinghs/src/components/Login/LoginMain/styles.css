@@ -27,7 +27,7 @@
 #TabsHolder{
     background-color: #ffffff;
     float: right;
-    margin-top: 50px;
+    margin-top: 20px;
     /* margin-bottom: 100px; */
     height: 80%;
     min-height: 550px;
@@ -36,6 +36,8 @@
 
     /* width: 50%; */
     border: 1px solid grey;
+    border-radius: 20px;
+    /* text-align: center; */
 }
 
 #LoginMain{
@@ -43,4 +45,5 @@
     background-image: url("background.jpeg");
     background-repeat: no-repeat;
     background-size: cover;
+    min-height: 100vh;
 }
