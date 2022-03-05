@@ -9,15 +9,15 @@ class Signup extends React.Component {
             <div id='Signup' className="tabcontent">
                 <h2>New user? Sign up!</h2>
                 <form>
-                    Full Name<br/>
+                    {/* Full Name<br/> */}
                     <TextField id="sName" label="Full Name" name="sName" placeholder="Name" value={sName} onInput={recieveInput}></TextField><br/>
-                    Username<br/>
+                    {/* Username<br/> */}
                     <TextField id="sUsername" label="Username" name="sUsername" placeholder="Username" value={sUsername} onInput={recieveInput}></TextField><br/>
-                    Password<br/>
+                    {/* Password<br/> */}
                     <TextField id="sPassword" label="Password" name="sPassword" placeholder="Password" value={sPassword} onInput={recieveInput}></TextField><br/>
-                    Re-enter Password<br/>
+                    {/* Re-enter Password<br/> */}
                     <TextField id="password2" label="Re-enter" name="password2" placeholder="Password" value={password2} onInput={recieveInput}></TextField><br/>
-                    Email<br/>
+                    {/* Email<br/> */}
                     <TextField id="sEmail" label="Email" name="sEmail" placeholder="Email" value={sEmail} onInput={recieveInput}></TextField><br/><br/>
                     <Button variant="contained"
                             onClick={validSignup}>
