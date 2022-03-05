@@ -16,7 +16,14 @@ function RecipeSingle(props) {
     let [servingSize, setServingSize] = useState(chosenRecipe.servings);
     let [scale, setScale] = useState(1);
 
-    const ingredientView = chosenRecipe.ingredients.map((ingredient) => {
+    const sumWithInitial = chosenComment.reduce(
+        (previousValue, currentValue) => {
+        return(previousValue.rating ? previousValue.rating + currentValue.rating : previousValue + currentValue.rating)
+        },
+    );
+    const averageRating = sumWithInitial/chosenComment.length
+
+    const ingredientView = chosenRecipe.ingredients.map((ingredient, index) => {
         let amount;
         if (ingredient.quantity) {
             let quantity = ingredient.quantity * scale;
@@ -25,8 +32,8 @@ function RecipeSingle(props) {
                     amount = new Fraction(quantity).toString();
                 }
                 else if (quantity*3%1 === 0) {
-                    amount = (quantity * 3).toString();
-                    amount = amount.concat('/3');
+                    amount = (quantity*3).toString();
+                    amount = new Fraction(amount.concat('/3')).toString()
                 }
                 else {
                     amount = new Fraction(quantity).toString();
@@ -46,7 +53,7 @@ function RecipeSingle(props) {
         }
             
         return (
-            <li>
+            <li key={index}>
                 <input type="checkbox" />
                 <> </>
                 {amount} 
@@ -55,38 +62,49 @@ function RecipeSingle(props) {
         );
     });
 
-    const stepsView = chosenRecipe.steps.map((step) => {
+    const stepsView = chosenRecipe.steps.map((step, index) => {
         return (
-            <li className='stepsList'>
+            <li className='stepsList' key={index}>
                 <span>{step}</span>
             </li>
         )
     });
 
-    const commentsView = chosenComment.map((comment) => {
-        const commentRating = function() {
-            return (
-                <div>
-                    {[...Array(5)].map((star, index) => {
-                        index += 1;
-                        if (index <= comment.rating) {
-                            return(
-                                <svg className='starIcon' key={index}>
-                                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
-                                </svg>
-                            )
-                        }
-                        else {
-                            return(
-                                <svg className='starIcon' key={index}>
-                                    <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                                </svg>
-                            )
-                        }
-                    })}
-                </div>
-            );
-        }
+    const starRating = function(rating) {
+        return (
+            <>
+                {[...Array(5)].map((star, index) => {
+                    index += 1;
+                    if (index <= rating + 0.25) {
+                        return(
+                            <svg className='starIcon' key={index}>
+                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
+                            </svg>
+                        )
+                    }
+                    else if (rating - index + 1 >= 0.25 & rating - index + 1 <= 0.75){
+                        return(
+                            <svg className='starIcon' key={index}>
+                                <path d="M22 9.74l-7.19-.62L12 2.5 9.19 9.13 2 9.74l5.46 4.73-1.64 7.03L12 17.77l6.18 3.73-1.63-7.03L22 9.74zM12 15.9V6.6l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.9z"></path>
+                            </svg>
+                        )
+                        
+                    }
+                    else {
+                        return(
+                            <svg className='starIcon' key={index}>
+                                <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                            </svg>
+                        )
+                    }
+                })}
+            </>
+        );
+    }
+
+    let [commentCount, setCommentCount] = useState(3)
+    const commentsView = chosenComment.slice(0,commentCount).map((comment) => {
+        let rating = comment.rating;
         return (
             <>
                 <Card>
@@ -95,7 +113,9 @@ function RecipeSingle(props) {
                         <span className='userLink'>{comment.user}</span> says: 
                     </CardHeader>
                     <CardBody>
-                        {commentRating()}
+                        <div>
+                            {starRating(rating)}
+                        </div>
                         {comment.content}
                     </CardBody>
                 </Card>
@@ -114,6 +134,7 @@ function RecipeSingle(props) {
                 title={chosenRecipe.title}
                 id={props.id}
             />
+            {/* <img src='../report.png' alt=''></img> */}
             <ListGroup>
                 <ListGroupItem>
                 <h1>{chosenRecipe.title}</h1>
@@ -125,6 +146,9 @@ function RecipeSingle(props) {
                         id="newRecipeButton"
                         />
                 </Link>
+                <div id='averageRating'>
+                    {starRating(averageRating)}
+                </div>
                 {/* link to author user profile here */}
                     {chosenRecipe.author ? <span> By <span className='userLink'>{chosenRecipe.author}</span></span> : null}
                 </ListGroupItem>
@@ -189,7 +213,12 @@ function RecipeSingle(props) {
                         Add Rating and Review
                     </Button>
                     {commentsView}
-                    <br></br>
+                    <Button
+                        onClick={() => setCommentCount(commentCount+3)}
+                        id='loadReviewButton'
+                    >
+                        Load More Reviews
+                    </Button>
                 </ListGroupItem>
             </ListGroup>
         </div>

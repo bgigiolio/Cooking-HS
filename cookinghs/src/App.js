@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Link} from 'react-router-dom';
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink, NavbarToggler, Collapse } from 'reactstrap';
 
+
 import './App.css';
 
 import LoginMain from './components/Login/LoginMain/index';
@@ -13,6 +14,7 @@ import RecipeBrowser from './components/recipeView/RecipeBrowserComponent';
 import WriteRecipe from './components/recipeForms/WriteRecipeComponent';
 import ForkRecipe from './components/recipeForms/ForkRecipeComponent';
 import Login from './components/Login';
+import FlagDesc from './components/Admin/FlagDesc';
 
 class App extends React.Component {
   state = {
@@ -23,11 +25,11 @@ class App extends React.Component {
     return(
       <div style={{position: "relative", minHeight: "100vh"}}>
         <BrowserRouter>
-          <Navbar color="light" light expand="md">
+          <Navbar light expand="md" className='navBar'>
             <NavbarBrand><Link to="/">CookingHS</Link></NavbarBrand>
             <NavbarToggler onClick={() => { this.setState({isOpen: !this.state.isOpen}) }} />
-            <Collapse isOpen={this.state.isOpen} navbar>
-                    <Nav className="mr-auto" navbar>
+            <Collapse className='navItems' isOpen={this.state.isOpen} navbar>
+                    <Nav  navbar>
                         <NavItem>
                             <NavLink><Link to="/login">Login</Link></NavLink>
                         </NavItem>
@@ -45,6 +47,7 @@ class App extends React.Component {
               <Route exact path="/admin" element={<AdminPage />}/>  
               <Route exact path="/login" element={<Login />}/>
               <Route exact path="/recipes/:id" element={<RecipeBrowser />}/>
+              <Route exact path="/admin/:id" element={<FlagDesc />}/>
               <Route exact path="/recipes" element={<RecipeBrowser />}/>
               <Route exact path="/writerecipe" element={<WriteRecipe />}/>
               <Route exact path="/forkrecipe" element={<ForkRecipe />}/>

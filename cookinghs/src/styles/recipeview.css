@@ -83,7 +83,21 @@ h1 {
     padding-bottom: 1px;
 }
 
+#servingSize {
+    margin: auto;
+}
+
 .starIcon {
-    height: 20px;
-    width: 20px;
+    height: 24px;
+    width: 24px;
+}
+
+#loadReviewButton {
+    margin-bottom: 1em;
+    margin-top: 0.5em;
+}
+
+#averageRating {
+    margin-top: -10px;
+    margin-bottom: 5px;
 }

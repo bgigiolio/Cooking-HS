@@ -1,0 +1,43 @@
+.landingContainer{
+    background: url('landingbg.png') no-repeat center fixed;
+    background-size: cover;
+    overflow: hidden;
+    max-width: 100%;
+    min-height: 100vh;
+
+}
+
+.welcomeText{
+ /* display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column; */
+  margin-top: 17%;
+  margin-left: 20%;
+  font-weight: bold;
+  font-size: large;
+
+}
+
+.appName{
+display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  margin-left: 20%;
+  margin-bottom: 1%;
+  font-weight: bolder;
+  font-size:xxx-large;
+  color: #C37B89;
+
+}
+
+.landingButtons{
+    margin-left: 24%;
+}
+
+.landingButton{
+    background-color: white;
+    color: grey;
+    border-radius: 20px;
+}

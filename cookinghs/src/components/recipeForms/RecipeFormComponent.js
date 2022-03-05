@@ -188,7 +188,7 @@ function RecipeForm(props) {
                         <Label
                         for="image"
                         >
-                        <img src='../upload.jpg' 
+                        <img src='../recipe-add-photo.png' 
                             alt=''
                             id='uploadImage'
                         />

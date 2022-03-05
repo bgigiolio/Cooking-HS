@@ -29,3 +29,39 @@
     width: 75%;
     margin-bottom: 20px;
 }
+
+.resolveBtn{
+    text-align: center;
+}
+
+td{
+    text-align: center;
+}
+th{
+    text-align: center;
+
+}
+
+.reportCard{
+    max-width: 70rem;
+    margin-left: 15rem;
+    margin-right: 15rem;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    border-radius: 10px;
+
+}
+
+.reportHeading{
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.reportDesc{
+    margin-top: 0.25rem;
+}
+
+.strong{
+    font-weight: bold;
+}

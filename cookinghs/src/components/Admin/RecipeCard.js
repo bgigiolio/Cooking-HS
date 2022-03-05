@@ -5,7 +5,6 @@ import React from 'react'
 import styles from '../Admin/UserCard.module.css'
 import {deleteRecipe} from "../../redux/AdminPage/AdminRecipes/AdminRecipes-actions";
 import {connect} from 'react-redux';
-import food from "./foodpics/foodpic1.jpeg";
 
 const RecipeCard = ({recipeData, deleteRecipe}) => {
     return(
