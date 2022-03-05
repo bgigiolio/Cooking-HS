@@ -22,7 +22,7 @@ const RecipeLanding = function() {
 
     return (
         <>
-            <h1 id="landingheader">All Recipes</h1>
+            <h2 id="landingheader">All Recipes</h2>
             <Link to="/writerecipe">
                 <img src='../plus.png'
                     alt=""
