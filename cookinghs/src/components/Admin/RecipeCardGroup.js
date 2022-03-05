@@ -3,18 +3,21 @@ import React from "react";
 
 import { connect } from "react-redux";
 import RecipeCard from "./RecipeCard";
-import {Row, Col} from "reactstrap";
+import {Row, Col, Container} from "reactstrap";
 
 const RecipeCardGroup = ({ recipes }) => {
     return (
         <div>
-            <Row xs={4}>
+            <Container>
+            <Row>
             {recipes.map((recipe) => (
-                <Col>
+                <Col sm>
                 <RecipeCard key={recipe.id} recipeData={recipe}/>
                 </Col>
             ))}
             </Row>
+
+            </Container>
 
         </div>
     )
