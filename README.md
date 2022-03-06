@@ -5,12 +5,13 @@
 * Run `npm install --force` inside the "team38/cookinghs/" folder
 * Run `npm start` inside the "team38/cookinghs/" folder
 
-* User Credentials
- * username: user
- * password: user
-* Admin Credentials
- * username: admin
- * password: admin
+User Credentials
+* username: user
+* password: user
+
+Admin Credentials
+* username: admin
+* password: admin
 
 
 # Website Components
