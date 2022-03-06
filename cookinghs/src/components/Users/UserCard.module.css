@@ -1,0 +1,23 @@
+.user{
+    width: 18rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 0 1 calc(25% - 1em);
+    justify-content: space-between;
+    margin-top: 2rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+
+}
+
+.user_img{
+    object-fit:fill;
+    border-radius: 10px;
+    max-height: 162px;
+    width: 100%;
+}

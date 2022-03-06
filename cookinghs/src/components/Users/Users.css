@@ -14,11 +14,9 @@
     height: 300px;
 }
 
-/* #infoCard {
-    width: 30%;
-    margin-top: 100px;
-    margin-left: 500px;
-} */
+.h4{
+    margin-left: 40px;
+}
 
 #name {
     margin-top: 100px;
@@ -43,6 +41,10 @@
     right: 0;
     width: 25%;
     margin-top: 50px;
+}
+
+.recipe_card_group{
+    margin: 0 auto;
 }
 
 #skillLevel {
