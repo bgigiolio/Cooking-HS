@@ -46,6 +46,7 @@ By clicking on `Recipes` in the navigation bar:
 By clicking on `Users` in the navigation bar:
 * This page is meant for a user to view their own profile or the profile of another user
 * Each user will have a set of recipes that they have made on the user page
+* The user also has the option to delete any of the recipes they have made
 * Each user also has a functional progress bar that measures their skill level. Their progress is measured by the number of recipes they have made. The progress will fill {number of recipes made by user}/100 of the progress bar or will completely fill the progress bar if the number of recipes made by user is greater than or equal to 100. Here are the skill levels that could be assigned to a user:
   * Beginner: The number of recipes made by the user is between 0 and 10 inclusive
   * Intermediate: The number of recipes made by the user is between 11 and 30 inclusive
