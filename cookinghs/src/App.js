@@ -24,7 +24,7 @@ class App extends React.Component {
   
   render() {
     return(
-      <div style={{position: "relative", minHeight: "100vh"}}>
+      <div id="container">
         <BrowserRouter>
           <Navbar light expand="md" className='navBar'>
             <NavbarBrand><Link to="/">CookingHS</Link></NavbarBrand>
@@ -59,7 +59,7 @@ class App extends React.Component {
           </ScrollToTop>
 
         </BrowserRouter>
-        <footer style={{position: "absolute", bottom: 0}}>
+        <footer id="footer">
           
         </footer>
       </div>
