@@ -24,6 +24,8 @@ Admin Credentials
 * You can also sign up for a new account, and then log in with that account with those new credentials
 
 ## Landing
+* The landing page is the home page that will introduce everyone to our website with captivating visuals
+* It has a search bar that currently leads you to the recipe page (Once we set up our backend, this will become functional)
 
 ## Recipes
 
