@@ -31,6 +31,16 @@ By clicking on `CookingHS` in the navigation bar:
 
 ## Recipes
 By clicking on `Recipes` in the navigation bar:
+* This page allows you to view all the recipes
+* There is "+" button that allows you to add a new recipe. By cliking on the "+", you will the option to add a new recipe by adding in a custom image, the recipe name, nutritional or other details, ingredients, and steps. This will become functional when the backend is setup.
+* If you click on a recipe (like "Original Mongolian Chicken" foor example), it will send you to a page with similar details to what we can see when we want to add a recipe. However, this page, also include several other options:
+  * You may fork the recipe. In other words, you can create a copy of the recipe and add your own spin to it. A timeline will be shown to demonstrate the fork history for users to view. This fork history is rendered as a list and you can see an example for the recipe "Archer's Fried Chicken".
+  * You can report the recipe.
+  * You can add a rating or review to the recipe.
+  * You can view comments to the recipe.
+  * You can report a comment.
+  * And finally, you can change the servings for the recipe to adjust the ingredients needed.
+  * Many of these features will become fully functional once the backend is setup.
 
 ## Users
 By clicking on `Users` in the navigation bar:
@@ -45,3 +55,4 @@ By clicking on `Users` in the navigation bar:
 
 ## Admin
 By logging into the admin user through the `Login` in the navigation bar:
+* 
