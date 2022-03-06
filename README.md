@@ -55,4 +55,7 @@ By clicking on `Users` in the navigation bar:
 
 ## Admin
 By logging into the admin user through the `Login` in the navigation bar:
-* 
+* Use the admin credentials in the "Credentials" section to access this page
+* This page allows admin to view all users, view all recipes, and manage reports
+* You can also delete users or recipes (assuming the admin is a respsonsible individual)
+* For each report, you can view further details on that report or delete it
