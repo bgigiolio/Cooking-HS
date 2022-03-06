@@ -1,10 +1,11 @@
 # Team38's CookingHS
 
-# Installation Requirement
+# Installation Requirements
 * Node version: 16.14.0
 * Run `npm install --force` inside the "team38/cookinghs/" folder
 * Run `npm start` inside the "team38/cookinghs/" folder
 
+# Credentials
 User Credentials
 * username: user
 * password: user
@@ -13,10 +14,14 @@ Admin Credentials
 * username: admin
 * password: admin
 
-
 # Website Components
 
 ## Login
+* The login page is for both users and admins to log into our website
+* You can use the credenitals from the 'Credentials' section to log into as a user or an admin
+* Logging into the website as a user will lead them to the recipes page
+* Logging into the website as a admin will lead them to the admin page
+* You can also sign up for a new account, and then log in with that account with those new credentials
 
 ## Landing
 
