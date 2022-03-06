@@ -4,18 +4,22 @@ import styles from "./Admin.module.css";
 
 import { connect } from "react-redux";
 import UserCard from "./UserCard";
-import {Row, Col} from "reactstrap";
+import {Row, Col, Container} from "reactstrap";
 
 const UserCardGroup = ({ users }) => {
     return (
         <div>
-            <Row xs={4} className={styles.card_row}>
+            <Container>
+            <Row className={styles.card_row}>
             {users.map((user) => (
-                <Col>
+                <Col sm>
                 <UserCard key={user.id} userData={user}/>
                 </Col>
             ))}
             </Row>
+
+            </Container>
+           
 
         </div>
     )

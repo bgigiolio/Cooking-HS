@@ -7,6 +7,7 @@ import { COMMENTS } from '../../shared/RecipeComments';
 import '../../styles/recipeview.css';
 import '../../styles/colorpalette.css';
 import ReviewModal from '../recipeForms/ReviewModalComponent';
+import ReportModal from '../report/ReportModalComponent';
 
 function RecipeSingle(props) {
     let [recipes] = useState(RECIPES);
@@ -22,6 +23,41 @@ function RecipeSingle(props) {
         },
     );
     const averageRating = sumWithInitial/chosenComment.length
+
+    const timeline = (par) => {
+        let parent = par;
+        let line = [props.id];
+        while (parent !== '') {
+            line.push(parent);
+            parent = recipes[parent].parent;
+        }
+        line.reverse()
+        const timelineView = line.map((step, index) => {
+            const parentTitle = recipes[step].title
+            const link = '../recipes/' + step
+            return (
+                <li>
+                    {index !== line.length - 1 ? <Link to={link}>{parentTitle}</Link> : <>{parentTitle} (Current)</>}
+                </li>
+            )
+        })
+
+        return(
+            <>
+                {line.length !== 1 ? 
+                    <>
+                    <strong>Timeline:</strong>
+                    <br></br>
+                    <ol>
+                        {timelineView}
+                    </ol>
+                    </> 
+                : 
+                <strong>Original Recipe!</strong>}
+
+            </>
+        )
+    }
 
     const ingredientView = chosenRecipe.ingredients.map((ingredient, index) => {
         let amount;
@@ -103,8 +139,17 @@ function RecipeSingle(props) {
     }
 
     let [commentCount, setCommentCount] = useState(3)
-    const commentsView = chosenComment.slice(0,commentCount).map((comment) => {
-        let rating = comment.rating;
+    const [reportModal, setReportModal] = useState(false);
+    const [reportId, setReportId] = useState();
+    const toggleReport = (e) => {
+        const targetId = Number(e.target.id.slice(-1));
+        setReportId(targetId);
+        setReportModal(!reportModal); 
+    }
+
+    const commentsView = chosenComment.slice(0,commentCount).map((comment, index) => {
+        const rating = comment.rating;
+        const reportId = 'reportIcon' + (index + 1);
         return (
             <>
                 <Card>
@@ -117,27 +162,52 @@ function RecipeSingle(props) {
                             {starRating(rating)}
                         </div>
                         {comment.content}
+                        <Button 
+                            className='reportButton'
+                            onClick={toggleReport}
+                            color="transparent"
+                        >
+                            <img src='../report.png' alt='' id={reportId} className='reportIcon'/>
+                        </Button>
                     </CardBody>
                 </Card>
             </>
         )
     })
 
-    const [modal, setModal] = useState(false);
-    const toggle = () => setModal(!modal);
+    const [reviewModal, setReviewModal] = useState(false);
+    const toggleReview = () => setReviewModal(!reviewModal);
 
     return(
         <div id='recipeViewContainer'>
             <ReviewModal
-                toggle={toggle}
-                isOpen={modal}
+                toggle={toggleReview}
+                isOpen={reviewModal}
                 title={chosenRecipe.title}
                 id={props.id}
             />
+            <ReportModal
+                toggle={toggleReport}
+                isOpen={reportModal}
+                recipeId={props.id}
+                recipeTitle={chosenRecipe.title}
+                reportId={reportId}
+                commentContent={reportId ? chosenComment[reportId-1] : ""}
+            />
             {/* <img src='../report.png' alt=''></img> */}
             <ListGroup>
-                <ListGroupItem>
-                <h1>{chosenRecipe.title}</h1>
+                <ListGroupItem row>
+                <Col md={11}>
+                    <h1>{chosenRecipe.title}</h1>
+                </Col>
+                <Button 
+                    className='reportButton'
+                    onClick={toggleReport}
+                    color="transparent"
+                    id='topReportButton' 
+                >
+                    <img src='../report.png' alt='' id='reportIcon0' className='reportIcon'/>
+                </Button>
                 <Link to="/forkrecipe"
                     state={{chosenRecipe: chosenRecipe}}
                     >
@@ -151,6 +221,9 @@ function RecipeSingle(props) {
                 </div>
                 {/* link to author user profile here */}
                     {chosenRecipe.author ? <span> By <span className='userLink'>{chosenRecipe.author}</span></span> : null}
+                </ListGroupItem>
+                <ListGroupItem>
+                    {timeline(chosenRecipe.parent)}
                 </ListGroupItem>
                 <img className="recipeimage" src={chosenRecipe.image} alt={chosenRecipe.title}></img>
                 <ListGroupItem>
@@ -169,7 +242,6 @@ function RecipeSingle(props) {
                                     name="servingSize"
                                     type="number"
                                     min='1'
-                                    style={{width:'60px'}}
                                     value={servingSize}
                                     onChange={(e) => {setServingSize(e.target.value);
                                         setScale(e.target.value/chosenRecipe.servings)}}
@@ -205,10 +277,10 @@ function RecipeSingle(props) {
                 </ListGroupItem>
                 <ListGroupItem>
                     <h2>Comments</h2>
-                    <Button className='color-secondary-bg' 
+                    <Button className='color-primary-bg' 
                         id='ratingButton'
-                        color="danger"
-                        onClick={toggle}
+                        color="black"
+                        onClick={toggleReview}
                     >
                         Add Rating and Review
                     </Button>

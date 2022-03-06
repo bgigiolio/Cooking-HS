@@ -16,6 +16,8 @@ class LoginMain extends React.Component {
         valid: false,
         username: "",
         password: "",
+        currentUser: {username: null, password: null, email: null, name: null, admin: false},
+        routeTo: "/recipes",
         //Signup
         sUsername: "",
         sPassword: "",
@@ -26,8 +28,8 @@ class LoginMain extends React.Component {
 
 
         validUsers: [
-            {username: "user", password: "user", email: "user@user.com", name: "Mr. User"},
-            {username: "admin", password: "admin", email: "admin@admin.com", name: "Ms. Admin"}
+            {username: "user", password: "user", email: "user@user.com", name: "Mr. User", admin: false},
+            {username: "admin", password: "admin", email: "admin@admin.com", name: "Ms. Admin", admin: true}
         ]
     }   
     recieveInputLogin = event =>{
@@ -56,12 +58,18 @@ class LoginMain extends React.Component {
             const entry = Object.entries(users[index])
             if (entry[0][1] == user.username && entry[1][1] == user.password) {
                     console.log("login valid")
+                    let route = "/recipes"
+                    if (entry[4][1]){
+                        route = "/admin"
+                    }
                     this.setState({
-                        valid: true
-                    }, () =>console.log(this.state.valid));
+                        valid: true,
+                        currentUser: users[index],
+                        routeTo: route
+                    }, () =>console.log(this.state.currentUser));
             }
         }
-        console.log("valid: {}", this.state.valid)
+        console.log("Login validated" )
     };
 
     change = (event, val) => {
@@ -99,7 +107,8 @@ class LoginMain extends React.Component {
                 username: this.state.sUsername,
                 password: this.state.sPassword,
                 email: this.state.sEmail,
-                name: this.state.sName
+                name: this.state.sName,
+                admin: false
             }
             this.state.validUsers.push(newUser)
         }
@@ -107,6 +116,7 @@ class LoginMain extends React.Component {
 
 
     render() {
+        this.state.currentUser = this.props
         return(
         <div id="LoginMain">
             <div id="TabsHolder">
@@ -121,7 +131,8 @@ class LoginMain extends React.Component {
                         username={this.state.username}
                         password={this.state.password}
                         recieveInput={this.recieveInputLogin}
-                        valid={this.state.valid}/> : null}
+                        valid={this.state.valid}
+                        routeTo={this.state.routeTo}/> : null}
                 </TabPanel>
                 <TabPanel value={this.state.tabVal} index={1}>
                     {this.state.tabVal ? <Signup
