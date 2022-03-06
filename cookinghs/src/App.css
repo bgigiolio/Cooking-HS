@@ -45,6 +45,16 @@ a:hover{
   color: grey;
 }
 
+#container {
+    position: "relative";
+    min-height: 100px;
+}
+
+#footer {
+    position: "absolute";
+    bottom: 0;
+}
+
 .navItems{
   justify-content: flex-end;
 }
