@@ -52,6 +52,12 @@
     text-align: center
 }
 
+.title {
+    
+    margin-top: 50px;
+    text-align: center;
+}
+
 #username {
     text-align: center;
 }
