@@ -2,8 +2,7 @@
 
 # Installation Requirements
 * Node version: 16.14.0
-* Run `npm install --force` inside the "team38/cookinghs/" folder
-* Run `npm start` inside the "team38/cookinghs/" folder
+* Run `yarn install` inside the "team38/cookinghs/" folder
 
 # Credentials
 User Credentials
