@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 const log = console.log
 
 const URI = process.env.URI
-console.log(URI)
 
 mongoose.connect(URI, {useNewUrlParser: true}).catch((error) => {
     log('MongoDB connection error')
