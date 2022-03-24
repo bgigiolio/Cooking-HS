@@ -6,7 +6,7 @@ require('dotenv').config()
 const express = require('express')
 const app = express();
 
-const {mongoose} = require('./Database/database')
+const {mongoose} = require('./db/database')
 const {ObjectID} = require('mongodb')
 // mongoose.set('bufferCommands', false);
 // ^^^ this has caused some problems for me in the past
