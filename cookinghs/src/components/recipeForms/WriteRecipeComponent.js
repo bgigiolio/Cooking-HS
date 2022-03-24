@@ -124,7 +124,7 @@ class WriteRecipe extends React.Component {
     render() {
         return(
             <div className='container' id='formContainer'>
-                <h1> + Add a Recipe</h1>
+                <h1> <i id="formIcon" class="fa-regular fa-square-plus"></i> Add a Recipe</h1>
                 <p>Uploading personal recipes is easy! Add yours to your favorites, share with friends, family, and the CookingHS community.</p>
                 <RecipeForm 
                     {...this.state} 

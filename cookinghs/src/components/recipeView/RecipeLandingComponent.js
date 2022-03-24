@@ -24,10 +24,7 @@ const RecipeLanding = function() {
         <>
             <h2 id="landingheader">All Recipes</h2>
             <Link to="/writerecipe">
-                <img src='../plus.png'
-                    alt=""
-                    id="newRecipeButton"
-                    />
+                <i class="fa-regular fa-square-plus" id="newRecipeButton"></i>
             </Link>
             <Row>
                 {recipeCards}

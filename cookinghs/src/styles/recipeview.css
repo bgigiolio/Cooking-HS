@@ -44,7 +44,7 @@
     position: absolute;
     top: 7px;
     right: 10px;
-    height: max(32px,3vw);
+    font-size: max(32px,3vw);
 }
 
 #recipeContainer {
