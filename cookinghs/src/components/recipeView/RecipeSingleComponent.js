@@ -17,6 +17,7 @@ function RecipeSingle(props) {
     let [servingSize, setServingSize] = useState(chosenRecipe.servings);
     let [scale, setScale] = useState(1);
 
+    // Getting average rating
     const sumWithInitial = chosenComment.reduce(
         (previousValue, currentValue) => {
         return(previousValue.rating ? previousValue.rating + currentValue.rating : previousValue + currentValue.rating)
