@@ -14,7 +14,6 @@ const {ObjectID} = require('mongodb')
 const {Recipe} = require('./models/recipe')
 // mongoose.set('bufferCommands', false);
 // ^^^ this has caused some problems for me in the past
-
 const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -35,6 +34,12 @@ app.get('*', (req, res) => {
     res.status(404).send("404 Error: We cannot find the page you are looking for.");
     // you could also send back a fancy 404 webpage here.
 });
+
+app.use(cors())
+// Add model routes here vvv
+const userRouter = require("./routes/users")
+app.use("/api/users", userRouter) // Could change this to just /users
+// Add model routes here ^^^
 
 const port = process.env.PORT || 5000
 app.listen(port, () => {
