@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { List, ListGroup, ListGroupItem, Card, CardBody, CardHeader, Button, Input, Label, FormGroup, Col } from 'reactstrap';
+import { List, ListGroup, ListGroupItem, Card, CardBody, CardHeader, Button, Input, Label, FormGroup, Col, Row } from 'reactstrap';
 import { Fraction } from 'fractional';
 import { Link } from 'react-router-dom';
 import { RECIPES } from '../../shared/RecipeList';
@@ -165,9 +165,10 @@ function RecipeSingle(props) {
                         <Button 
                             className='reportButton'
                             onClick={toggleReport}
-                            color="transparent"
+                            color="danger"
+                            outline
                         >
-                            <img src='../report.png' alt='' id={reportId} className='reportIcon'/>
+                            <i id={reportId} className="reportIcon fa-solid fa-triangle-exclamation"></i>
                         </Button>
                     </CardBody>
                 </Card>
@@ -197,25 +198,26 @@ function RecipeSingle(props) {
             {/* <img src='../report.png' alt=''></img> */}
             <ListGroup>
                 <ListGroupItem row>
-                <Col md={11}>
-                    <h1>{chosenRecipe.title}</h1>
-                </Col>
-                <Button 
-                    className='reportButton'
-                    onClick={toggleReport}
-                    color="transparent"
-                    id='topReportButton' 
-                >
-                    <img src='../report.png' alt='' id='reportIcon0' className='reportIcon'/>
-                </Button>
-                <Link to="/forkrecipe"
-                    state={{chosenRecipe: chosenRecipe}}
-                    >
-                    <img src='../fork.png'
-                        alt=""
-                        id="newRecipeButton"
-                        />
-                </Link>
+                    <Row>
+                        <Col md={10}>
+                            <h1>{chosenRecipe.title}</h1>
+                        </Col>
+                        <Col md={2}>
+                            <Button 
+                                onClick={toggleReport}
+                                color="danger"
+                                outline
+                            >
+                                <i id='reportIcon0' className="fa-solid fa-triangle-exclamation"></i>
+                            </Button>
+                            <Link to="/forkrecipe" state={{chosenRecipe: chosenRecipe}}>
+                                <Button color="secondary" outline id="forkButton">
+                                    <i class="fa-solid fa-code-fork"></i>
+                                </Button>
+                            </Link>
+                        </Col>
+                    </Row>
+                
                 <div id='averageRating'>
                     {starRating(averageRating)}
                 </div>

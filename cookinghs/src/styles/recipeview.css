@@ -106,29 +106,21 @@ h1 {
 
 .reportButton {
     height: 20px;
+    width: 20px;
     padding: 0px;
-    position: absolute; 
+    position: absolute;
     top: 10px; 
     right: 10px
 }
 
 .reportIcon {
-    height: 16px;
-    vertical-align:top
-}
-
-#topReportButton {
-    height: max(20px,2.8vw);
-    padding: 0px;
-    position:absolute;
-    top: 7px;
-    right:40px;
-}
-
-#reportIcon0 {
-    height: max(20px,2.8vw)
+    vertical-align: top;
 }
 
 #servingSize {
     width:60px
+}
+
+#forkButton {
+    margin-left: 10px
 }
