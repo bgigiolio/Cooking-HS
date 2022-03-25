@@ -9,6 +9,7 @@ const user = new Schema({
     lName: {
         type: String
     },
+    admin:{Boolean},
     username: {
         type: String,
         required: true,
