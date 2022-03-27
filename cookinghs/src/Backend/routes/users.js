@@ -29,6 +29,13 @@ router.route("/").post((req, res) => {
 
 router.route("/").get((req, res) => { //fields must match exactly
     let query = req.query
+    if(!req.query.hasOwnProperty("username")){
+        query.username = ""
+    }
+    if(!req.query.hasOwnProperty("passHash")){
+        query.passHash = ""
+    }
+    console.log(req.query)
     User.find(query).lean().then(function (result) {
         if (result) {
             res.status(200).send(result)
