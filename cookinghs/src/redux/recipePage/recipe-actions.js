@@ -83,7 +83,12 @@ export const postRecipe = (author, parent, title, description, ingredients, step
   .catch(error => { console.log('recipe creation', error.message); alert('Recipe could not be posted\nError: '+error.message); });
 }
 
-export const editRecipe = (_id, author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image) => (dispatch) => {
+export const editRecipe = (recipe) => ({
+  type: ActionTypes.EDIT_RECIPE,
+  payload: recipe
+});
+
+export const putRecipe = (_id, author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image) => (dispatch) => {
   const newRecipe = {
     _id: _id,
     author: author,
@@ -124,7 +129,35 @@ export const editRecipe = (_id, author, parent, title, description, ingredients,
           throw error;
     })
   .then(response => response.json())
-  .then(response => dispatch(addRecipe(response)))
+  .then(response => dispatch(editRecipe(response)))
   .catch(error => { console.log('recipe editing', error.message); alert('Recipe could not be edited\nError: '+error.message); });
 }
 
+export const delRecipe = (_id) => ({
+  type: ActionTypes.DELETE_RECIPE,
+  payload: _id
+});
+
+export const deleteRecipe = (_id) => (dispatch) => {
+  return fetch(baseUrl + 'api/recipes/' + _id, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    credentials: "same-origin"
+  })
+  .then(response => {
+      if (response.ok) {
+        return response;
+      } else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    },
+    error => {
+          throw error;
+    })
+  .then(response => dispatch(delRecipe(_id)))
+  .catch(error => { console.log('recipe deleting', error.message); alert('Recipe could not be deleted\nError: '+error.message); });
+}

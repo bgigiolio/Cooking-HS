@@ -31,7 +31,7 @@ const RecipeSchema = new mongoose.Schema({
     },
     parent: {
         type: String,
-        required: false,
+        default: "",
     },
     deleted: {
         type: Boolean,
@@ -45,12 +45,9 @@ const RecipeSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    description: {
-        type: String,
-        required: false,
-    },
+    description: String,
     ingredients: [IngredientsSchema],
-    steps: [{String}],
+    steps: [String],
     difficulty: Number,
     course: String,
     cuisine: String,

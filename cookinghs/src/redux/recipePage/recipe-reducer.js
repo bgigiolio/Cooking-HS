@@ -1,6 +1,6 @@
 import * as ActionTypes from './recipe-types';
 
-export const Recipes = (
+export const RecipesReducer = (
     state = { 
         isLoading: true,
         errMess: null, 
@@ -8,6 +8,7 @@ export const Recipes = (
     }, action) => {
     switch (action.type) {
         case ActionTypes.ADD_RECIPES:
+            console.log('adding recipes')
             return {...state, isLoading: false, errMess: null, recipes: action.payload};
         
         case ActionTypes.RECIPES_LOADING:

@@ -1,5 +1,9 @@
+const log = console.log
+
 const express = require('express')
+const cors = require('cors')
 const router = express.Router();
+router.use(cors)
 
 const { Recipe } = require('../models/recipe')
 
@@ -9,7 +13,7 @@ const { ObjectID } = require('mongodb');
 
 // get all recipes - called by recipe landing page
 router.get('/api/recipes', mongoChecker, async (req, res) => {
-    try {
+	try {
         const recipes = await Recipe.find()
         res.send(recipes)
     } catch(error) {
@@ -23,19 +27,19 @@ router.get('/api/recipes', mongoChecker, async (req, res) => {
 
 // post single recipe - called by write page, fork page
 router.post('/api/recipes', mongoChecker, async (req, res) => {
-    const recipe = new Recipe({
-        author: req.body.author,
-        parent: req.body.parent,
-        title: req.body.title,
-        description: req.body.description,
-        ingredients: req.body.ingredients,
-        steps: req.body.steps,
-        course: req.body.course,
-        cuisine: req.body.cuisine,
-        preptime: req.body.preptime,
-        cooktime: req.body.cooktime,
-        servings: req.body.servings,
-        image: req.body.image
+	const recipe = new Recipe({
+        "author": req.body.author,
+        "parent": req.body.parent,
+        "title": req.body.title,
+        "description": req.body.description,
+        "ingredients": req.body.ingredients,
+        "steps": req.body.steps,
+        "course": req.body.course,
+        "cuisine": req.body.cuisine,
+        "preptime": req.body.preptime,
+        "cooktime": req.body.cooktime,
+        "servings": req.body.servings,
+        "image": req.body.image
     })
 
     try {

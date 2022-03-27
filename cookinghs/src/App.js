@@ -1,7 +1,7 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Link} from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink, NavbarToggler, Collapse } from 'reactstrap';
-
 
 import './App.css';
 
@@ -13,14 +13,34 @@ import ScrollToTop from './components/ScrolltoTop';
 import RecipeBrowser from './components/recipeView/RecipeBrowserComponent';
 import WriteRecipe from './components/recipeForms/WriteRecipeComponent';
 import ForkRecipe from './components/recipeForms/ForkRecipeComponent';
-import Login from './components/Login';
 import FlagDesc from './components/Admin/FlagDesc';
+
+import { getRecipes, postRecipe, editRecipe, deleteRecipe } from './redux/recipePage/recipe-actions';
+
+const mapStateToProps = state => {
+  return {
+    Recipes: state.Recipes
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  getRecipes: () => {dispatch(getRecipes())},
+  postRecipe: (author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image) => {dispatch(postRecipe(author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image))},
+  editRecipe: (_id, author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image) => {dispatch(editRecipe(_id, author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image))},
+  deleteRecipe: (id) => {dispatch(deleteRecipe(id))}
+});
 
 class App extends React.Component {
   state = {
     isOpen: false,
     currentUser: {username: null, password: null, email: null, name: null, admin: false}
   };
+
+  componentDidMount() {
+    console.log("component mounting")
+    this.props.getRecipes();
+    console.log(this.props.Recipes)
+  }
   
   render() {
     return(
@@ -50,7 +70,7 @@ class App extends React.Component {
                                                   currentUser={this.state.currentUser}/>}/>
               <Route exact path="/recipes/:id" element={<RecipeBrowser />}/>
               <Route exact path="/admin/:id" element={<FlagDesc />}/>
-              <Route exact path="/recipes" element={<RecipeBrowser />}/>
+              <Route exact path="/recipes" element={<RecipeBrowser recipes={this.props.Recipes}/>}/>
               <Route exact path="/writerecipe" element={<WriteRecipe />}/>
               <Route exact path="/forkrecipe" element={<ForkRecipe />}/>
               <Route exact path="/users" element={<Users />}/>
@@ -67,4 +87,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
