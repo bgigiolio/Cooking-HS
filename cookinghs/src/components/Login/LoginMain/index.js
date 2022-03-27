@@ -47,24 +47,20 @@ class LoginMain extends React.Component {
             username: this.state.username,
             password: this.state.password
         }
-        // console.log(user.username)
-        // console.log(user.password)
-        console.log(SHA256(user.password).toString())
         this.setState({
             valid: false
-        }, () =>console.log(this.state.valid));
+        }, () =>console.log("valid login: " + this.state.valid));
         if(this.state.tabVal === 0){
             axios.get('http://localhost:5000/api/users', {params :{
                 username : user.username,
                 passHash : SHA256(user.password).toString()
               }}).then(async (response) => {
-                  console.log(response.data)
                 const res = response.data
                 if(res.length !== 0){
                     this.setState({
                         valid: true,
                         _id: res[0]._id
-                    }, () => console.log("user " + user.username + " logged in"))
+                    }, () => console.log("user " + user.username + " may now log in"))
                 }
               }, (error) => {
                 console.log(error);
@@ -111,7 +107,6 @@ class LoginMain extends React.Component {
                 fullName : sUser.fullName,
                 email : sUser.email
               }).then(async (response) => {
-                console.log("user added!")
                 valid = 1
               }).catch(function (error) {
                 valid = -6
@@ -120,7 +115,7 @@ class LoginMain extends React.Component {
         }
         this.setState({
             sValid: valid
-        }, () =>console.log(this.state.sValid));
+        }, () =>console.log("valid user if " + this.state.sValid + " = 1"));
     }
 
 
