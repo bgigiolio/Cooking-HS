@@ -10,7 +10,7 @@ const { ObjectID } = require('mongodb');
 // get all recipes - called by recipe landing page
 router.get('/api/recipes', mongoChecker, async (req, res) => {
     try {
-        const recipes = await Recipes.find()
+        const recipes = await Recipe.find()
         res.send(recipes)
     } catch(error) {
         log(error)
