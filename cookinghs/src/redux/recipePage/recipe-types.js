@@ -1,0 +1,8 @@
+export const RECIPES_LOADING = "RECIPES_LOADING"
+export const RECIPES_FAILED = "RECIPES_FAILED"
+export const ADD_RECIPES = "ADD_RECIPES"
+
+export const ADD_RECIPE = "ADD_RECIPE"
+export const EDIT_RECIPE = "EDIT_RECIPE"
+export const DELETE_RECIPE = "DELETE_RECIPE"
+export const LOAD_RECIPE = "LOAD_RECIPE"
