@@ -9,7 +9,10 @@ const user = new Schema({
     lName: {
         type: String
     },
-    admin:{Boolean},
+    admin:{
+        type: Boolean,
+        default: false
+    },
     username: {
         type: String,
         required: true,
@@ -31,6 +34,6 @@ const user = new Schema({
 
 })
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', user);
 
 module.exports = User;
