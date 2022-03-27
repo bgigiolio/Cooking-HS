@@ -23,9 +23,13 @@ class Signup extends React.Component {
                             onClick={validSignup}>
                             Sign Up
                     </Button>
-                    {sValid == -1 ? <h4 id="failedLogin"> Username is in use </h4> : null}
+                    {sValid == -1 ? <h4 id="failedLogin"> Username can not be empty </h4> : null}
                     {sValid == -2 ? <h4 id="failedLogin"> Passwords do not match </h4> : null}
                     {sValid == 1 ? <h4 id="successLogin"> Account successfully created </h4> : null}
+                    {sValid == -3 ? <h4 id="failedLogin"> Please enter a valid password </h4> : null}
+                    {sValid == -4 ? <h4 id="failedLogin"> Please enter a valid email </h4> : null}
+                    {sValid == -5 ? <h4 id="failedLogin"> Please enter a valid name </h4> : null}
+                    {sValid == -6 ? <h4 id="failedLogin"> Username is already taken </h4> : null}
                 </form>
             </div>
         )

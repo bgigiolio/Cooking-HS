@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 
 const user = new Schema({
-    fName: {
+    fullName: {
         type: String
     },
-    lName: {
+    email: {
         type: String
     },
     admin:{

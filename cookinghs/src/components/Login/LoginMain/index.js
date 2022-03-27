@@ -11,7 +11,7 @@ import Signup from "./../Signup";
 import './styles.css';
 
 const {SHA256} = require('crypto-js'); // new!!
-const bcrypt = require('bcryptjs') // new!!
+// const bcrypt = require('bcryptjs') // new!!
 
 class LoginMain extends React.Component {
     state = {
@@ -49,23 +49,27 @@ class LoginMain extends React.Component {
         }
         // console.log(user.username)
         // console.log(user.password)
+        console.log(SHA256(user.password).toString())
         this.setState({
             valid: false
         }, () =>console.log(this.state.valid));
-        axios.get('/api/users', {
-            "username" : username,
-            "passHash" : SHA256(password).toString()
-          }).then(async (response) => {
-            const res = JSON.parse(response)
-            if(res.length !== 0){
-                this.setState({
-                    valid: true,
-                    _id: res[0]._id
-                }, () => console.log("user " + username + " logged in"))
-            }
-          }, (error) => {
-            console.log(error);
-          });
+        if(this.state.tabVal === 0){
+            axios.get('http://localhost:5000/api/users', {params :{
+                username : user.username,
+                passHash : SHA256(user.password).toString()
+              }}).then(async (response) => {
+                  console.log(response.data)
+                const res = response.data
+                if(res.length !== 0){
+                    this.setState({
+                        valid: true,
+                        _id: res[0]._id
+                    }, () => console.log("user " + user.username + " logged in"))
+                }
+              }, (error) => {
+                console.log(error);
+              });
+        }
     };
 
     change = (event, val) => {
@@ -78,36 +82,45 @@ class LoginMain extends React.Component {
 
     validateSignup = () => {
         let valid = 1
-        const sUsers = this.state.validUsers
         const sUser = {
             username: this.state.sUsername,
             password: this.state.sPassword,
-            password2: this.state.password2
+            password2: this.state.password2,
+            email: this.state.sEmail,
+            fullName: this.state.sName
         }
-        
-        for (let index = 0; index < sUsers.length; index++) {
-            const entry = Object.entries(sUsers[index])
-            if (entry[0][1] == sUser.username){
-                valid = -1
-            }else if( sUser.password != sUser.password2){
-                valid = -2
-            }
             
+        // }
+        //Add further checking for valid inputs below
+        if(sUser.username === ""){
+            valid = -1
+        } else if(sUser.password !== sUser.password2){
+            valid = -2
+        }else if(sUser.password === ""){
+            valid = -3
+        }else if(sUser.email === ""){
+            valid = -4
+        }else if(sUser.name === ""){
+            valid = -5
+        }
+        if (valid === 1){
+            axios.post('http://localhost:5000/api/users', 
+            {
+                username : sUser.username,
+                passHash : SHA256(sUser.password).toString(),
+                fullName : sUser.fullName,
+                email : sUser.email
+              }).then(async (response) => {
+                console.log("user added!")
+                valid = 1
+              }).catch(function (error) {
+                valid = -6
+                console.log(error)
+              });
         }
         this.setState({
             sValid: valid
         }, () =>console.log(this.state.sValid));
-
-        if (this.state.sValid) {
-            const newUser = {
-                username: this.state.sUsername,
-                password: this.state.sPassword,
-                email: this.state.sEmail,
-                name: this.state.sName,
-                admin: false
-            }
-            this.state.validUsers.push(newUser)
-        }
     }
 
 
