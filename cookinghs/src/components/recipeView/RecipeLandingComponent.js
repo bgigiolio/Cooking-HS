@@ -1,39 +1,34 @@
-import React, { useState } from 'react';
-import { Row, Col } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import { RECIPES } from '../../shared/RecipeList';
-import '../../styles/recipeview.css';
-import '../../styles/colorpalette.css';
+import React from 'react';
+import RecipesPageCardGroup from './RecipesPageCardGroup';
+import SearchBar from "material-ui-search-bar";
+import styles from '../../styles/recipelanding.module.css';
+import { Button } from 'reactstrap';
 
-const RecipeLanding = function() {
-    let [recipes] = useState(RECIPES);
+// make a stylesheet
 
-    const recipeCards = Object.entries(recipes).map(([key, value]) => {
+
+class RecipeLanding extends React.Component {
+    render() {
         return(
-            <Col lg={4} md={6}>
-                <Link to={key} className="article">
-                    <img src={value.image} alt={value.title} className="articleimage"></img>
-                    <h4 className="articlename">{value.title}</h4>
-                </Link>
-                <br></br>
-            </Col>
-        )
-    });
+            <div>
+                <div className={styles.topCategories}>
+                    <div className={styles.categoryButtons}>
+                        <Button className={styles.categoryButton}>Chicken</Button>
+                        <Button className={styles.categoryButton}>Quick Fix</Button>
+                        <Button className={styles.categoryButton}>Vegetarian</Button>
+                    </div>
 
-    return (
-        <>
-            <h2 id="landingheader">All Recipes</h2>
-            <Link to="/writerecipe">
-                <img src='../plus.png'
-                    alt=""
-                    id="newRecipeButton"
-                    />
-            </Link>
-            <Row>
-                {recipeCards}
-            </Row>
-        </>
-    )
+                    <div className={styles.barDiv}>
+                        <SearchBar className={styles.searchBar}></SearchBar>
+                    </div>
+
+                </div>
+               
+                <RecipesPageCardGroup/>
+    
+            </div>
+        )
+    }
 }
 
 export default RecipeLanding;
