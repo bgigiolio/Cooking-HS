@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
     AdminRecipes: AdminRecipesReducer,
     AdminFlags: AdminFlagsReducer,
     UserRecipes: UserRecipesReducer,
-    Recipes: RecipesReducer
+    Recipes: RecipesReducer,
     RecipesPage: RecipesPageReducer
 });
 
