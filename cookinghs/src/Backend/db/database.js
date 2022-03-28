@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const log = console.log
 
-const URI = 'mongodb://localhost:27017' || process.env.URI
+const URI = process.env.URI || 'mongodb://localhost:27017'
 
 mongoose.connect(URI, {useNewUrlParser: true}).catch((error) => {
     log('MongoDB connection error')
