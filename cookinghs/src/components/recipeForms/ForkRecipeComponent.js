@@ -99,7 +99,7 @@ function ForkRecipe() {
     
     return(
         <div className='container' id='formContainer'>
-            <h1> <img src='../fork.png' alt='' id='formIcon'></img> Fork a Recipe</h1>
+            <h1> <i id="formIcon" class="fa-solid fa-code-fork"></i> Fork a Recipe</h1>
             <p>Forking a recipe is easy! Share your own unique spin on a recipe with friends, family, and the CookingHS community.</p>
             <RecipeForm 
                 {...recipe} 
