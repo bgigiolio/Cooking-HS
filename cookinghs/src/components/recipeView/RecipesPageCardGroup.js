@@ -19,8 +19,9 @@ const RecipesPageCardGroup = ({ recipes }) => {
             <Row>
             {Object.entries(recipes).map(([key, value]) => (
                 <Col lg={4} md={6}>
-                 <Link to={key}>
+                 
                  <Card className="r-card article">
+                 <Link to={key}>
                 
                 <CardImg src={value.image} alt={value.title} className="recipeImg" top></CardImg>
                 {/* <img src={value.image} alt={value.title} className="articleimage"></img> */}
@@ -38,10 +39,10 @@ const RecipesPageCardGroup = ({ recipes }) => {
                     </CardSubtitle>
                 </CardBody>
             
-
+                </Link>
             </Card>
 
-                 </Link>
+                 
                 </Col>
             ))}
             </Row>

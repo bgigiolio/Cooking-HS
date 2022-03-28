@@ -4,7 +4,7 @@ export const RECIPES =
     author: 'Archer',
     date: "11-12-2021",
     parent: '',
-    title: 'Original Mongolian Chicken',
+    title: 'Original Mongolian ChickenChickenChicken',
     description: 'If Mongolian beef is your go to when it comes to Chinese take-out, I challenge you to try this version made with chicken instead. The chicken is melt-in-your-mouth tender and requires no marinating time as beef would. Serve over rice.',
     ingredients: [
         {
