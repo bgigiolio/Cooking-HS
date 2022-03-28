@@ -8,7 +8,6 @@ export const RecipesReducer = (
     }, action) => {
     switch (action.type) {
         case ActionTypes.ADD_RECIPES:
-            console.log('adding recipes')
             return {...state, isLoading: false, errMess: null, recipes: action.payload};
         
         case ActionTypes.RECIPES_LOADING:

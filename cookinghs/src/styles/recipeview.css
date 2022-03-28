@@ -41,9 +41,7 @@
 }
 
 #newRecipeButton {
-    position: absolute;
-    top: 7px;
-    right: 10px;
+    float: right;
     font-size: max(32px,3vw);
 }
 

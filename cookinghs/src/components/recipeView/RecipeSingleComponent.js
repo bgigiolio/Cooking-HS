@@ -9,7 +9,7 @@ import ReportModal from '../report/ReportModalComponent';
 
 function RecipeSingle(props) {
     const recipes = props.recipes
-    const chosenRecipe = props.recipe;
+    const chosenRecipe = props.chosenRecipe;
     const chosenComment = chosenRecipe.comments
     let [servingSize, setServingSize] = useState(chosenRecipe.servings);
     let [scale, setScale] = useState(1);
@@ -208,9 +208,9 @@ function RecipeSingle(props) {
                             >
                                 <i id='reportIcon0' className="fa-solid fa-triangle-exclamation"></i>
                             </Button>
-                            <Link to="/forkrecipe" state={{chosenRecipe: chosenRecipe}}>
+                            <Link to="./forkrecipe" state={{chosenRecipe: chosenRecipe}}>
                                 <Button color="secondary" outline id="forkButton">
-                                    <i class="fa-solid fa-code-fork"></i>
+                                    <i className="fa-solid fa-code-fork"></i>
                                 </Button>
                             </Link>
                         </Col>

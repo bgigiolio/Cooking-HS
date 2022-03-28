@@ -11,8 +11,7 @@ import Landing from './components/Landing';
 import Users from './components/Users/Users';
 import ScrollToTop from './components/ScrolltoTop';
 import RecipeBrowser from './components/recipeView/RecipeBrowserComponent';
-import WriteRecipe from './components/recipeForms/WriteRecipeComponent';
-import ForkRecipe from './components/recipeForms/ForkRecipeComponent';
+import CreateRecipe from './components/recipeForms/CreateRecipeComponent';
 import FlagDesc from './components/Admin/FlagDesc';
 
 import { getRecipes, postRecipe, editRecipe, deleteRecipe } from './redux/recipePage/recipe-actions';
@@ -39,7 +38,6 @@ class App extends React.Component {
   componentDidMount() {
     console.log("component mounting")
     this.props.getRecipes();
-    console.log(this.props.Recipes)
   }
   
   render() {
@@ -65,16 +63,16 @@ class App extends React.Component {
           </Navbar>
           <ScrollToTop>
             <Routes>
-              <Route exact path="/admin" element={<AdminPage />}/>  
               <Route exact path="/login" element={<LoginMain
                                                   currentUser={this.state.currentUser}/>}/>
-              <Route exact path="/recipes/:id" element={<RecipeBrowser />}/>
               <Route exact path="/admin/:id" element={<FlagDesc />}/>
-              <Route exact path="/recipes" element={<RecipeBrowser recipes={this.props.Recipes}/>}/>
-              <Route exact path="/writerecipe" element={<WriteRecipe />}/>
-              <Route exact path="/forkrecipe" element={<ForkRecipe />}/>
+              <Route exact path="/admin" element={<AdminPage />}/>  
               <Route exact path="/users" element={<Users />}/>
-              <Route exact path="/" element={<Landing />}/>
+              <Route exact path="/recipes/newrecipe" element={<CreateRecipe postRecipe={this.props.postRecipe}/>}/>
+              <Route exact path="/recipes/:id/forkrecipe" element={<CreateRecipe postRecipe={this.props.postRecipe}/>}/>
+              <Route exact path="/recipes/:id" element={<RecipeBrowser recipes={this.props.Recipes}/>}/>
+              <Route exact path="/recipes" element={<RecipeBrowser recipes={this.props.Recipes}/>}/>
+              <Route exact path="/*" element={<Landing />}/>
             </Routes>
           </ScrollToTop>
 

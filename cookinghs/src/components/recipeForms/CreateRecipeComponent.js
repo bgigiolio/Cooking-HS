@@ -4,9 +4,38 @@ import RecipeForm from './RecipeFormComponent';
 
 import '../../styles/recipeform.css';
 
-function ForkRecipe() {
+function CreateRecipe() {
     const location=useLocation()
-    const [recipe, setRecipe] = useState(location.state.chosenRecipe)
+    const [recipe, setRecipe] = useState(() => 
+        location.state ? location.state.chosenRecipe :
+            {
+                title: '',
+                ingredients: [
+                    {
+                        name: '',
+                        quantity: '',
+                        unit: ''
+                    },
+                    {
+                        name: '',
+                        quantity: '',
+                        unit: ''
+                    }
+                ],
+                steps: [
+                    '',
+                    '',
+                    ''
+                ],
+                course: 'Main',
+                cuisine: '',
+                preptime: '',
+                cooktime: '',
+                servings: '',
+                difficulty: 5,                                              
+                image: ''
+            }
+    )
 
     const handleInputChange = e => {
         const target = e.target;
@@ -96,11 +125,28 @@ function ForkRecipe() {
         checkForm();
         e.preventDefault();
     }
+
+    const newRecipe = () => {
+        return(
+            <>
+                <h1> <i id="formIcon" className="fa-regular fa-square-plus"></i> Add a Recipe</h1>
+                <p>Uploading personal recipes is easy! Add yours to your favorites, share with friends, family, and the CookingHS community.</p>
+            </>
+        )
+    }
+
+    const forkRecipe = () => {
+        return(
+            <>
+                <h1> <i id="formIcon" className="fa-solid fa-code-fork"></i> Fork a Recipe</h1>
+                <p>Forking a recipe is easy! Share your own unique spin on a recipe with friends, family, and the CookingHS community.</p>
+            </>
+        )
+    }
     
     return(
         <div className='container' id='formContainer'>
-            <h1> <i id="formIcon" class="fa-solid fa-code-fork"></i> Fork a Recipe</h1>
-            <p>Forking a recipe is easy! Share your own unique spin on a recipe with friends, family, and the CookingHS community.</p>
+            {location.state ? forkRecipe() : newRecipe()}
             <RecipeForm 
                 {...recipe} 
                 handleSubmit = {handleSubmit}
@@ -116,4 +162,4 @@ function ForkRecipe() {
     )
 }
 
-export default ForkRecipe;
+export default CreateRecipe;

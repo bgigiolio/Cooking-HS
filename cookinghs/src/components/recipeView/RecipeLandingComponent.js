@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { RECIPES } from '../../shared/NewRecipeList';
 import '../../styles/recipeview.css';
 import '../../styles/colorpalette.css';
 
-const RecipeLanding = function() {
-    let [recipes] = useState(RECIPES);
-    console.log(recipes)
+const RecipeLanding = function(props) {
+    let recipes = props.recipes
 
     const recipeCards = recipes.map((recipe) => {
         return(
@@ -23,10 +21,11 @@ const RecipeLanding = function() {
 
     return (
         <>
-            <h2 id="landingheader">All Recipes</h2>
-            <Link to="/writerecipe">
-                <i class="fa-regular fa-square-plus" id="newRecipeButton"></i>
-            </Link>
+            <h2 id="landingheader">All Recipes 
+                <Link to="./newrecipe">
+                    <i className="fa-regular fa-square-plus" id="newRecipeButton"></i>
+                </Link>
+            </h2>
             <Row>
                 {recipeCards}
             </Row>
