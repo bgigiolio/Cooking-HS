@@ -2,39 +2,36 @@ import React, { useState } from 'react';
 import { List, ListGroup, ListGroupItem, Card, CardBody, CardHeader, Button, Input, Label, FormGroup, Col, Row } from 'reactstrap';
 import { Fraction } from 'fractional';
 import { Link } from 'react-router-dom';
-import { RECIPES } from '../../shared/RecipeList';
-import { COMMENTS } from '../../shared/RecipeComments';
 import '../../styles/recipeview.css';
 import '../../styles/colorpalette.css';
 import ReviewModal from '../recipeForms/ReviewModalComponent';
 import ReportModal from '../report/ReportModalComponent';
 
 function RecipeSingle(props) {
-    let [recipes] = useState(RECIPES);
-    let [comments] = useState(COMMENTS);
-    const chosenRecipe = recipes[props.id] ? recipes[props.id] : null;
-    const chosenComment = comments[props.id] ? comments[props.id] : null;
+    const recipes = props.recipes
+    const chosenRecipe = props.chosenRecipe;
+    const chosenComment = chosenRecipe.comments
     let [servingSize, setServingSize] = useState(chosenRecipe.servings);
     let [scale, setScale] = useState(1);
 
     // Getting average rating
-    const sumWithInitial = chosenComment.reduce(
-        (previousValue, currentValue) => {
-        return(previousValue.rating ? previousValue.rating + currentValue.rating : previousValue + currentValue.rating)
-        },
-    );
-    const averageRating = sumWithInitial/chosenComment.length
+    // const sumWithInitial = chosenComment.reduce(
+    //     (previousValue, currentValue) => {
+    //     return(previousValue.rating ? previousValue.rating + currentValue.rating : previousValue + currentValue.rating)
+    //     },
+    // );
+    const averageRating = chosenRecipe.averageRating
 
     const timeline = (par) => {
         let parent = par;
-        let line = [props.id];
+        let line = [chosenRecipe._id];
         while (parent !== '') {
             line.push(parent);
-            parent = recipes[parent].parent;
+            parent = recipes.filter(recipe => recipe._id === parent)[0].parent
         }
         line.reverse()
         const timelineView = line.map((step, index) => {
-            const parentTitle = recipes[step].title
+            const parentTitle = recipes.filter(recipe => recipe._id === step)[0].title
             const link = '../recipes/' + step
             return (
                 <li>
@@ -211,9 +208,9 @@ function RecipeSingle(props) {
                             >
                                 <i id='reportIcon0' className="fa-solid fa-triangle-exclamation"></i>
                             </Button>
-                            <Link to="/forkrecipe" state={{chosenRecipe: chosenRecipe}}>
+                            <Link to="./forkrecipe" state={{chosenRecipe: chosenRecipe}}>
                                 <Button color="secondary" outline id="forkButton">
-                                    <i class="fa-solid fa-code-fork"></i>
+                                    <i className="fa-solid fa-code-fork"></i>
                                 </Button>
                             </Link>
                         </Col>
