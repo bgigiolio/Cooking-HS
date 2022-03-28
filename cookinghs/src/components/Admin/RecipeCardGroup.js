@@ -1,5 +1,4 @@
 import React from "react";
-//TODO @ZOHA: import a stylesheet
 
 import { connect } from "react-redux";
 import RecipeCard from "./RecipeCard";
