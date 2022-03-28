@@ -28,5 +28,11 @@
 
 .categoryButton:hover{
     color: slategray;
+    border: 0;
+    background-color: white;
+}
+
+.categoryButton:focus{
+    color: slategray;
     background-color: white;
 }

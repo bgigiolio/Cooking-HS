@@ -3,9 +3,7 @@ import RecipesPageCardGroup from './RecipesPageCardGroup';
 import SearchBar from "material-ui-search-bar";
 import styles from '../../styles/recipelanding.module.css';
 import { Button } from 'reactstrap';
-
-// make a stylesheet
-
+import axios from "axios";
 
 class RecipeLanding extends React.Component {
     render() {

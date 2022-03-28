@@ -8,5 +8,11 @@ export const filterRecipes = (filterCategory) => {
             category: filterCategory,
         }
     }
+}
 
+export const setInitialRecipes = (recipes) => {
+    return {
+      type: actionTypes.SET_INITIAL_RECIPES,
+      payload: recipes,
+    }
 }

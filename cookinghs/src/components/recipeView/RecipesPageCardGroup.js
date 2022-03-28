@@ -7,8 +7,10 @@ import { RECIPES } from '../../shared/RecipeList';
 import '../../styles/recipeview.css';
 import '../../styles/colorpalette.css';
 import { connect } from "react-redux";
+import { setInitialRecipes } from "../../redux/RecipesPage/RecipesPage-actions";
+import axios from 'axios';
+import {useEffect } from 'react';
 
-// use cardgroup
 
 const RecipesPageCardGroup = ({ recipes }) => {
 
@@ -23,7 +25,6 @@ const RecipesPageCardGroup = ({ recipes }) => {
                  <Link to={value._id}>
                 
                 <CardImg src={value.image} alt={value.title} className="recipeImg" top></CardImg>
-                {/* <img src={value.image} alt={value.title} className="articleimage"></img> */}
                 <CardBody className='card-body'>
                     {/* maybe bold this */}
                     <CardTitle className="articlename">
@@ -32,9 +33,9 @@ const RecipesPageCardGroup = ({ recipes }) => {
                     <CardSubtitle className='author-name'>
                         By: {value.author}
                     </CardSubtitle>
-                    {/* parse the date to remove the time etc. */}
+                    {/* remove extra datetime values */}
                     <CardSubtitle className='date-created'>
-                    Date Created: {value.date}
+                    Date Created: {value.date.slice(0,10)}
                     </CardSubtitle>
                 </CardBody>
             
@@ -48,6 +49,12 @@ const RecipesPageCardGroup = ({ recipes }) => {
         )
     }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setInitialRecipes: (recipes) => dispatch(setInitialRecipes(recipes)),
+    }
+  }
+
 const mapStateToProps = state => {
     return {
         recipes: state.Recipes.recipes
@@ -55,4 +62,4 @@ const mapStateToProps = state => {
 
 }
 
-export default connect(mapStateToProps)(RecipesPageCardGroup);
+export default connect(mapStateToProps, mapDispatchToProps)(RecipesPageCardGroup);
