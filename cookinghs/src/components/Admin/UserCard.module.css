@@ -12,6 +12,7 @@
     margin-right: 2rem;
     margin-bottom: 2rem;
     text-align: center;
+    height: 100%;
 
 }
 
@@ -23,4 +24,14 @@
     max-height: 162px;
     width: 100%;
     /* max-width: 250px; */
+}
+
+.cardBody{
+    width: 18rem;
+
+}
+
+/* to make the length equal */
+.cardContainer{
+    /* height: 400px; */
 }

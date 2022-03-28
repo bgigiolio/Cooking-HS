@@ -119,6 +119,67 @@ h1 {
     width:60px
 }
 
+.recipeImg{
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.r-card{
+    width: 18rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 0 1 calc(25% - 1em);
+    justify-content: space-between;
+    margin-top: 2rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+.r-card:hover{
+    color: rgb(116, 116, 116);
+
+}
+
+.articlename{
+    font-weight: bold;
+    font-size: large;
+    text-align: center;
+    color: #000;
+    width: 16rem;
+}
+
+.articlename:hover{
+    color: rgb(116, 116, 116);
+}
+
+.date-created{
+    color: slategray;
+    font-size: small;
+    padding: 2px;
+    width: 16rem;
+}
+
+.author-name{
+    font-size: medium;
+    padding: 2px;
+    color: #000;
+    width: 16rem;
+}
+
+.card-body{
+    width: 18rem;
+    overflow: scroll;
+    height: 130px;
+}
+
 #forkButton {
     margin-left: 10px
 }

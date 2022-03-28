@@ -1,36 +1,34 @@
 import React from 'react';
-import { Row, Col } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import '../../styles/recipeview.css';
-import '../../styles/colorpalette.css';
+import RecipesPageCardGroup from './RecipesPageCardGroup';
+import SearchBar from "material-ui-search-bar";
+import styles from '../../styles/recipelanding.module.css';
+import { Button } from 'reactstrap';
 
-const RecipeLanding = function(props) {
-    let recipes = props.recipes
+// make a stylesheet
 
-    const recipeCards = recipes.map((recipe) => {
+
+class RecipeLanding extends React.Component {
+    render() {
         return(
-            <Col lg={4} md={6}>
-                <Link to={recipe._id} className="article">
-                    <img src={recipe.image} alt={recipe.title} className="articleimage"></img>
-                    <h4 className="articlename">{recipe.title}</h4>
-                </Link>
-                <br></br>
-            </Col>
-        )
-    });
+            <div>
+                <div className={styles.topCategories}>
+                    <div className={styles.categoryButtons}>
+                        <Button className={styles.categoryButton}>Chicken</Button>
+                        <Button className={styles.categoryButton}>Quick Fix</Button>
+                        <Button className={styles.categoryButton}>Vegetarian</Button>
+                    </div>
 
-    return (
-        <>
-            <h2 id="landingheader">All Recipes 
-                <Link to="./newrecipe">
-                    <i className="fa-regular fa-square-plus" id="newRecipeButton"></i>
-                </Link>
-            </h2>
-            <Row>
-                {recipeCards}
-            </Row>
-        </>
-    )
+                    <div className={styles.barDiv}>
+                        <SearchBar className={styles.searchBar}></SearchBar>
+                    </div>
+
+                </div>
+               
+                <RecipesPageCardGroup/>
+    
+            </div>
+        )
+    }
 }
 
 export default RecipeLanding;
