@@ -1,6 +1,5 @@
 'use strict'
 let log = console.log
-const { query } = require("express");
 let express = require("express")
 const{mongoose} = require("mongoose")
 var router = express.Router();
@@ -60,6 +59,37 @@ router.route("/search").get((req, res) => { //works for search bar (partial sear
     })
 })
 
+// In the query params, use something like this: 
+//req.query ->
+//{want: ["username", "etc", ...]}
+//make sure you use the key 'want' with an array of everything you want
+router.route("/session").get((req, res) => { //Use this to get session information
+    const query = req.query.want
+    if(!Array.isArray(query)){
+        res.status(422).send("Please send an array of attributes you want")
+    }
+    const toSend = {}
+    query.forEach(element => {
+        if(req.session.hasOwnProperty(element)){
+            toSend[element] = req.session[element]
+        }
+    });
+    res.status(200).json(toSend)
+})
+
+router.route("/logout").get((req, res) => {
+    console.log("reached logout")
+    req.session.destroy((error) => {
+        if(error){
+            console.log("logout fail")
+            res.status(500).send(error)
+        }else{
+            console.log("user logged out")
+            res.status(200).send("User logged out")
+        }
+    })
+})
+
 router.route("/:id").get((req, res) => {
     User.findById(req.params.id, (error, result) => {
         if(error){
@@ -98,6 +128,8 @@ router.route("/:id").delete((req, res) => {
     })
 })
 
+
+
 router.route("/login/:id").get((req, res) => {
     User.findById(req.params.id, 
         (error, result) => {
@@ -120,33 +152,7 @@ router.route("/login/:id").get((req, res) => {
             }
         })
 })
-// give an array with the session elements you want, like [username, email]
-router.route("/session").get((req, res) => { //Use this to get session information
-    const query = req.body
-    if(!Array.isArray(query)){
-        res.status(422).send("Please send an array of attributes you want")
-    }
-    const toSend = {}
-    query.forEach(element => {
-        if(req.session.hasOwnProperty(element)){
-            toSend[element] = req.session[element]
-        }
-    });
-    res.status(200).json(toSend)
-})
 
-router.route("/logout").get((req, res) => {
-    console.log("reached logout")
-    req.session.destroy((error) => {
-        if(error){
-            console.log("logout fail")
-            res.status(500).send(error)
-        }else{
-            console.log("user logged out")
-            res.status(200).send("User logged out")
-        }
-    })
-})
 
 module.exports = router;
 

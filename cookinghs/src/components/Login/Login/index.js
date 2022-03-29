@@ -16,18 +16,20 @@ class Login extends React.Component {
         this.setState({
             failedLoginSeen: true
         }, () => console.log(this.state.failedLoginSeen))
-        // axios.get(this.props.host + 'api/users/logout')
-        // .then(async (response, error) => {
-        //     console.log(response);
-        //     console.log(error)
-        // })
+        axios.get(this.props.host + 'api/users/logout')
+        .then(async (response, error) => {
+            console.log(response);
+            console.log(error)
+        })
     }
     validLogIn = () => {
-        axios.get(this.props.host + 'api/users/login/' + this.props._id, )
+        axios.get(this.props.host + 'api/users/login/' + this.props._id)
         .then(async (response) => {
             
         })
-        axios.get(this.props.host + 'api/users/session')
+        // axios.get(this.props.host + 'api/users/session', {params :{
+        //     want : ["username"]
+        //   }})
     }
     render() {
         const {username, password, recieveInput, valid, routeTo} = this.props
