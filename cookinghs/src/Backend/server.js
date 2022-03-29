@@ -3,9 +3,7 @@ const log = console.log
 const path = require ('path')
 require('dotenv').config()
 const cors = require("cors")
-
 const express = require('express');
-// const cors = require('cors');
 const app = express();
 app.use(cors());
 

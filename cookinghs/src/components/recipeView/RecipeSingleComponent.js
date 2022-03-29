@@ -135,6 +135,13 @@ function RecipeSingle(props) {
             </>
         );
     }
+    const [reportModal, setReportModal] = useState(false);
+    const [reportId, setReportId] = useState();
+    const toggleReport = (e) => {
+        const targetId = Number(e.target.id.slice(-1));
+        setReportId(targetId);
+        setReportModal(!reportModal); 
+    }
 
     const [reviewModal, setReviewModal] = useState(false);
     const toggleReview = () => setReviewModal(!reviewModal);
@@ -246,7 +253,7 @@ function RecipeSingle(props) {
                     </Button>
                     {/* {commentsView} */}
                     <Button
-                        onClick={() => setCommentCount(commentCount+3)}
+                        // onClick={() => setCommentCount(commentCount+3)}
                         id='loadReviewButton'
                     >
                         Load More Reviews
