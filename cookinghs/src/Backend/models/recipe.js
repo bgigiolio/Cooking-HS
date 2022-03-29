@@ -5,10 +5,7 @@ const IngredientsSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    quantity: {
-        numerator: Number,
-        denominator: Number
-    },
+    quantity: Number,
     unit: String
 })
 

@@ -3,6 +3,8 @@ import RecipesPageCardGroup from './RecipesPageCardGroup';
 import SearchBar from "material-ui-search-bar";
 import styles from '../../styles/recipelanding.module.css';
 import { Button, Card } from 'reactstrap';
+// import { Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import axios from "axios";
 import { Slider } from '@mui/material';
 
@@ -141,7 +143,9 @@ class RecipeLanding extends React.Component {
                 <div className={styles.mainRecipeSection}>
                 <div className={styles.topCategories}>
                     <div className={styles.addBtn}>
-                    <i className="fa-regular fa-square-plus"></i>
+                        <Link to="/recipes/newrecipe">
+                            <i className="fa-regular fa-square-plus"></i>
+                        </Link>
                     </div>
                     <div className={styles.categoryButtons}>
                         {/* all, quick fix and desserts */}

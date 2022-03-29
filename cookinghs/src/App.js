@@ -11,10 +11,10 @@ import Landing from './components/Landing';
 import Users from './components/Users/Users';
 import ScrollToTop from './components/ScrolltoTop';
 import RecipeBrowser from './components/recipeView/RecipeBrowserComponent';
-import CreateRecipe from './components/recipeForms/CreateRecipeComponent';
+import WriteWrapper from './components/recipeForms/WriteWrapperComponent';
 import FlagDesc from './components/Admin/FlagDesc';
 
-import { getRecipes, postRecipe, editRecipe, deleteRecipe } from './redux/recipePage/recipe-actions';
+import { getRecipes, deleteRecipe } from './redux/recipePage/recipe-actions';
 
 const mapStateToProps = state => {
   return {
@@ -24,8 +24,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   getRecipes: () => {dispatch(getRecipes())},
-  postRecipe: (author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image) => {dispatch(postRecipe(author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image))},
-  editRecipe: (_id, author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image) => {dispatch(editRecipe(_id, author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image))},
   deleteRecipe: (id) => {dispatch(deleteRecipe(id))}
 });
 
@@ -36,7 +34,7 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    console.log("component mounting")
+    console.log("app mounting")
     this.props.getRecipes();
   }
   
@@ -63,13 +61,13 @@ class App extends React.Component {
           </Navbar>
           <ScrollToTop>
             <Routes>
-              <Route exact path="/login" element={<LoginMain
-                                                  currentUser={this.state.currentUser}/>}/>
+              <Route exact path="/login" element={<LoginMain currentUser={this.state.currentUser}/>}/>
               <Route exact path="/admin/:id" element={<FlagDesc />}/>
               <Route exact path="/admin" element={<AdminPage />}/>  
               <Route exact path="/users" element={<Users />}/>
-              <Route exact path="/recipes/newrecipe" element={<CreateRecipe postRecipe={this.props.postRecipe}/>}/>
-              <Route exact path="/recipes/:id/forkrecipe" element={<CreateRecipe postRecipe={this.props.postRecipe}/>}/>
+              <Route exact path="/recipes/newrecipe" element={<WriteWrapper flag={"new"} recipes={this.props.Recipes}/>}/>
+              <Route exact path="/recipes/:id/editrecipe" element={<WriteWrapper flag={"edit"} recipes={this.props.Recipes}/>}/>
+              <Route exact path="/recipes/:id/forkrecipe" element={<WriteWrapper flag={"fork"} recipes={this.props.Recipes}/>}/>
               <Route exact path="/recipes/:id" element={<RecipeBrowser recipes={this.props.Recipes}/>}/>
               <Route exact path="/recipes" element={<RecipeBrowser recipes={this.props.Recipes}/>}/>
               <Route exact path="/*" element={<Landing />}/>
