@@ -1,14 +1,24 @@
 import React, { useState} from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import RecipeForm from './RecipeFormComponent';
-
+import { Fraction } from 'fractional'; 
 import '../../styles/recipeform.css';
 
-function CreateRecipe() {
+
+const AUTHOR = 'admin'
+
+function CreateRecipe(props) {
     const location=useLocation()
     const [recipe, setRecipe] = useState(() => 
-        location.state ? location.state.chosenRecipe :
+        location.state ? 
+            {...location.state.chosenRecipe, 
+                parent: location.state.chosenRecipe._id,
+                author: AUTHOR,
+                image: ''
+            }
+                :
             {
+                author: AUTHOR,
                 title: '',
                 ingredients: [
                     {
@@ -32,7 +42,7 @@ function CreateRecipe() {
                 preptime: '',
                 cooktime: '',
                 servings: '',
-                difficulty: 5,                                              
+                difficulty: 5,
                 image: ''
             }
     )
@@ -41,15 +51,24 @@ function CreateRecipe() {
         const target = e.target;
         const value = target.value;
         const name = target.name;
-        setRecipe({
-            ...recipe,
-            [name] : value
-        }); 
+        if (name === "difficulty") {
+            setRecipe({
+                ...recipe,
+                [name] : Number(value)
+            }); 
+        }
+        else {
+            setRecipe({
+                ...recipe,
+                [name] : value
+            }); 
+        }
+        
     }
 
     const handleIngredientChange = (index, e) => {
         const target = e.target;
-        const value = target.value;
+        let value = target.value;
         const name = target.name;
         let ingredients = [...recipe.ingredients]
         let ingredient = {
@@ -117,13 +136,29 @@ function CreateRecipe() {
     }
 
     const checkForm = function() {
+        const checkedRecipe = JSON.parse(JSON.stringify(recipe))
+        //remove empty ingredients
+        checkedRecipe.ingredients = recipe.ingredients.filter((ingredient) => ingredient.name !== '')
+        //convert ingredient quantities to float
+        checkedRecipe.ingredients.forEach(ingredient => {
+            // console.log(new Fraction(ingredient.quantity))
+            ingredient.quantity = new Fraction(ingredient.quantity)
+            console.log(ingredient)
+        })
+        //remove empty steps
+        checkedRecipe.steps = recipe.steps.filter((step) => step.trim() !== '')
+    }
 
+    let navigate = useNavigate()
+    const handleRedirect = () => {
+        let path = '/recipes'; 
+        navigate(path);
     }
 
     const handleSubmit = (e) => {
-        console.log(recipe);
         checkForm();
-        e.preventDefault();
+        // props.postRecipe(recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, 5, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image)
+        // handleRedirect();
     }
 
     const newRecipe = () => {

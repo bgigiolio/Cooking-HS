@@ -153,6 +153,7 @@ export const RECIPES = [
         "servings": 6,
         "image": "../friedchicken.jpeg",
         "comments": [],
+        "difficulty": 5,
         "__v": 0
     },
     {
@@ -260,35 +261,7 @@ export const RECIPES = [
         "servings": 4,
         "image": "../spaghettibolognese.jpg",
         "comments": [],
+        "difficulty": 2,
         "__v": 0
     },
-    {
-        "_id": "1",
-        "author": "Mallory",
-        "parent": "623fc9113fc330e2f5fa3af5",
-        "title": "Mallory's Fried Chicken",
-        "ingredients": [
-          { "name": "chicken thighs", "quantity": 6 },
-          { "name": "chicken drumsticks", "quantity": 6 },
-          { "name": "buttermilk", "quantity": 3, "unit": "cups" },
-          { "name": "buffalo hot sauce", "quantity": 0.5, "unit": "cup" },
-          { "name": "salt", "quantity": 2, "unit": "teaspoons" },
-          { "name": "pepper", "quantity": 1, "unit": "teaspoon" }
-        ],
-        "steps": [
-          "In a large mixing bowl, whisk together buttermilk, hot sauce (optional, for added flavor), salt, and pepper in a mixing bowl. Add in chicken pieces. Cover the bowl with plastic wrap and refrigerate 4 hours.",
-          "When ready to cook, pour the vegetable oil in a skillet until it is about 3/4 inch deep. Heat to 350 degrees.",
-          "Prepare the breading by combining the flour, cornstarch, onion powder, garlic powder, oregano, basil, white pepper, cayenne pepper, paprika, and salt in a gallon sized resealable plastic bag or shallow dish. Mix it thoroughly.",
-          "Working one at a time, remove chicken pieces from buttermilk mixture. Shake it gently to remove the excess. Place it in the breading mix and coat thoroughly. Tap off the excess.",
-          "Place the breaded chicken into the 350 degree oil. Fry 3 or 4 pieces at a time. The chicken will drop the temperature of the oil so keep it as close to 350 degrees as possible. Fry each piece for 14 minutes, turning each piece about half way through, until the chicken reaches an internal temperature of 165 degrees F. ",
-          "Remove from the oil and place on paper towels. Let them rest for at least 10 minutes before serving. "
-        ],
-        "course": "Main",
-        "cuisine": "Western",
-        "preptime": 5,
-        "cooktime": 30,
-        "servings": 6,
-        "image": "../friedchicken.jpeg",
-        "comments": []
-      }
 ]

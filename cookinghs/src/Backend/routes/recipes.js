@@ -37,7 +37,8 @@ router.post('/api/recipes', mongoChecker, async (req, res) => {
         "preptime": req.body.preptime,
         "cooktime": req.body.cooktime,
         "servings": req.body.servings,
-        "image": req.body.image
+        "image": req.body.image,
+		"difficulty": req.body.difficulty
     })
 
     try {

@@ -5,11 +5,18 @@ const IngredientsSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    quantity: Number,
+    quantity: {
+        numerator: Number,
+        denominator: Number
+    },
     unit: String
 })
 
 const CommentSchema = new mongoose.Schema({
+    recipeid: {
+        type: String,
+        required: true
+    },
     user: {
         type: String,
         required: true
@@ -48,15 +55,15 @@ const RecipeSchema = new mongoose.Schema({
     description: String,
     ingredients: [IngredientsSchema],
     steps: [String],
-    difficulty: Number,
     course: String,
     cuisine: String,
     preptime: Number,
     cooktime: Number,
     servings: Number,
+    difficulty: {type: Number, required: true},
     image: String,
     averageRating: Number,
-    comments: [CommentSchema]
+    // comments: [CommentSchema]
 })
 
 const Recipe = mongoose.model('Recipe', RecipeSchema)
