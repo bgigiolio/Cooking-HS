@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Row, Col } from 'reactstrap';
 import { Card, CardGroup, Container } from 'reactstrap';
 import { CardBody, CardTitle, CardSubtitle, CardImg } from 'reactstrap'
 import { Link } from 'react-router-dom';
-import { RECIPES } from '../../shared/RecipeList';
 import '../../styles/recipeview.css';
 import '../../styles/colorpalette.css';
 import { connect } from "react-redux";

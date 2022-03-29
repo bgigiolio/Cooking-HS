@@ -8,6 +8,7 @@ export const RecipesReducer = (
     }, action) => {
     switch (action.type) {
         case ActionTypes.ADD_RECIPES:
+            console.log("adding all recipes")
             return {...state, isLoading: false, errMess: null, recipes: action.payload};
         
         case ActionTypes.RECIPES_LOADING:
@@ -17,8 +18,21 @@ export const RecipesReducer = (
             return {...state, isLoading: false, errMess: action.payload};
 
         case ActionTypes.ADD_RECIPE:
-            var recipe = action.payload;
+            alert("Created recipe successfully")
+            const recipe = action.payload;
             return { ...state, recipes: state.recipes.concat(recipe)};
+
+        case ActionTypes.EDIT_RECIPE:
+            alert("Edited recipe successfully")
+            const editedrecipe = action.payload;
+            let editedrecipeinstate = state.recipes.find(recipe => recipe._id === recipe._id)
+            editedrecipeinstate = editedrecipe
+            return { ...state }
+
+
+        case ActionTypes.DELETE_RECIPE:
+            const recipeid = action.payload;
+            return { ...state, recipes: state.recipes.filter((recipe) => recipe._id !== recipeid)};
 
         default:
             return state;
