@@ -1,5 +1,6 @@
 'use strict'
 let log = console.log
+const { query } = require("express");
 let express = require("express")
 const{mongoose} = require("mongoose")
 var router = express.Router();
@@ -93,6 +94,56 @@ router.route("/:id").delete((req, res) => {
             res.status(404).send("user not found")
         }else{
             res.status(200).send(result)
+        }
+    })
+})
+
+router.route("/login/:id").get((req, res) => {
+    User.findById(req.params.id, 
+        (error, result) => {
+            console.log(result)
+            const user = result
+            if(error){
+                res.status(500).send("internal server error")
+            }else{
+                req.session._id = user._id.toString();
+                req.session.admin = user.admin;
+                req.session.username = user.username;
+                req.session.fullName = user.fullName;
+                req.session.email = user.email;
+                req.session.recipes = user.recipes;
+                req.session.liked = user.liked;
+                req.session.bookmarked = user.bookmarked;
+                req.session.skillLevel = user.skillLevel
+                console.log(req.session)
+                res.status(200).send("session updated!")
+            }
+        })
+})
+// give an array with the session elements you want, like [username, email]
+router.route("/session").get((req, res) => { //Use this to get session information
+    const query = req.body
+    if(!Array.isArray(query)){
+        res.status(422).send("Please send an array of attributes you want")
+    }
+    const toSend = {}
+    query.forEach(element => {
+        if(req.session.hasOwnProperty(element)){
+            toSend[element] = req.session[element]
+        }
+    });
+    res.status(200).json(toSend)
+})
+
+router.route("/logout").get((req, res) => {
+    console.log("reached logout")
+    req.session.destroy((error) => {
+        if(error){
+            console.log("logout fail")
+            res.status(500).send(error)
+        }else{
+            console.log("user logged out")
+            res.status(200).send("User logged out")
         }
     })
 })
