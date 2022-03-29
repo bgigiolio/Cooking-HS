@@ -9,7 +9,33 @@ let User = require("../models/user")
 app.use(express.urlencoded())
 app.use(express.json())
 
-router.route("/").post((req, res) => {
+
+/*
+User route guide!!!
+
+Each route will be called as follows:
+http://localhost:5000/api/users<route>
+*** will likely need to change on deployment ***
+example for route #3:
+http://localhost:5000/api/users/search
+
+-Add user: route #1
+-Find user with attributes exactly as sent: route #2
+-Find user with partial name search: route #3
+-Get session info: route #4
+-Log out (destroy session): route #5
+-Get user by ID: route #6
+-Update user _id's info: route #7
+-Remove user _id: route #8
+-Log user _id in (create their session): route #9
+
+*/
+
+//Send an object in the body of the type:
+//body ->
+//{username: <username>, passHash: <passHash>, attribute: <value>, ...}
+// ***MUST INCLUDE username AND passHash***
+router.route("/").post((req, res) => {//#1
     let userDetails = req.body
 
     if (!userDetails.hasOwnProperty("username")){
@@ -27,7 +53,12 @@ router.route("/").post((req, res) => {
 
 })
 
-router.route("/").get((req, res) => { //fields must match exactly
+//Finds a user with an exact username and passHash (good for logging in)
+//Send a query object of the type:
+//query -> 
+//{username: <username>, passHash: <passHash>, ...}
+//***WONT DO ANYTHING WITHOUT PROPER username AND passHash***
+router.route("/").get((req, res) => { //#2
     let query = req.query
     if(!req.query.hasOwnProperty("username")){
         query.username = ""
@@ -45,7 +76,13 @@ router.route("/").get((req, res) => { //fields must match exactly
     })
 })
 
-router.route("/search").get((req, res) => { //works for search bar (partial searches)
+
+//Finds a user with a partial string in their username
+//Send a query object of the type:
+//query ->
+//{username: <partial username>, attribute: <value>, ...}
+//Will add better search for other attributes if needed!
+router.route("/search").get((req, res) => { //#3
     let query = req.query
     if (query.hasOwnProperty("username")) {
         query["username"] = { $regex: query.username, $options: "i" };
@@ -59,11 +96,12 @@ router.route("/search").get((req, res) => { //works for search bar (partial sear
     })
 })
 
+//returns requested session information
 // In the query params, use something like this: 
 //req.query ->
 //{want: ["username", "etc", ...]}
 //make sure you use the key 'want' with an array of everything you want
-router.route("/session").get((req, res) => { //Use this to get session information
+router.route("/session").get((req, res) => { //#4
     const query = req.query.want
     if(!Array.isArray(query)){
         res.status(422).send("Please send an array of attributes you want")
@@ -77,7 +115,9 @@ router.route("/session").get((req, res) => { //Use this to get session informati
     res.status(200).json(toSend)
 })
 
-router.route("/logout").get((req, res) => {
+//logs a user out, destroying their current session cookie
+//nothing special here, just call this to kill the current session :)
+router.route("/logout").get((req, res) => {//#5
     console.log("reached logout")
     req.session.destroy((error) => {
         if(error){
@@ -90,7 +130,9 @@ router.route("/logout").get((req, res) => {
     })
 })
 
-router.route("/:id").get((req, res) => {
+//Gets a user by their id
+//also very simple, just send the id in the URL :)
+router.route("/:id").get((req, res) => {//#6
     User.findById(req.params.id, (error, result) => {
         if(error){
             res.status(500).send("internal server error")
@@ -102,7 +144,11 @@ router.route("/:id").get((req, res) => {
     })
 })
 
-router.route("/:id").patch((req, res) => {
+//updates specific parts of a user who has the same _id as the one passed it
+//attributes we want to update will be sent in the query in the form:
+//query ->
+//{attribute: <new value>, attribute2: <new value 2>, ...}
+router.route("/:id").patch((req, res) => {//#7
     User.findByIdAndUpdate(req.params.id, req.query, {new: true}, 
         (error, result) => {
         if(error){
@@ -115,7 +161,9 @@ router.route("/:id").patch((req, res) => {
     })
 })
 
-router.route("/:id").delete((req, res) => {
+//deletes user with _id equal to the one passed
+//Also very simple :)
+router.route("/:id").delete((req, res) => {//#8
     User.findByIdAndDelete(req.params.id, 
         (error, result) => {
         if(error){
@@ -128,9 +176,10 @@ router.route("/:id").delete((req, res) => {
     })
 })
 
-
-
-router.route("/login/:id").get((req, res) => {
+//log user with _id in.
+//This will update the current session to hold the user's non sensitive info
+//calling is simple, but must call route #4 to access this info in the frontend
+router.route("/login/:id").get((req, res) => {//#9
     User.findById(req.params.id, 
         (error, result) => {
             console.log(result)
