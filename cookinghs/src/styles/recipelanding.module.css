@@ -10,12 +10,13 @@
 
 .categoryButtons{
     display: flex;
+    margin-left: 10vw
 }
 
 .topCategories{
     display: flex;
     justify-content: space-between;
-    margin-left: 30vw;
+    /* margin-left: 15vw; */
 }
 
 .categoryButton{
@@ -35,4 +36,16 @@
 .categoryButton:focus{
     color: slategray;
     background-color: white;
+}
+
+.addBtn{
+    font-size: 42px;
+    margin-top: 17px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.addBtn:hover{
+    cursor: pointer;
+    color: lightgray;
 }

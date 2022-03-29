@@ -10,6 +10,9 @@ class RecipeLanding extends React.Component {
         return(
             <div>
                 <div className={styles.topCategories}>
+                    <div className={styles.addBtn}>
+                    <i className="fa-regular fa-square-plus"></i>
+                    </div>
                     <div className={styles.categoryButtons}>
                         <Button className={styles.categoryButton}>Chicken</Button>
                         <Button className={styles.categoryButton}>Quick Fix</Button>
