@@ -1,11 +1,9 @@
-import React, { useDebugValue } from 'react';
+import React from 'react';
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabPanel from "@mui/lab/TabPanel";
 import axios from 'axios'; // new!!
-import { BrowserRouter, Routes, Route, Link} from 'react-router-dom';
-
 import Login from "./../Login";
 import Signup from "./../Signup";
 import './styles.css';
@@ -16,6 +14,7 @@ const {SHA256} = require('crypto-js'); // new!!
 class LoginMain extends React.Component {
     state = {
         tabVal: 0,
+        host: "http://localhost:5000/",
         _id: "",
         //Login
         valid: false,
@@ -51,7 +50,7 @@ class LoginMain extends React.Component {
             valid: false
         }, () =>console.log("valid login: " + this.state.valid));
         if(this.state.tabVal === 0){
-            axios.get('http://localhost:5000/api/users', {params :{
+            axios.get(this.state.host + 'api/users', {params :{
                 username : user.username,
                 passHash : SHA256(user.password).toString()
               }}).then(async (response) => {
@@ -66,6 +65,7 @@ class LoginMain extends React.Component {
                         valid: true,
                         _id: res[0]._id,
                         currentUser: {
+                            _id: res[0]._id,
                             username: user.username, 
                             email: res[0].email, 
                             fullName: res[0].fullName, 
@@ -76,6 +76,8 @@ class LoginMain extends React.Component {
               }, (error) => {
                 console.log(error);
               });
+        } else{
+            axios.get(this.state.host + 'api/users/logout')
         }
     };
 
@@ -111,7 +113,7 @@ class LoginMain extends React.Component {
             valid = -5
         }
         if (valid === 1){
-            axios.post('http://localhost:5000/api/users', 
+            axios.post(this.state.host + 'api/users', 
             {
                 username : sUser.username,
                 passHash : SHA256(sUser.password).toString(),
@@ -131,7 +133,7 @@ class LoginMain extends React.Component {
 
 
     render() {
-        this.state.currentUser = this.props
+        // this.state.currentUser = this.props
         return(
         <div id="LoginMain">
             <div id="TabsHolder">
@@ -143,6 +145,8 @@ class LoginMain extends React.Component {
                 <TabPanel value={this.state.tabVal} index={0}>
                     {!this.state.tabVal ?
                         <Login
+                        host={this.state.host}
+                        _id={this.state._id}
                         username={this.state.username}
                         password={this.state.password}
                         recieveInput={this.recieveInputLogin}
