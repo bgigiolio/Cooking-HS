@@ -155,7 +155,7 @@ router.delete('/api/recipes/:id', mongoChecker, async (req, res) => {
     }
 
     try {
-		const recipe = await Recipe.findOneAndRemove({_id: id})
+		const recipe = await Recipe.findOneAndUpdate({_id: id}, {deleted: true})
 		if (!recipe) {
 			res.status(404).send()
 		} else {   
