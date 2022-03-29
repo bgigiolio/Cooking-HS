@@ -2,38 +2,36 @@ import React, { useState } from 'react';
 import { List, ListGroup, ListGroupItem, Card, CardBody, CardHeader, Button, Input, Label, FormGroup, Col } from 'reactstrap';
 import { Fraction } from 'fractional';
 import { Link } from 'react-router-dom';
-import { RECIPES } from '../../shared/RecipeList';
-import { COMMENTS } from '../../shared/RecipeComments';
 import '../../styles/recipeview.css';
 import '../../styles/colorpalette.css';
 import ReviewModal from '../recipeForms/ReviewModalComponent';
 import ReportModal from '../report/ReportModalComponent';
 
 function RecipeSingle(props) {
-    let [recipes] = useState(RECIPES);
-    let [comments] = useState(COMMENTS);
-    const chosenRecipe = recipes[props.id] ? recipes[props.id] : null;
-    const chosenComment = comments[props.id] ? comments[props.id] : null;
+    const recipes = props.recipes
+    const chosenRecipe = props.chosenRecipe;
+    const chosenComment = chosenRecipe.comments
     let [servingSize, setServingSize] = useState(chosenRecipe.servings);
     let [scale, setScale] = useState(1);
 
-    const sumWithInitial = chosenComment.reduce(
-        (previousValue, currentValue) => {
-        return(previousValue.rating ? previousValue.rating + currentValue.rating : previousValue + currentValue.rating)
-        },
-    );
-    const averageRating = sumWithInitial/chosenComment.length
+    // Getting average rating
+    // const sumWithInitial = chosenComment.reduce(
+    //     (previousValue, currentValue) => {
+    //     return(previousValue.rating ? previousValue.rating + currentValue.rating : previousValue + currentValue.rating)
+    //     },
+    // );
+    const averageRating = chosenRecipe.averageRating
 
     const timeline = (par) => {
         let parent = par;
-        let line = [props.id];
+        let line = [chosenRecipe._id];
         while (parent !== '') {
             line.push(parent);
-            parent = recipes[parent].parent;
+            parent = recipes.filter(recipe => recipe._id === parent)[0].parent
         }
         line.reverse()
         const timelineView = line.map((step, index) => {
-            const parentTitle = recipes[step].title
+            const parentTitle = recipes.filter(recipe => recipe._id === step)[0].title
             const link = '../recipes/' + step
             return (
                 <li>
@@ -137,8 +135,6 @@ function RecipeSingle(props) {
             </>
         );
     }
-
-    let [commentCount, setCommentCount] = useState(3)
     const [reportModal, setReportModal] = useState(false);
     const [reportId, setReportId] = useState();
     const toggleReport = (e) => {
@@ -146,34 +142,6 @@ function RecipeSingle(props) {
         setReportId(targetId);
         setReportModal(!reportModal); 
     }
-
-    const commentsView = chosenComment.slice(0,commentCount).map((comment, index) => {
-        const rating = comment.rating;
-        const reportId = 'reportIcon' + (index + 1);
-        return (
-            <>
-                <Card>
-                    <CardHeader>
-                        {/* link to commenter user profile here */}
-                        <span className='userLink'>{comment.user}</span> says: 
-                    </CardHeader>
-                    <CardBody>
-                        <div>
-                            {starRating(rating)}
-                        </div>
-                        {comment.content}
-                        <Button 
-                            className='reportButton'
-                            onClick={toggleReport}
-                            color="transparent"
-                        >
-                            <img src='../report.png' alt='' id={reportId} className='reportIcon'/>
-                        </Button>
-                    </CardBody>
-                </Card>
-            </>
-        )
-    })
 
     const [reviewModal, setReviewModal] = useState(false);
     const toggleReview = () => setReviewModal(!reviewModal);
@@ -197,30 +165,29 @@ function RecipeSingle(props) {
             {/* <img src='../report.png' alt=''></img> */}
             <ListGroup>
                 <ListGroupItem row>
-                <Col md={11}>
-                    <h1>{chosenRecipe.title}</h1>
-                </Col>
-                <Button 
-                    className='reportButton'
-                    onClick={toggleReport}
-                    color="transparent"
-                    id='topReportButton' 
-                >
-                    <img src='../report.png' alt='' id='reportIcon0' className='reportIcon'/>
-                </Button>
-                <Link to="/forkrecipe"
-                    state={{chosenRecipe: chosenRecipe}}
-                    >
-                    <img src='../fork.png'
-                        alt=""
-                        id="newRecipeButton"
-                        />
-                </Link>
-                <div id='averageRating'>
-                    {starRating(averageRating)}
-                </div>
-                {/* link to author user profile here */}
+                    <Col md={10}>
+                        <h1>{chosenRecipe.title}</h1>
+                    </Col>
+                    <Col md={2}>
+                        <Button 
+                            onClick={toggleReport}
+                            color="danger"
+                            outline
+                        >
+                            <i id='reportIcon0' className="fa-solid fa-triangle-exclamation"></i>
+                        </Button>
+                        <Link to="./forkrecipe" state={{chosenRecipe: chosenRecipe}}>
+                            <Button color="secondary" outline id="forkButton">
+                                <i className="fa-solid fa-code-fork"></i>
+                            </Button>
+                        </Link>
+                    </Col>
+                    <div id='averageRating'>
+                        {starRating(averageRating)}
+                    </div>
+                    {/* link to author user profile here */}
                     {chosenRecipe.author ? <span> By <span className='userLink'>{chosenRecipe.author}</span></span> : null}
+                    {chosenRecipe.difficulty ? <span style={{float: "right"}}> Difficulty: {chosenRecipe.difficulty}/10 </span> : null}
                 </ListGroupItem>
                 <ListGroupItem>
                     {timeline(chosenRecipe.parent)}
@@ -284,9 +251,9 @@ function RecipeSingle(props) {
                     >
                         Add Rating and Review
                     </Button>
-                    {commentsView}
+                    {/* {commentsView} */}
                     <Button
-                        onClick={() => setCommentCount(commentCount+3)}
+                        // onClick={() => setCommentCount(commentCount+3)}
                         id='loadReviewButton'
                     >
                         Load More Reviews

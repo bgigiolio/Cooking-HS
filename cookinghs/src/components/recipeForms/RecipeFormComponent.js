@@ -316,6 +316,30 @@ function RecipeForm(props) {
             <div className="spacer" />
             {stepsForm()}
             <div className="spacer" />
+            <FormGroup row>
+                <Label
+                    for="difficulty"
+                    md={2}
+                >
+                    Difficulty
+                </Label>
+                <Col md={6} style={{display:"flex", alignItems: "center"}}>
+                    <Input
+                        id="difficulty"
+                        name="difficulty"
+                        type="range"
+                        min='1'
+                        max='10'
+                        step='1'
+                        value={props.difficulty}
+                        onChange={props.handleInputChange}
+                    />
+                </Col>
+                <Label md={2}>
+                    {props.difficulty}/10
+                </Label>
+            </FormGroup>
+            <div className="spacer" />
             <Button type="button"
                     className="color-primary-bg"
                     color="info"

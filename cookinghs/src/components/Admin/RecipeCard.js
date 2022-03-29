@@ -8,7 +8,9 @@ import {connect} from 'react-redux';
 
 const RecipeCard = ({recipeData, deleteRecipe}) => {
     return(
-                <Card className={styles.user}>
+      <div className={styles.cardContainer}>
+
+<Card className={styles.user}>
                 <CardImg
       alt="Card image cap"
       src={recipeData.img}
@@ -16,7 +18,7 @@ const RecipeCard = ({recipeData, deleteRecipe}) => {
       top
       className={styles.user_img}
     />
-    <CardBody>
+    <CardBody className={styles.cardBody}>
       <CardTitle tag="h5">
         {recipeData.name}
       </CardTitle>
@@ -35,6 +37,9 @@ const RecipeCard = ({recipeData, deleteRecipe}) => {
       </Button>
     </CardBody>
   </Card>
+
+      </div>
+              
                 
     );
 

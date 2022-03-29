@@ -41,10 +41,8 @@
 }
 
 #newRecipeButton {
-    position: absolute;
-    top: 7px;
-    right: 10px;
-    height: max(32px,3vw);
+    float: right;
+    font-size: max(32px,3vw);
 }
 
 #recipeContainer {
@@ -106,29 +104,82 @@ h1 {
 
 .reportButton {
     height: 20px;
+    width: 20px;
     padding: 0px;
-    position: absolute; 
+    position: absolute;
     top: 10px; 
     right: 10px
 }
 
 .reportIcon {
-    height: 16px;
-    vertical-align:top
-}
-
-#topReportButton {
-    height: max(20px,2.8vw);
-    padding: 0px;
-    position:absolute;
-    top: 7px;
-    right:40px;
-}
-
-#reportIcon0 {
-    height: max(20px,2.8vw)
+    vertical-align: top;
 }
 
 #servingSize {
     width:60px
+}
+
+.recipeImg{
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.r-card{
+    width: 18rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 0 1 calc(25% - 1em);
+    justify-content: space-between;
+    margin-top: 2rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+.r-card:hover{
+    color: rgb(116, 116, 116);
+
+}
+
+.articlename{
+    font-weight: bold;
+    font-size: large;
+    text-align: center;
+    color: #000;
+    width: 16rem;
+}
+
+.articlename:hover{
+    color: rgb(116, 116, 116);
+}
+
+.date-created{
+    color: slategray;
+    font-size: small;
+    padding: 2px;
+    width: 16rem;
+}
+
+.author-name{
+    font-size: medium;
+    padding: 2px;
+    color: #000;
+    width: 16rem;
+}
+
+.card-body{
+    width: 18rem;
+    overflow: scroll;
+    height: 130px;
+}
+
+#forkButton {
+    margin-left: 10px
 }

@@ -1,10 +1,9 @@
-export const RECIPES = 
+RECIPES = 
 {
     "1" : {
     author: 'Archer',
-    date: "11-12-2021",
     parent: '',
-    title: 'Original Mongolian ChickenChickenChicken',
+    title: 'Original Mongolian Chicken',
     description: 'If Mongolian beef is your go to when it comes to Chinese take-out, I challenge you to try this version made with chicken instead. The chicken is melt-in-your-mouth tender and requires no marinating time as beef would. Serve over rice.',
     ingredients: [
         {
@@ -83,7 +82,6 @@ export const RECIPES =
 
     "2" : {
     author: 'Lana',
-    date: "14-12-2021",
     parent: '',
     title: 'Original Fried Chicken',
     description: "As simple, as easy, as tasty as it gets! With this classic fried chicken recipe, you can't go wrong - so go right and fry up some chicken tonight!",
@@ -135,7 +133,6 @@ export const RECIPES =
 
     "3" : {
     author: 'Mallory',
-    date: "11-11-2021",
     parent: '',
     title: 'Original Spaghetti Bolognese',
     description: 'Recipe passed on from my Italian grandfather. The ultimate comfort food. Leftovers freeze nicely!',
@@ -225,7 +222,6 @@ export const RECIPES =
 
     "4" : {
     author: 'Mallory',
-    date: "01-01-2022",
     parent: '2',
     title: 'Mallory\'s Fried Chicken',
     ingredients: [
@@ -276,7 +272,6 @@ export const RECIPES =
 
     "5" : {
         author: 'Cyril',
-        date: "01-02-2022",
         parent: '4',
         title: 'Cyril\'s Fried Chicken',
         ingredients: [
@@ -327,7 +322,6 @@ export const RECIPES =
 
     "6" : {
     author: 'Archer',
-    date: "12-01-2022",
     parent: '5',
     title: 'Archer\'s Fried Chicken',
     ingredients: [
@@ -378,7 +372,6 @@ export const RECIPES =
 
     "7" : {
     author: 'Cyril',
-    date: "11-10-2021",
     parent: '1',
     title: 'Cyril\'s Mongolian Chicken',
     description: 'If Mongolian beef is your go to when it comes to Chinese take-out, I challenge you to try this version made with chicken instead. The chicken is melt-in-your-mouth tender and requires no marinating time as beef would. Serve over rice.',
@@ -457,3 +450,12 @@ export const RECIPES =
     image: '../mongolianchicken.jpg'
     },
 };
+
+const myJSON = JSON.stringify(RECIPES)
+
+var fs = require('fs');
+fs.writeFile("test.txt", myJSON, function(err) {
+    if (err) {
+        console.log(err);
+    }
+});
