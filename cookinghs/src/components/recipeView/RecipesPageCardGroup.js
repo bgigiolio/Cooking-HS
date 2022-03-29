@@ -7,24 +7,24 @@ import { RECIPES } from '../../shared/RecipeList';
 import '../../styles/recipeview.css';
 import '../../styles/colorpalette.css';
 import { connect } from "react-redux";
+import { setInitialRecipes } from "../../redux/RecipesPage/RecipesPage-actions";
+import axios from 'axios';
+import {useEffect } from 'react';
 
-// use cardgroup
 
 const RecipesPageCardGroup = ({ recipes }) => {
-    // let [recipes] = useState(RECIPES);
-    console.log(recipes);
+
     return (
         <div>
             <Container>
             <Row>
-            {Object.entries(recipes).map(([key, value]) => (
+            {recipes.map((value) => (
                 <Col lg={4} md={6}>
                  
                  <Card className="r-card article">
-                 <Link to={key}>
+                 <Link to={value._id}>
                 
                 <CardImg src={value.image} alt={value.title} className="recipeImg" top></CardImg>
-                {/* <img src={value.image} alt={value.title} className="articleimage"></img> */}
                 <CardBody className='card-body'>
                     {/* maybe bold this */}
                     <CardTitle className="articlename">
@@ -33,80 +33,33 @@ const RecipesPageCardGroup = ({ recipes }) => {
                     <CardSubtitle className='author-name'>
                         By: {value.author}
                     </CardSubtitle>
-                    {/* parse the date to remove the time etc. */}
+                    {/* remove extra datetime values */}
                     <CardSubtitle className='date-created'>
-                    Date Created: {value.date}
+                    Date Created: {value.date.slice(0,10)}
                     </CardSubtitle>
                 </CardBody>
             
                 </Link>
             </Card>
-
-                 
                 </Col>
             ))}
             </Row>
-
             </Container>
-
         </div>
-    )
-            }
+        )
+    }
 
-    // Object.entries(recipes).map(([key, value]) => {
-    //     return(
-    //         <Col lg={4} md={6}>
-    //             <Link to={key}>
-    //             <Card className="r-card article">
-                
-    //                 <CardImg src={value.image} alt={value.title} className="recipeImg" top></CardImg>
-    //                 {/* <img src={value.image} alt={value.title} className="articleimage"></img> */}
-    //                 <CardBody className='card-body'>
-    //                     {/* maybe bold this */}
-    //                     <CardTitle className="articlename">
-    //                     {value.title}
-    //                     </CardTitle>
-    //                     <CardSubtitle className='author-name'>
-    //                         By: {value.author}
-    //                     </CardSubtitle>
-    //                     <CardSubtitle className='date-created'>
-    //                     Date Created: {value.date}
-    //                     </CardSubtitle>
-    //                 </CardBody>
-                
-
-    //             </Card>
-    //             </Link>
-    //             <br></br>
-    //         </Col>
-        // )
-    // });
-
-    // filter code here!!
-
-//     return (
-//         <>
-//             <h2 id="landingheader">All Recipes</h2>
-//             <Link to="/writerecipe">
-//                 <img src='../plus.png'
-//                     alt=""
-//                     id="newRecipeButton"
-//                     />
-//             </Link>
-//             <Row>
-//                 {recipeCards}
-//             </Row>
-//         </>
-//     )
-// }
-
-// export default RecipeLanding;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setInitialRecipes: (recipes) => dispatch(setInitialRecipes(recipes)),
+    }
+  }
 
 const mapStateToProps = state => {
     return {
-        recipes: state.RecipesPage
+        recipes: state.Recipes.recipes
     }
 
 }
 
-export default connect(mapStateToProps)(RecipesPageCardGroup);
+export default connect(mapStateToProps, mapDispatchToProps)(RecipesPageCardGroup);
