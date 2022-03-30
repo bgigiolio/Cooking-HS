@@ -2,7 +2,7 @@ import React, { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Fraction } from 'fractional'; 
 import { connect } from 'react-redux';
-import { postRecipe, editRecipe } from '../../redux/recipePage/recipe-actions';
+import { postRecipe, putRecipe } from '../../redux/recipePage/recipe-actions';
 
 import RecipeForm from './RecipeFormComponent';
 
@@ -182,8 +182,14 @@ function WriteRecipe(props) {
         const recipe = parseForm()
         const valid = checkForm(recipe)
         if (valid) {
-            props.postRecipe(recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, 5, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image)
-            handleRedirect()
+            if (props.flag === "fork" || props.flag === "new") {
+                props.postRecipe(recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, 5, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image);
+                handleRedirect()
+            }
+            else if (props.flag === "edit") {
+                props.putRecipe(recipe._id, recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.difficulty, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image);
+                handleRedirect()
+            }
         }
         else {
             alert("Please double check your recipe!")
@@ -244,7 +250,7 @@ function WriteRecipe(props) {
 const mapDispatchtoProps = (dispatch) => {
     return{
         postRecipe: (author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image) => {dispatch(postRecipe(author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image))},
-        editRecipe: (_id, author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image) => {dispatch(editRecipe(_id, author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image))},
+        putRecipe: (_id, author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image) => {dispatch(putRecipe(_id, author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image))},
     }
 }
 
