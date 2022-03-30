@@ -22,6 +22,22 @@ function RecipeForm(props) {
                         {index + 1}.
                     </Label>
                     <Col md={5}>
+                        {!index ?
+                        <>
+                            <Input
+                                id="ingredientname"
+                                name='name'
+                                type="text"
+                                placeholder='Ingredient e.g. Chicken Wings'
+                                value={ingredient.name}
+                                onChange={(e) => props.handleIngredientChange(index, e)}
+                                invalid={ingredient.name === ''}
+                            />
+                            <FormFeedback>
+                                Please provide at least one ingredient for your recipe!
+                            </FormFeedback>
+                        </>
+                         :
                         <Input
                             id="ingredientname"
                             name='name'
@@ -30,6 +46,9 @@ function RecipeForm(props) {
                             value={ingredient.name}
                             onChange={(e) => props.handleIngredientChange(index, e)}
                         />
+                    }
+                        
+                        
                     </Col>
                     <Col md={2}>
                         <Input
@@ -103,15 +122,33 @@ function RecipeForm(props) {
                         {index+1}. 
                     </Label>
                     <Col md={10}>
-                    <Input
-                        id="steps"
-                        name="steps"
-                        type="textarea"
-                        rows="3"
-                        placeholder='e.g. Preheat oven to 350 degrees F...'
-                        value={step}
-                        onChange={(e) => props.handleStepChange(index, e)}
-                    />
+                        {!index ? 
+                        <>
+                            <Input
+                                id="steps"
+                                name="steps"
+                                type="textarea"
+                                rows="3"
+                                placeholder='e.g. Preheat oven to 350 degrees F...'
+                                value={step}
+                                onChange={(e) => props.handleStepChange(index, e)}
+                                invalid={step === ""}
+                            />
+                            <FormFeedback>
+                                Please provide at least one step for your recipe!
+                            </FormFeedback>
+                        </> :
+                        <Input
+                            id="steps"
+                            name="steps"
+                            type="textarea"
+                            rows="3"
+                            placeholder='e.g. Preheat oven to 350 degrees F...'
+                            value={step}
+                            onChange={(e) => props.handleStepChange(index, e)}
+                        />
+                        }
+                    
                     </Col>
                     <Col md={1}>
                     {
