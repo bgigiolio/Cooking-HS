@@ -1,0 +1,8 @@
+// export const RECIPES_LOADING = "RECIPES_LOADING"
+// export const RECIPES_FAILED = "RECIPES_FAILED"
+// export const ADD_RECIPES = "ADD_RECIPES"
+
+export const GET_COMMENT = "GET_COMMENT"
+export const POST_COMMENT = "POST_COMMENT"
+export const DELETE_COMMENT = "DELETE_COMMENT"
+// export const LOAD_RECIPE = "LOAD_RECIPE"

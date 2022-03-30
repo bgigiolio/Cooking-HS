@@ -12,25 +12,6 @@ const IngredientsSchema = new mongoose.Schema({
     unit: String
 })
 
-const CommentSchema = new mongoose.Schema({
-    recipeid: {
-        type: String,
-        required: true
-    },
-    user: {
-        type: String,
-        required: true
-    },
-    rating: {
-        type: Number,
-        required: true
-    },
-    content: {
-        type: String,
-        required: true
-    }
-})
-
 const RecipeSchema = new mongoose.Schema({
     author: {
         type: String,
@@ -63,7 +44,6 @@ const RecipeSchema = new mongoose.Schema({
     difficulty: {type: Number, required: true},
     image: String,
     averageRating: Number,
-    // comments: [CommentSchema]
 })
 
 const Recipe = mongoose.model('Recipe', RecipeSchema)

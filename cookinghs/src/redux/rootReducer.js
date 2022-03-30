@@ -6,6 +6,7 @@ import AdminFlagsReducer from './AdminPage/AdminFlags/AdminFlags-reducer';
 import UserRecipesReducer from './UserPage/UserRecipes/UserRecipes-reducer';
 import { RecipesReducer } from './recipePage/recipe-reducer';
 import RecipesPageReducer from './RecipesPage/RecipesPage-reducer';
+import CommentsReducer from './CommentPage/comment-reducer';
 
 const rootReducer = combineReducers({
     AdminUsers: AdminUsersReducer,
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
     AdminFlags: AdminFlagsReducer,
     UserRecipes: UserRecipesReducer,
     Recipes: RecipesReducer,
-    RecipesPage: RecipesPageReducer
+    RecipesPage: RecipesPageReducer,
+    Comments: CommentsReducer
 });
 
 export default rootReducer;
