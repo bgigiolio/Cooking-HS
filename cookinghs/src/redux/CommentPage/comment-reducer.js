@@ -52,3 +52,5 @@ export const CommentReducer = (
             return state;
     }
 };
+
+export default CommentReducer;
