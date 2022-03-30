@@ -34,7 +34,7 @@ function RecipeSingle(props) {
             const parentTitle = recipes.filter(recipe => recipe._id === step)[0].title
             const link = '../recipes/' + step
             return (
-                <li>
+                <li key={index}>
                     {index !== line.length - 1 ? <Link to={link}>{parentTitle}</Link> : <>{parentTitle} (Current)</>}
                 </li>
             )
