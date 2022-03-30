@@ -11,8 +11,7 @@ import '../../styles/recipeform.css';
 const AUTHOR = 'admin'
 
 function WriteRecipe(props) {
-    const id = props.id
-    const chosenRecipe = props.recipes.filter((recipe) => recipe._id === id)[0]
+    const chosenRecipe = props.chosenRecipe
     const [recipe, setRecipe] = useState(() => 
         {
         switch (props.flag) {
@@ -146,14 +145,19 @@ function WriteRecipe(props) {
         })
     }
 
-    const checkForm = function() {
+    const parseForm = function() {
         const checkedRecipe = JSON.parse(JSON.stringify(recipe))
         //remove empty ingredients
         checkedRecipe.ingredients = checkedRecipe.ingredients.filter((ingredient) => ingredient.name !== '')
         //convert ingredient quantities to float
         checkedRecipe.ingredients.forEach(ingredient => {
-            ingredient.quantity = new Fraction(ingredient.quantity)
-            ingredient.quantity = ingredient.quantity.numerator/ingredient.quantity.denominator
+            if (ingredient.quantity !== null) {
+                ingredient.quantity = new Fraction(ingredient.quantity)
+                ingredient.quantity = ingredient.quantity.numerator/ingredient.quantity.denominator
+            }
+            else {
+                ingredient.quantity = ''
+            }
         })
         //remove empty steps
         checkedRecipe.steps = checkedRecipe.steps.filter((step) => step.trim() !== '')
@@ -161,16 +165,35 @@ function WriteRecipe(props) {
         return checkedRecipe
     }
 
+    const checkForm = (recipe) => {
+        console.log(recipe)
+        //check required fields: title, ingredient0, step0
+        if (recipe.title === '') {return false}
+        recipe.ingredients.map((ingredient) => {
+            if (ingredient.name === '') {return false}
+            if (ingredient.quantity !== '' && ingredient.quantity === NaN) {console.log('bad quantity'); return false}
+        })
+        recipe.steps.map((step) => {if (step === ''){return false}})
+        return true
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const recipe = parseForm()
+        const valid = checkForm(recipe)
+        if (valid) {
+            props.postRecipe(recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, 5, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image)
+            handleRedirect()
+        }
+        else {
+            alert("Please double check your recipe!")
+        }
+    }
+
     let navigate = useNavigate()
     const handleRedirect = () => {
         let path = '/recipes'; 
         navigate(path);
-    }
-
-    const handleSubmit = (e) => {
-        console.log(checkForm())
-        props.postRecipe(recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, 5, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image)
-        // handleRedirect();
     }
 
     const forkRecipe = () => {
@@ -218,12 +241,6 @@ function WriteRecipe(props) {
     )
 }
 
-const mapStatetoProps = state => {
-    return{
-        Recipes: state.Recipes
-    }
-}
-
 const mapDispatchtoProps = (dispatch) => {
     return{
         postRecipe: (author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image) => {dispatch(postRecipe(author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image))},
@@ -232,5 +249,5 @@ const mapDispatchtoProps = (dispatch) => {
 }
 
 
-export default connect(mapStatetoProps, mapDispatchtoProps)(WriteRecipe);
+export default connect(null, mapDispatchtoProps)(WriteRecipe);
 

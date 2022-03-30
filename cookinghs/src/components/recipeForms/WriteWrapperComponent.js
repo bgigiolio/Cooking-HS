@@ -15,10 +15,20 @@ function WriteWrapper(props) {
         )
     }
 
-    else {
+    else if (id) {
         const recipes = props.recipes.recipes
+        const chosenRecipe = recipes.filter(recipe => recipe._id === id)[0]
+
         return(
-            <WriteRecipe flag={props.flag} recipes={recipes} id={id}/>
+            <>
+                {chosenRecipe ? <WriteRecipe flag={props.flag} chosenRecipe={chosenRecipe}/> : <p>404 Recipe Not Found</p>}
+            </>
+        )
+    }
+
+    else {
+        return(
+            <WriteRecipe flag={props.flag} chosenRecipe={null}/> 
         )
     }
     
