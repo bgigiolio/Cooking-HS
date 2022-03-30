@@ -25,10 +25,7 @@ export const RecipesReducer = (
         case ActionTypes.EDIT_RECIPE:
             alert("Edited recipe successfully")
             const editedrecipe = action.payload;
-            let editedrecipeinstate = state.recipes.find(recipe => recipe._id === recipe._id)
-            editedrecipeinstate = editedrecipe
-            return { ...state }
-
+            return { ...state, recipes: state.recipes.filter((recipe) => recipe._id !== editedrecipe._id).concat(editedrecipe) }
 
         case ActionTypes.DELETE_RECIPE:
             const recipeid = action.payload;

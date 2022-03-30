@@ -1,20 +1,43 @@
-import React from 'react';
-import { Form, FormGroup, Label, Input, FormText, Col, Button } from 'reactstrap';
+import React, { useState } from 'react';
+import { Form, FormGroup, Label, Input, FormText, FormFeedback, Col, Button } from 'reactstrap';
 import '../../styles/recipeform.css'
 
+const required = (val) => val && val.length;
+const maxLength = (len) => (val) => !(val) || (val.length <= len);
+const minLength = (len) => (val) => val && (val.length >= len);
+const isNumber = (val) => !isNaN(Number(val));
+const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
+
 function RecipeForm(props) {
+    const [cannot, usecannot] = useState(0)
     const ingredientsForm = function()  {
         let ingredientInput = props.ingredients.map((ingredient, index) => {
             return(
                 <FormGroup row key={index}>
                     <Label
                         for="ingredient"
-                        md={2}
+                        md={1}
                         className='numberedLabel'
                     >
                         {index + 1}.
                     </Label>
                     <Col md={5}>
+                        {!index ?
+                        <>
+                            <Input
+                                id="ingredientname"
+                                name='name'
+                                type="text"
+                                placeholder='Ingredient e.g. Chicken Wings'
+                                value={ingredient.name}
+                                onChange={(e) => props.handleIngredientChange(index, e)}
+                                invalid={ingredient.name === ''}
+                            />
+                            <FormFeedback>
+                                Please provide at least one ingredient for your recipe!
+                            </FormFeedback>
+                        </>
+                         :
                         <Input
                             id="ingredientname"
                             name='name'
@@ -23,6 +46,9 @@ function RecipeForm(props) {
                             value={ingredient.name}
                             onChange={(e) => props.handleIngredientChange(index, e)}
                         />
+                    }
+                        
+                        
                     </Col>
                     <Col md={2}>
                         <Input
@@ -34,7 +60,7 @@ function RecipeForm(props) {
                             onChange={(e) => props.handleIngredientChange(index, e)}
                         />
                     </Col>
-                    <Col md={2}>
+                    <Col md={3}>
                         <Input
                             id="unit"
                             name="unit"
@@ -66,7 +92,10 @@ function RecipeForm(props) {
         return (
             <>
                 <FormGroup row>
-                    <Label md={2}>Ingredients</Label>
+                    <Label>Ingredients</Label>
+                </FormGroup>
+                {ingredientInput}
+                <FormGroup row>
                     <Col>
                         <Button type="button"
                             className="float-end color-tertiary-bg"
@@ -77,7 +106,6 @@ function RecipeForm(props) {
                         </Button>
                     </Col>
                 </FormGroup>
-                {ingredientInput}
             </>
         )
     }
@@ -88,21 +116,39 @@ function RecipeForm(props) {
                 <FormGroup row key={index}>
                     <Label
                         for="steps"
-                        md={2}
+                        md={1}
                         className='numberedLabel'
                     >
                         {index+1}. 
                     </Label>
-                    <Col md={9}>
-                    <Input
-                        id="steps"
-                        name="steps"
-                        type="textarea"
-                        rows="3"
-                        placeholder='e.g. Preheat oven to 350 degrees F...'
-                        value={step}
-                        onChange={(e) => props.handleStepChange(index, e)}
-                    />
+                    <Col md={10}>
+                        {!index ? 
+                        <>
+                            <Input
+                                id="steps"
+                                name="steps"
+                                type="textarea"
+                                rows="3"
+                                placeholder='e.g. Preheat oven to 350 degrees F...'
+                                value={step}
+                                onChange={(e) => props.handleStepChange(index, e)}
+                                invalid={step === ""}
+                            />
+                            <FormFeedback>
+                                Please provide at least one step for your recipe!
+                            </FormFeedback>
+                        </> :
+                        <Input
+                            id="steps"
+                            name="steps"
+                            type="textarea"
+                            rows="3"
+                            placeholder='e.g. Preheat oven to 350 degrees F...'
+                            value={step}
+                            onChange={(e) => props.handleStepChange(index, e)}
+                        />
+                        }
+                    
                     </Col>
                     <Col md={1}>
                     {
@@ -125,8 +171,11 @@ function RecipeForm(props) {
         })
         return (
             <>
+                <FormGroup>
+                    <Label>Steps</Label>
+                </FormGroup>
+                {stepsInput}
                 <FormGroup row>
-                    <Label md={2}>Steps</Label>
                     <Col>
                         <Button type="button"
                             className="float-end color-tertiary-bg"
@@ -137,13 +186,12 @@ function RecipeForm(props) {
                         </Button>
                     </Col>
                 </FormGroup>
-                {stepsInput}
             </>
         )
     }
 
     return(
-        <Form>
+        <Form noValidate onSubmit={props.handleSubmit}>
             <div className="spacer" />
             <FormGroup row>
                 <Col md={8}>
@@ -161,7 +209,12 @@ function RecipeForm(props) {
                                 type="text"
                                 value={props.title}
                                 onChange={props.handleInputChange}
+                                valid={props.title !== ''}
+                                invalid={props.title === ''}
                             />
+                            <FormFeedback>
+                                Please give your recipe a title
+                            </FormFeedback>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
@@ -172,6 +225,7 @@ function RecipeForm(props) {
                         </Label>
                         <Col>
                             <Input
+                                required
                                 id="description"
                                 name="description"
                                 placeholder="Share the story behind your recipe and what makes it so special"
@@ -340,10 +394,10 @@ function RecipeForm(props) {
                 </Label>
             </FormGroup>
             <div className="spacer" />
-            <Button type="button"
+            <Button type="submit"
                     className="color-primary-bg"
                     color="info"
-                    onClick={props.handleSubmit}>
+                    >
                 Post Recipe
             </Button>
         </Form>

@@ -18,7 +18,7 @@ const RecipesPageCardGroup = ({ recipes }) => {
             <Container>
             <Row>
             {recipes.map((value) => (
-                <Col lg={4} md={6}>
+                <Col lg={4} md={6} key={value._id}>
                  
                  <Card className="r-card article">
                  <Link to={value._id}>
