@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Fraction } from 'fractional'; 
 import { connect } from 'react-redux';
 import { postRecipe, putRecipe } from '../../redux/recipePage/recipe-actions';
+import { addImage } from '../../actions/images-actions';
 
 import RecipeForm from './RecipeFormComponent';
 
@@ -20,7 +21,8 @@ function WriteRecipe(props) {
                     ...chosenRecipe, 
                     parent: chosenRecipe._id,
                     author: AUTHOR,
-                    image: ''
+                    tempimage: 'https://res.cloudinary.com/yongdk1/image/upload/v1648748246/recipe-add-photo_ortqgg.png',
+                    imagefile: null
                 }
             case "edit":
                 return {
@@ -53,10 +55,13 @@ function WriteRecipe(props) {
                     cooktime: '',
                     servings: '',
                     difficulty: 5,
-                    image: ''
+                    tempimage: 'https://res.cloudinary.com/yongdk1/image/upload/v1648748246/recipe-add-photo_ortqgg.png',
+                    imagefile: null
                 };
             }
-        })
+        }
+    )
+
     const handleInputChange = e => {
         const target = e.target;
         const value = target.value;
@@ -72,6 +77,21 @@ function WriteRecipe(props) {
                 ...recipe,
                 [name] : value
             }); 
+        }
+    }
+
+    const handleImageChange = e => {
+        const target = e.target;
+        const file = target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file)
+        reader.onloadend = () => {
+            setRecipe({
+                ...recipe,
+                imagefile: reader.result
+                }
+            )
+            console.log(recipe.imagefile)
         }
         
     }
@@ -236,6 +256,7 @@ function WriteRecipe(props) {
                 {...recipe} 
                 handleSubmit = {handleSubmit}
                 handleInputChange = {handleInputChange}
+                handleImageChange = {handleImageChange}
                 handleIngredientChange = {handleIngredientChange}
                 handleStepChange = {handleStepChange}
                 addIngredient = {addIngredient}

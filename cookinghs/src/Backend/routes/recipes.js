@@ -9,6 +9,19 @@ const { mongoChecker, isMongoError } = require("./helpers/mongo_helpers");
 
 const { ObjectId } = require('mongodb');
 
+// multipart middleware: allows you to access uploaded file from req.file
+const multipart = require('connect-multiparty');
+const multipartMiddleware = multipart();
+
+// cloudinary: configure using credentials found on your Cloudinary Dashboard
+// sign up for a free account here: https://cloudinary.com/users/register/free
+const cloudinary = require('cloudinary');
+cloudinary.config({
+    cloud_name: 'yongdk1',
+    api_key: '545953548539613',
+    api_secret: '_AKSaIR7ptxuEh_CTmQdjFDaaOc'
+});
+
 {
 	/*
 	Query Parameters:
@@ -93,32 +106,32 @@ router.get('/api/recipes', mongoChecker, async (req, res) => {
 // post single recipe - called by write page, fork page
 router.post('/api/recipes', mongoChecker, async (req, res) => {
 	const recipe = new Recipe({
-        "author": req.body.author,
-        "parent": req.body.parent,
-        "title": req.body.title,
-        "description": req.body.description,
-        "ingredients": req.body.ingredients,
-        "steps": req.body.steps,
-        "course": req.body.course,
-        "cuisine": req.body.cuisine,
-        "preptime": req.body.preptime,
-        "cooktime": req.body.cooktime,
-        "servings": req.body.servings,
-        "image": req.body.image,
+		"author": req.body.author,
+		"parent": req.body.parent,
+		"title": req.body.title,
+		"description": req.body.description,
+		"ingredients": req.body.ingredients,
+		"steps": req.body.steps,
+		"course": req.body.course,
+		"cuisine": req.body.cuisine,
+		"preptime": req.body.preptime,
+		"cooktime": req.body.cooktime,
+		"servings": req.body.servings,
+		"image": req.body.image,
 		"difficulty": req.body.difficulty
-    })
+	})
 
-    try {
-        const result = await recipe.save()
-        res.send(result)
-    } catch(error) {
-        log(error)
-        if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
+	try {
+		const result = await recipe.save()
+		res.send(result)
+	} catch(error) {
+		log(error)
+		if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
 			res.status(500).send('Internal server error')
 		} else {
 			res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
 		}
-    }
+	}
 })
 
 // get single recipe - called by recipe single page

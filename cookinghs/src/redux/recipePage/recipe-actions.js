@@ -3,7 +3,9 @@ import { baseUrl } from '../../shared/baseUrl';
 
 export const getRecipes = () => (dispatch) => {
     dispatch(recipesLoading(true));
-    return fetch(baseUrl + 'api/recipes')
+    return fetch(baseUrl + 'api/recipes', {
+      credentials: 'same-origin'
+    })
     .then(response => {
         if (response.ok) {
             return response;
@@ -40,6 +42,26 @@ export const addRecipe = (recipe) => ({
 });
 
 export const postRecipe = (author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image) => (dispatch) => {
+  // console.log(imagefile)
+  
+  // const form = new FormData()
+  // form.append('author', author)
+  // form.append('parent', parent)
+  // form.append('title', title)
+  // form.append('description', description)
+  // form.append('ingredients', ingredients)
+  // form.append('steps', steps)
+  // form.append('course', course)
+  // form.append('cuisine', cuisine)
+  // form.append('preptime', preptime)
+  // form.append('cooktime', cooktime)
+  // form.append('servings', servings)
+  // form.append('image', imagefile)
+  // form.append('averageRating', 0)
+  // form.append('difficulty', difficulty)
+
+  // console.log(form.get('image'))
+  
   const newRecipe = {
     author: author,
     parent: parent,
@@ -47,7 +69,6 @@ export const postRecipe = (author, parent, title, description, ingredients, step
     description: description,
     ingredients: ingredients,
     steps: steps,
-    difficulty: difficulty,
     course: course,
     cuisine: cuisine,
     preptime: preptime,
@@ -55,7 +76,7 @@ export const postRecipe = (author, parent, title, description, ingredients, step
     servings: servings,
     image: image,
     averageRating: 0,
-    comments: []
+    difficulty: difficulty
   };
 
   return fetch(baseUrl + 'api/recipes', {
