@@ -4,7 +4,6 @@ import SearchBar from "material-ui-search-bar";
 import styles from '../../styles/recipelanding.module.css';
 import { Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import axios from "axios";
 
 class RecipeLanding extends React.Component {
     render() {
@@ -28,7 +27,7 @@ class RecipeLanding extends React.Component {
 
                 </div>
                
-                <RecipesPageCardGroup/>
+                <RecipesPageCardGroup users={this.props.users}/>
     
             </div>
         )

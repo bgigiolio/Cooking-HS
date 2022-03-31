@@ -188,7 +188,7 @@ function RecipeSingle(props) {
                         {starRating(averageRating)}
                     </div>
                     {/* link to author user profile here */}
-                    {chosenRecipe.author ? <span> By <span className='userLink'>{chosenRecipe.author}</span></span> : null}
+                    {chosenRecipe.author ? <span> By <span className='userLink'>{props.users.filter((user) => user._id === chosenRecipe.author)[0].fullName}</span></span> : null}
                     {chosenRecipe.difficulty ? <span style={{float: "right"}}> Difficulty: {chosenRecipe.difficulty}/10 </span> : null}
                 </ListGroupItem>
                 <ListGroupItem>
