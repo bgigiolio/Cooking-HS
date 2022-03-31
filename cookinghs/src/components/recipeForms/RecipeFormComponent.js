@@ -1,15 +1,8 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import { Form, FormGroup, Label, Input, FormText, FormFeedback, Col, Button } from 'reactstrap';
 import '../../styles/recipeform.css'
 
-const required = (val) => val && val.length;
-const maxLength = (len) => (val) => !(val) || (val.length <= len);
-const minLength = (len) => (val) => val && (val.length >= len);
-const isNumber = (val) => !isNaN(Number(val));
-const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
-
 function RecipeForm(props) {
-    const [cannot, usecannot] = useState(0)
     const ingredientsForm = function()  {
         let ingredientInput = props.ingredients.map((ingredient, index) => {
             return(
@@ -242,7 +235,7 @@ function RecipeForm(props) {
                         <Label
                         for="image"
                         >
-                        <img src='../recipe-add-photo.png' 
+                        <img src={props.imagefile || props.tempimage} 
                             alt=''
                             id='uploadImage'
                         />
@@ -254,6 +247,7 @@ function RecipeForm(props) {
                             type="file"
                             accept="image/*"
                             style={{display: 'none'}}
+                            onChange={props.handleImageChange}
                         />
                         <FormText>
                             Give us the tastiest image of your recipe! Use JPEG or PNG.
