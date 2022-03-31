@@ -9,10 +9,9 @@ import RecipeForm from './RecipeFormComponent';
 
 import '../../styles/recipeform.css';
 
-const AUTHOR = 'admin'
-
 function WriteRecipe(props) {
     const chosenRecipe = props.chosenRecipe
+    const AUTHOR = props.user._id
     const [recipe, setRecipe] = useState(() => 
         {
         switch (props.flag) {

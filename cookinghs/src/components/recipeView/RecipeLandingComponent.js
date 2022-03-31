@@ -160,7 +160,7 @@ class RecipeLanding extends React.Component {
 
                 </div>
                
-                <RecipesPageCardGroup/>
+                <RecipesPageCardGroup users={this.props.users}/>
     
             </div>
 
