@@ -10,11 +10,13 @@ import { setInitialRecipes } from "../../redux/RecipesPage/RecipesPage-actions";
 
 
 const RecipesPageCardGroup = ({ recipes, users }) => {
+    const recipestoRender = recipes.filter((recipe) => recipe.deleted === false)
+
     return (
         <div>
             <Container>
             <Row>
-            {recipes.map((value) => (
+            {recipestoRender.map((value) => (
                 <Col lg={4} md={6} key={value._id}>
                     <Card className="r-card article">
                     <Link to={value._id}>
