@@ -1,6 +1,7 @@
 import { Button, TextField } from '@mui/material';
 import React from 'react';
 import './styles.css';
+import axios from 'axios'; // new!!
 import RecipeBrowser from '../../recipeView/RecipeBrowserComponent';
 import AdminPage from '../../Admin/index'
 import {Routes, Route, Link} from 'react-router-dom';
@@ -8,12 +9,30 @@ import {Routes, Route, Link} from 'react-router-dom';
 class Login extends React.Component {
     state = {
         failedLoginSeen: false,
+        _id: "",
+        host: ""
     }
-    
+
     failedLogin = () => {
         this.setState({
             failedLoginSeen: true
         }, () => console.log(this.state.failedLoginSeen))
+        axios.get(this.props.host + 'api/users/logout')
+        .then(async (response, error) => {
+            this.props.updateUser(null)
+        })
+    }
+    validLogIn = () => {
+        axios.get(this.props.host + 'api/users/login/' + this.props._id)
+        .then(async (response) => {
+            axios.get(this.props.host + 'api/users/session', {params :{//hmm
+                want : ["_id", "username", "admin", "fullName", "email", "profilePic"]
+              }}).then( async (response) => {
+                  console.log(response.data)
+                  this.props.updateCurrentUser(response.data)
+              })
+        })
+        
     }
     render() {
         const {username, password, recieveInput, valid, routeTo} = this.props
@@ -29,7 +48,7 @@ class Login extends React.Component {
 
                     {valid ? 
                     // <Link to="/recipes">Log In</Link>
-                    <Button to={routeTo} component={Link} variant="contained">Log In</Button>: 
+                    <Button to={routeTo} onClick={this.validLogIn} component={Link} variant="contained">Log In</Button>: 
                     <Button variant="contained"
                             onClick={this.failedLogin}>
                                 Log In

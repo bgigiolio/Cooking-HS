@@ -34,7 +34,7 @@ function RecipeSingle(props) {
             const parentTitle = recipes.filter(recipe => recipe._id === step)[0].title
             const link = '../recipes/' + step
             return (
-                <li>
+                <li key={index}>
                     {index !== line.length - 1 ? <Link to={link}>{parentTitle}</Link> : <>{parentTitle} (Current)</>}
                 </li>
             )
@@ -135,8 +135,6 @@ function RecipeSingle(props) {
             </>
         );
     }
-
-    let [commentCount, setCommentCount] = useState(3)
     const [reportModal, setReportModal] = useState(false);
     const [reportId, setReportId] = useState();
     const toggleReport = (e) => {
@@ -144,35 +142,6 @@ function RecipeSingle(props) {
         setReportId(targetId);
         setReportModal(!reportModal); 
     }
-
-    const commentsView = chosenComment.slice(0,commentCount).map((comment, index) => {
-        const rating = comment.rating;
-        const reportId = 'reportIcon' + (index + 1);
-        return (
-            <>
-                <Card>
-                    <CardHeader>
-                        {/* link to commenter user profile here */}
-                        <span className='userLink'>{comment.user}</span> says: 
-                    </CardHeader>
-                    <CardBody>
-                        <div>
-                            {starRating(rating)}
-                        </div>
-                        {comment.content}
-                        <Button 
-                            className='reportButton'
-                            onClick={toggleReport}
-                            color="danger"
-                            outline
-                        >
-                            <i id={reportId} className="reportIcon fa-solid fa-triangle-exclamation"></i>
-                        </Button>
-                    </CardBody>
-                </Card>
-            </>
-        )
-    })
 
     const [reviewModal, setReviewModal] = useState(false);
     const toggleReview = () => setReviewModal(!reviewModal);
@@ -195,7 +164,7 @@ function RecipeSingle(props) {
             />
             {/* <img src='../report.png' alt=''></img> */}
             <ListGroup>
-                <ListGroupItem row>
+                <ListGroupItem>
                     <Row>
                         <Col md={10}>
                             <h1>{chosenRecipe.title}</h1>
@@ -215,12 +184,12 @@ function RecipeSingle(props) {
                             </Link>
                         </Col>
                     </Row>
-                
-                <div id='averageRating'>
-                    {starRating(averageRating)}
-                </div>
-                {/* link to author user profile here */}
+                    <div id='averageRating'>
+                        {starRating(averageRating)}
+                    </div>
+                    {/* link to author user profile here */}
                     {chosenRecipe.author ? <span> By <span className='userLink'>{chosenRecipe.author}</span></span> : null}
+                    {chosenRecipe.difficulty ? <span style={{float: "right"}}> Difficulty: {chosenRecipe.difficulty}/10 </span> : null}
                 </ListGroupItem>
                 <ListGroupItem>
                     {timeline(chosenRecipe.parent)}
@@ -284,9 +253,9 @@ function RecipeSingle(props) {
                     >
                         Add Rating and Review
                     </Button>
-                    {commentsView}
+                    {/* {commentsView} */}
                     <Button
-                        onClick={() => setCommentCount(commentCount+3)}
+                        // onClick={() => setCommentCount(commentCount+3)}
                         id='loadReviewButton'
                     >
                         Load More Reviews

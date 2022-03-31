@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Row, Col } from 'reactstrap';
 import { Card, CardGroup, Container } from 'reactstrap';
 import { CardBody, CardTitle, CardSubtitle, CardImg } from 'reactstrap'
 import { Link } from 'react-router-dom';
-import { RECIPES } from '../../shared/RecipeList';
 import '../../styles/recipeview.css';
 import '../../styles/colorpalette.css';
 import { connect } from "react-redux";
@@ -19,7 +18,7 @@ const RecipesPageCardGroup = ({ recipes }) => {
             <Container>
             <Row>
             {recipes.map((value) => (
-                <Col lg={4} md={6}>
+                <Col lg={4} md={6} key={value._id}>
                  
                  <Card className="r-card article">
                  <Link to={value._id}>

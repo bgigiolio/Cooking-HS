@@ -1,22 +1,26 @@
-import React, { useDebugValue } from 'react';
+import React from 'react';
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabPanel from "@mui/lab/TabPanel";
-import { BrowserRouter, Routes, Route, Link} from 'react-router-dom';
-
+import axios from 'axios'; // new!!
 import Login from "./../Login";
 import Signup from "./../Signup";
 import './styles.css';
 
+const {SHA256} = require('crypto-js'); // new!!
+// const bcrypt = require('bcryptjs') // new!!
+
 class LoginMain extends React.Component {
     state = {
         tabVal: 0,
+        host: "http://localhost:5000/",
+        _id: "",
         //Login
         valid: false,
         username: "",
         password: "",
-        currentUser: {username: null, password: null, email: null, name: null, admin: false},
+        currentUser: null,
         routeTo: "/recipes",
         //Signup
         sUsername: "",
@@ -25,12 +29,6 @@ class LoginMain extends React.Component {
         sName: "",
         password2: "",
         sValid: 0, // -2 is confirm password dont match, -1 is username in use, 1 is seen true, 0 is never seen (potentially add more for specific issues)
-
-
-        validUsers: [
-            {username: "user", password: "user", email: "user@user.com", name: "Mr. User", admin: false},
-            {username: "admin", password: "admin", email: "admin@admin.com", name: "Ms. Admin", admin: true}
-        ]
     }   
     recieveInputLogin = event =>{
         const target = event.target;
@@ -44,32 +42,42 @@ class LoginMain extends React.Component {
 
     checkInput = () =>{
 
-        const users = this.state.validUsers
         const user = {
             username: this.state.username,
             password: this.state.password
         }
-        // console.log(user.username)
-        // console.log(user.password)
         this.setState({
             valid: false
-        }, () =>console.log(this.state.valid));
-        for (let index = 0; index < users.length; index++) {
-            const entry = Object.entries(users[index])
-            if (entry[0][1] == user.username && entry[1][1] == user.password) {
-                    console.log("login valid")
+        }, () =>console.log("valid login: " + this.state.valid));
+        if(this.state.tabVal === 0){
+            axios.get(this.state.host + 'api/users', {params :{
+                username : user.username,
+                passHash : SHA256(user.password).toString()
+              }}).then(async (response) => {
+                const res = response.data
+                if(res.length !== 0){
                     let route = "/recipes"
-                    if (entry[4][1]){
+                    if (res[0].admin){
                         route = "/admin"
                     }
                     this.setState({
                         valid: true,
-                        currentUser: users[index],
+                        _id: res[0]._id,
+                        currentUser: {
+                            _id: res[0]._id,
+                            username: user.username, 
+                            email: res[0].email, 
+                            fullName: res[0].fullName, 
+                            admin: res[0].admin},
                         routeTo: route
-                    }, () =>console.log(this.state.currentUser));
-            }
+                    }, () => console.log("user " + user.username + " may now log in"))
+                }
+              }, (error) => {
+                console.log(error);
+              });
+        } else{
+            // axios.get(this.state.host + 'api/users/logout')
         }
-        console.log("Login validated" )
     };
 
     change = (event, val) => {
@@ -82,41 +90,49 @@ class LoginMain extends React.Component {
 
     validateSignup = () => {
         let valid = 1
-        const sUsers = this.state.validUsers
         const sUser = {
             username: this.state.sUsername,
             password: this.state.sPassword,
-            password2: this.state.password2
+            password2: this.state.password2,
+            email: this.state.sEmail,
+            fullName: this.state.sName
         }
-        
-        for (let index = 0; index < sUsers.length; index++) {
-            const entry = Object.entries(sUsers[index])
-            if (entry[0][1] == sUser.username){
-                valid = -1
-            }else if( sUser.password != sUser.password2){
-                valid = -2
-            }
             
+        // }
+        //Add further checking for valid inputs below
+        if(sUser.username === ""){
+            valid = -1
+        } else if(sUser.password !== sUser.password2){
+            valid = -2
+        }else if(sUser.password === ""){
+            valid = -3
+        }else if(sUser.email === ""){
+            valid = -4
+        }else if(sUser.name === ""){
+            valid = -5
+        }
+        if (valid === 1){
+            axios.post(this.state.host + 'api/users', 
+            {
+                username : sUser.username,
+                passHash : SHA256(sUser.password).toString(),
+                fullName : sUser.fullName,
+                email : sUser.email
+              }).then(async (response) => {
+                valid = 1
+              }).catch(function (error) {
+                valid = -6
+                console.log(error)
+              });
         }
         this.setState({
             sValid: valid
-        }, () =>console.log(this.state.sValid));
-
-        if (this.state.sValid) {
-            const newUser = {
-                username: this.state.sUsername,
-                password: this.state.sPassword,
-                email: this.state.sEmail,
-                name: this.state.sName,
-                admin: false
-            }
-            this.state.validUsers.push(newUser)
-        }
+        }, () =>console.log("valid user if " + this.state.sValid + " = 1"));
     }
 
 
     render() {
-        this.state.currentUser = this.props
+        // this.state.currentUser = this.props
         return(
         <div id="LoginMain">
             <div id="TabsHolder">
@@ -128,6 +144,10 @@ class LoginMain extends React.Component {
                 <TabPanel value={this.state.tabVal} index={0}>
                     {!this.state.tabVal ?
                         <Login
+                        currentUser={this.props.currentUser}
+                        updateCurrentUser={this.props.updateCurrentUser}
+                        host={this.state.host}
+                        _id={this.state._id}
                         username={this.state.username}
                         password={this.state.password}
                         recieveInput={this.recieveInputLogin}
