@@ -12,31 +12,30 @@ class Login extends React.Component {
         _id: "",
         host: ""
     }
+
     failedLogin = () => {
         this.setState({
             failedLoginSeen: true
         }, () => console.log(this.state.failedLoginSeen))
         axios.get(this.props.host + 'api/users/logout')
         .then(async (response, error) => {
-            console.log(response);
-            console.log(error)
+            this.props.updateUser(null)
         })
     }
     validLogIn = () => {
         axios.get(this.props.host + 'api/users/login/' + this.props._id)
         .then(async (response) => {
-            
+            axios.get(this.props.host + 'api/users/session', {params :{//hmm
+                want : ["_id", "username", "admin", "fullName", "email", "profilePic"]
+              }}).then( async (response) => {
+                  console.log(response.data)
+                  this.props.updateCurrentUser(response.data)
+              })
         })
-        // axios.get(this.props.host + 'api/users/session', {params :{
-        //     want : ["username"]
-        //   }})
+        
     }
     render() {
         const {username, password, recieveInput, valid, routeTo} = this.props
-        // this.setState({
-        //     _id: _id,
-        //     host: host
-        // })
         return(
             <div id='Login' className="tabcontent">
                 <br/>

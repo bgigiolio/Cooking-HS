@@ -6,7 +6,20 @@ const cors = require("cors")
 const express = require('express')
 const app = express();
 const session = require('express-session')
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
+app.use(session({
+    secret: "idk lol",
+    cookie: {
+        expires: 86400000, //one day
+        httpOnly: true,
+        secure: false
+    },
+    saveUninitialized: false,
+    resave: false
+}))
 
 const {mongoose} = require('./db/database')
 const {ObjectID} = require('mongodb')
@@ -18,18 +31,8 @@ const {Recipe} = require('./models/recipe')
 
 const bodyParser = require('body-parser')
 app.use(bodyParser.json())
-app.use(cors())
 // Add model routes here vvv
 const userRouter = require("./routes/users")
-app.use(session({
-    secret: "idk lol",
-    cookie: {
-        expires: 86400000, //one day
-        httpOnly: true
-    },
-    saveUninitialized: false,
-    resave: false
-}))
 app.use("/api/users", userRouter) // Could change this to just /users
 
 app.use(require('./routes/recipes'))
