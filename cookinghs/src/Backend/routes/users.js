@@ -4,11 +4,10 @@ let express = require("express")
 const{mongoose} = require("mongoose")
 var router = express.Router();
 let app = express();
-
+// const session = require("express-session")
 let User = require("../models/user")
 app.use(express.urlencoded())
 app.use(express.json())
-
 
 /*
 User route guide!!!
@@ -66,7 +65,6 @@ router.route("/").get((req, res) => { //#2
     if(!req.query.hasOwnProperty("passHash")){
         query.passHash = ""
     }
-    console.log(req.query)
     User.find(query).lean().then(function (result) {
         if (result) {
             res.status(200).send(result)
@@ -103,28 +101,39 @@ router.route("/search").get((req, res) => { //#3
 //make sure you use the key 'want' with an array of everything you want
 router.route("/session").get((req, res) => { //#4
     const query = req.query.want
+    console.log(req.session.id)
+    console.log(req.session)
     if(!Array.isArray(query)){
         res.status(422).send("Please send an array of attributes you want")
     }
     const toSend = {}
+    console.log(query)
+    let fail = false
+    console.log(req.session)
     query.forEach(element => {
         if(req.session.hasOwnProperty(element)){
             toSend[element] = req.session[element]
+        }else{
+            fail = true
         }
     });
-    res.status(200).json(toSend)
+    if(fail){
+        res.status(404).json(null)
+    }else{
+        res.status(200).json(toSend)
+    }
 })
 
 //logs a user out, destroying their current session cookie
 //nothing special here, just call this to kill the current session :)
 router.route("/logout").get((req, res) => {//#5
-    console.log("reached logout")
     req.session.destroy((error) => {
         if(error){
             console.log("logout fail")
             res.status(500).send(error)
         }else{
             console.log("user logged out")
+            console.log(req.session)
             res.status(200).send("User logged out")
         }
     })
@@ -182,11 +191,11 @@ router.route("/:id").delete((req, res) => {//#8
 router.route("/login/:id").get((req, res) => {//#9
     User.findById(req.params.id, 
         (error, result) => {
-            console.log(result)
             const user = result
             if(error){
                 res.status(500).send("internal server error")
             }else{
+                console.log(req.session.id)
                 req.session._id = user._id.toString();
                 req.session.admin = user.admin;
                 req.session.username = user.username;
@@ -195,8 +204,10 @@ router.route("/login/:id").get((req, res) => {//#9
                 req.session.recipes = user.recipes;
                 req.session.liked = user.liked;
                 req.session.bookmarked = user.bookmarked;
-                req.session.skillLevel = user.skillLevel
-                console.log(req.session)
+                req.session.skillLevel = user.skillLevel;
+                req.session.profilePic = user.profilePic;
+                req.session.save()
+                console.log(req.session.id)
                 res.status(200).send("session updated!")
             }
         })

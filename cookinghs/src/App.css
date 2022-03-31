@@ -55,6 +55,10 @@ a:hover{
     bottom: 0;
 }
 
+.profilePic {
+  border-radius: 50%;
+  max-height: 30px;
+}
 .navItems{
   justify-content: flex-end;
 }

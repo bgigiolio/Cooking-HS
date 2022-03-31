@@ -20,7 +20,7 @@ class LoginMain extends React.Component {
         valid: false,
         username: "",
         password: "",
-        currentUser: {username: null, password: null, email: null, name: null, admin: false},
+        currentUser: null,
         routeTo: "/recipes",
         //Signup
         sUsername: "",
@@ -55,7 +55,6 @@ class LoginMain extends React.Component {
                 passHash : SHA256(user.password).toString()
               }}).then(async (response) => {
                 const res = response.data
-                console.log(res[0])
                 if(res.length !== 0){
                     let route = "/recipes"
                     if (res[0].admin){
@@ -77,7 +76,7 @@ class LoginMain extends React.Component {
                 console.log(error);
               });
         } else{
-            axios.get(this.state.host + 'api/users/logout')
+            // axios.get(this.state.host + 'api/users/logout')
         }
     };
 
@@ -145,6 +144,8 @@ class LoginMain extends React.Component {
                 <TabPanel value={this.state.tabVal} index={0}>
                     {!this.state.tabVal ?
                         <Login
+                        currentUser={this.props.currentUser}
+                        updateCurrentUser={this.props.updateCurrentUser}
                         host={this.state.host}
                         _id={this.state._id}
                         username={this.state.username}
