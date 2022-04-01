@@ -15,16 +15,21 @@ import WriteWrapper from './components/recipeForms/WriteWrapperComponent';
 import FlagDesc from './components/Admin/FlagDesc';
 
 import { getRecipes, deleteRecipe } from './redux/recipePage/recipe-actions';
+import { getComments, deleteComment } from "./redux/CommentPage/comment-actions";
+import CommentComponent from './components/recipeView/CommentComponent';
 
 const mapStateToProps = state => {
   return {
-    Recipes: state.Recipes
+    Recipes: state.Recipes,
+    Comments: state.Comments
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   getRecipes: () => {dispatch(getRecipes())},
-  deleteRecipe: (id) => {dispatch(deleteRecipe(id))}
+  deleteRecipe: (id) => {dispatch(deleteRecipe(id))},
+  getComments: () => {dispatch(getComments())},
+  deleteComments: (id) => {dispatch(deleteComment(id))}
 });
 
 class App extends React.Component {
@@ -68,7 +73,7 @@ class App extends React.Component {
               <Route exact path="/recipes/newrecipe" element={<WriteWrapper flag={"new"} recipes={this.props.Recipes}/>}/>
               <Route exact path="/recipes/:id/editrecipe" element={<WriteWrapper flag={"edit"} recipes={this.props.Recipes}/>}/>
               <Route exact path="/recipes/:id/forkrecipe" element={<WriteWrapper flag={"fork"} recipes={this.props.Recipes}/>}/>
-              <Route exact path="/recipes/:id" element={<RecipeBrowser recipes={this.props.Recipes}/>}/>
+              <Route exact path="/recipes/:id" element={<RecipeBrowser recipes={this.props.Recipes} comments={this.props.Comments}/>}/>
               <Route exact path="/recipes" element={<RecipeBrowser recipes={this.props.Recipes}/>}/>
               <Route exact path="/*" element={<Landing />}/>
             </Routes>

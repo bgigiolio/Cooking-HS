@@ -70,7 +70,7 @@ const { ObjectId } = require('mongodb');
 
 
 // post single comment - (TODO - don't know about this comment) called by write page, fork page
-router.post('/api/recipes', mongoChecker, async (req, res) => {
+router.post('/api/comments', mongoChecker, async (req, res) => {
 
     // check mongoose connection established.
 	if (mongoose.connection.readyState != 1) {
@@ -132,7 +132,8 @@ router.post('/api/recipes', mongoChecker, async (req, res) => {
 })
 
 // get single comment - called by comment single page
-router.get('/api/comments/:id', mongoChecker, async (req, res) => {
+router.get('/api/comments/:id', mongoChecker, async (req, res) => { 
+    //TODO need to defined for /api/comments/ since that what I define in comment-actions
     
     const id = req.params.id
 

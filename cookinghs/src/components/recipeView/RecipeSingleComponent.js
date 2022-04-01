@@ -6,11 +6,14 @@ import '../../styles/recipeview.css';
 import '../../styles/colorpalette.css';
 import ReviewModal from '../recipeForms/ReviewModalComponent';
 import ReportModal from '../report/ReportModalComponent';
+import CommentComponent from './CommentComponent';
+import CommentForm from './CommentForm';
 
 function RecipeSingle(props) {
     const recipes = props.recipes
     const chosenRecipe = props.chosenRecipe;
-    const chosenComment = chosenRecipe.comments
+    const comments = props.comments
+    const chosenComments = props.chosenComments
     let [servingSize, setServingSize] = useState(chosenRecipe.servings);
     let [scale, setScale] = useState(1);
 
@@ -160,7 +163,7 @@ function RecipeSingle(props) {
                 recipeId={props.id}
                 recipeTitle={chosenRecipe.title}
                 reportId={reportId}
-                commentContent={reportId ? chosenComment[reportId-1] : ""}
+                commentContent={reportId ? chosenComments[reportId-1] : ""}
             />
             {/* <img src='../report.png' alt=''></img> */}
             <ListGroup>
@@ -253,13 +256,22 @@ function RecipeSingle(props) {
                     >
                         Add Rating and Review
                     </Button>
-                    {/* {commentsView} */}
+                    <CommentComponent 
+                        props={props}
+                        recipes={recipes}
+                        starRating={starRating} 
+                        toggleReport={toggleReport}
+                        chosenRecipe={chosenRecipe}
+                        comments={comments}
+                        chosenComments={chosenComments} 
+                    />
                     <Button
                         // onClick={() => setCommentCount(commentCount+3)}
                         id='loadReviewButton'
                     >
                         Load More Reviews
                     </Button>
+                    {/* <CommentForm/> */}
                 </ListGroupItem>
             </ListGroup>
         </div>

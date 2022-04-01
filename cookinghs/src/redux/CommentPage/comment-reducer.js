@@ -6,31 +6,43 @@ export const CommentReducer = (
     }, action) => {
     switch (action.type) {
 
-        case ActionTypes.GET_COMMENT:
-            console.log("getting a comment")
-            const getIDComment = action.payload;
-            return { 
-                ...state, 
-                comments: state.comments.filter((comment) => comment._id === getIDComment)
+        // case ActionTypes.ADD_RECIPES:
+        //     console.log("adding all recipes")
+        //     return {...state, isLoading: false, errMess: null, recipes: action.payload};
+
+        case ActionTypes.ADD_COMMENTS:
+            console.log("adding all comment")
+            return {
+                ...state,
+                 recipes: action.payload
             };
+
+        // case ActionTypes.GET_COMMENT: //TODO - going to rename this
+        //     console.log("getting a comment")
+        //     const getIDComment = action.payload;
+        //     return { 
+        //         ...state, 
+        //         comments: state.comments.filter((comment) => comment._id === getIDComment)
+        //     };
             
-        case ActionTypes.POST_COMMENT:
+        case ActionTypes.ADD_COMMENT: //TODO - this is what is actually POST comment but taking this from ADD_RECIPE
             console.log("adding a comment")
             const comment = action.payload;
             return {
                 ...state,
-                comments: state.comments.concat(comment)};
+                comments: state.comments.concat(comment)
+            };
         
-        // case ActionTypes.RECIPES_LOADING:
-        //     return {...state, isLoading: true, errMess: null, recipes: []}
+        case ActionTypes.COMMENTS_LOADING:
+            return {
+                ...state, 
+                comments: []
+            }
         
-        // case ActionTypes.RECIPES_FAILED:
-        //     return {...state, isLoading: false, errMess: action.payload};
-
-        // case ActionTypes.ADD_RECIPE:
-        //     alert("Created recipe successfully")
-        //     /const recipe = action.payload;
-        //     return { ...state, recipes: state.recipes.concat(recipe)};
+        case ActionTypes.COMMENTS_FAILED:
+            return {
+                ...state
+            };
 
         // case ActionTypes.EDIT_RECIPE:
         //     alert("Edited recipe successfully")

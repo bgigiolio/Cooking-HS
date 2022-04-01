@@ -35,6 +35,9 @@ app.use("/api/users", userRouter) // Could change this to just /users
 app.use(require('./routes/recipes'))
 // Add model routes here ^^^
 
+// app.use(require('./routes/comments'))
+// // Add model routes here ^^^
+
 // // 404 route at the bottom for anything not found.
 app.get('*', (req, res) => {
     res.status(404).send("404 Error: We cannot find the page you are looking for.");
