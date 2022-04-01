@@ -135,10 +135,17 @@ function RecipeSingle(props) {
         )
     });
 
+    const [reportModal, setReportModal] = useState(false);
+    const [reportId, setReportId] = useState();
+    const toggleReport = (e) => {
+        const targetId = Number(e.target.id.slice(-1));
+        setReportId(targetId);
+        setReportModal(!reportModal); 
+    }
+
     const [reviewModal, setReviewModal] = useState(false);
     const toggleReview = () => {props.currentUser ? setReviewModal(!reviewModal) : alert("Please login to leave a comment!")};
     let [commentCount, setCommentCount] = useState(3)
-
     const commentsView = chosenComment.slice(0,commentCount).map((comment, index) => {
         const rating = comment.rating;
         const reportId = 'reportIcon' + (index + 1);
@@ -147,8 +154,7 @@ function RecipeSingle(props) {
                 <Card>
                     <CardHeader>
                         {/* link to commenter user profile here */}
-                        {starRating(rating)}
-                        <span className='userLink'>{props.users.filter((user) => user._id === comment.user)[0].fullName}</span> says: 
+                        <span className='userLink'>{props.users.filter((user) => user._id === comment.user)[0].fullName}</span> rates this: {starRating(rating)}
                         <Button 
                             className='reportButton'
                             onClick={toggleReport}
@@ -168,14 +174,6 @@ function RecipeSingle(props) {
             </>
         )
     })
-
-    const [reportModal, setReportModal] = useState(false);
-    const [reportId, setReportId] = useState();
-    const toggleReport = (e) => {
-        const targetId = Number(e.target.id.slice(-1));
-        setReportId(targetId);
-        setReportModal(!reportModal); 
-    }
 
     return(
         <div id='recipeViewContainer'>
