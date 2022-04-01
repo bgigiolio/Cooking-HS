@@ -101,15 +101,11 @@ router.route("/search").get((req, res) => { //#3
 //make sure you use the key 'want' with an array of everything you want
 router.route("/session").get((req, res) => { //#4
     const query = req.query.want
-    console.log(req.session.id)
-    console.log(req.session)
     if(!Array.isArray(query)){
         res.status(422).send("Please send an array of attributes you want")
     }
     const toSend = {}
-    console.log(query)
     let fail = false
-    console.log(req.session)
     query.forEach(element => {
         if(req.session.hasOwnProperty(element)){
             toSend[element] = req.session[element]
@@ -170,6 +166,21 @@ router.route("/:id").patch((req, res) => {//#7
     })
 })
 
+router.route("/recipes/:id/:recipeid").patch((req, res) => {//#7
+    User.findById(req.params.id, 
+        (error, result) => {
+        if(error){
+            res.status(500).send("internal server error")
+        }else if(result === null){
+            res.status(404).send("user not found")
+        }else{
+            result.recipes.push(req.params.recipeid)
+            result.save().then(() => res.status(200).send(result))
+            .catch((error) => res.status(500).send(error))
+        }
+    })
+})
+
 //deletes user with _id equal to the one passed
 //Also very simple :)
 router.route("/:id").delete((req, res) => {//#8
@@ -195,7 +206,7 @@ router.route("/login/:id").get((req, res) => {//#9
             if(error){
                 res.status(500).send("internal server error")
             }else{
-                console.log(req.session.id)
+                console.log(user.recipes)
                 req.session._id = user._id.toString();
                 req.session.admin = user.admin;
                 req.session.username = user.username;
@@ -207,7 +218,7 @@ router.route("/login/:id").get((req, res) => {//#9
                 req.session.skillLevel = user.skillLevel;
                 req.session.profilePic = user.profilePic;
                 req.session.save()
-                console.log(req.session.id)
+                console.log(req.session)
                 res.status(200).send("session updated!")
             }
         })

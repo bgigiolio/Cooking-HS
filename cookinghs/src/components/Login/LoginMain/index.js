@@ -55,6 +55,7 @@ class LoginMain extends React.Component {
                 passHash : SHA256(user.password).toString()
               }}).then(async (response) => {
                 const res = response.data
+                console.log(res)
                 if(res.length !== 0){
                     let route = "/recipes"
                     if (res[0].admin){

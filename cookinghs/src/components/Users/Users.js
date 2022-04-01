@@ -15,7 +15,7 @@ class Users extends React.Component {
             want : ["_id", "username", "admin", "fullName", "email", "profilePic", "recipes"]
         }}).then( async (response) => {
             this.state.currentUser = response.data
-            console.log(this.state.currentUser)
+            // console.log(this.state.currentUser)
             console.log("user loaded from state ;)")
             this.forceUpdate()
         }).catch(function (error) {
@@ -23,9 +23,9 @@ class Users extends React.Component {
     })
     }
     state = {
-        currentUser: {fullName: "null", username: "null", recipes : []},
+        currentUser: {fullName: "", username: "null", recipes : []},
         loaded: true,
-        recipes: this.props.Recipes.recipes.filter((recipe) => recipe.author === this.state.currentUser._id)
+        // recipes: this.props.Recipes.recipes.filter((recipe) => recipe.author === this.state.currentUser._id)
     }
     componentDidUpdate() {
         // console.log("post mount:")
@@ -40,25 +40,35 @@ class Users extends React.Component {
 
     render() {
         const {profilePic} = this.props
-        return(
-            <div id='container'>
-                <Button 
-                    id="editProfileButton"
-                    color="success"
-                >
-                    Edit Profile
-                </Button>
-                <img id="profilePic" src={profilePic}/>
-                <img id="foodBanner" src={foodBanner}/>
-                {/** The name, username will depend on info from backend per user */}
-                <h1 id="name">{this.state.currentUser.fullName}</h1>
-                <p id="username">{"@" + this.state.currentUser.username}</p>
-                <UserProgress/>
+        console.log("start of render:")
+        console.log(this.state.currentUser.recipes)
+        if(this.state.currentUser.fullName !== ""){
 
-                <h4 className="title">My Recipes</h4>
-                <RecipeCardGroup className={styles.recipe_card_group}/>
-            </div>
-        )
+            return(
+                <div id='container'>
+                    <Button 
+                        id="editProfileButton"
+                        color="success"
+                    >
+                        Edit Profile
+                    </Button>
+                    <img id="profilePic" src={profilePic}/>
+                    <img id="foodBanner" src={foodBanner}/>
+                    {/** The name, username will depend on info from backend per user */}
+                    <h1 id="name">{this.state.currentUser.fullName}</h1>
+                    <p id="username">{"@" + this.state.currentUser.username}</p>
+                    <UserProgress/>
+    
+                    <h4 className="title">My Recipes</h4>
+                    {RecipeCardGroup(this.state.currentUser.recipes)}
+                </div>
+            )
+        }else{
+            return(                
+            <div id='container'>
+            <h1 id="name">You are not currently logged in!</h1>
+        </div>)
+        }
     }
 }
 

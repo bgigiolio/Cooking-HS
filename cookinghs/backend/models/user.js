@@ -23,9 +23,9 @@ const user = new Schema({
         type: String,
         required: true
     },
-    recipes: [{String}], // Store recipe _ids here
-    liked: [{String}],
-    bookmarked: [{String}],
+    recipes: [String], // Store recipe _ids here
+    liked: [String],
+    bookmarked: [String],
     skillLevel: {
         type: Number,
         default: 0
