@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styles from './Users.css';
 import RecipeCardGroup from './RecipeCardGroup';
 import UserProgress from './UserProgress';
@@ -23,7 +24,8 @@ class Users extends React.Component {
     }
     state = {
         currentUser: {fullName: "null", username: "null", recipes : []},
-        loaded: true
+        loaded: true,
+        recipes: Recipes.filter((recipe) => recipe.author === currentUser._id)
     }
     componentDidUpdate() {
         // console.log("post mount:")
@@ -60,4 +62,10 @@ class Users extends React.Component {
     }
 }
 
-export default Users;
+const mapStateToProps = state => {
+    return {
+      Recipes: state.Recipes,
+    }
+  }
+
+export default connect(mapStateToProps, null)(Users);

@@ -39,6 +39,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(require('./routes/recipes'))
 
 app.use(require('./routes/comments'))
+
+app.use(require('./routes/reports'))
 // Add model routes here ^^^
 
 // // 404 route at the bottom for anything not found.
