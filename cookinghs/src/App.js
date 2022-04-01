@@ -18,19 +18,20 @@ import { baseUrl } from './shared/baseUrl';
 import { getRecipes } from './redux/recipePage/recipe-actions';
 import { getUsers } from './redux/users/user-actions';
 import { getComments } from './redux/comments/comment-actions';
+import { getReports } from './redux/reports/report-actions';
 
 const mapStateToProps = state => {
   return {
     Recipes: state.Recipes,
     Users: state.Users,
-    Comments: state.Comments
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   getRecipes: () => {dispatch(getRecipes())},
   getUsers: () => {dispatch(getUsers())},
-  getComments: () => {dispatch(getComments())}
+  getComments: () => {dispatch(getComments())},
+  getReports: () => {dispatch(getReports())}
 });
 
 class App extends React.Component {
@@ -60,6 +61,7 @@ class App extends React.Component {
     this.props.getRecipes();
     this.props.getUsers();
     this.props.getComments();
+    this.props.getReports();
   }
   logout(){
     console.log("running logout")

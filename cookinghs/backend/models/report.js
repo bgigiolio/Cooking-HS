@@ -9,6 +9,14 @@ const ReportSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    item: {
+        type: String,
+        required: true
+    },
+    item_type: {
+        type: String,
+        required: true
+    },
     category: {
         type: String,
         required: true
