@@ -9,15 +9,15 @@ function ReportModal(props) {
         e.preventDefault();
         console.log('submitting report')
         const newReport = {
-            // reporter_user: ,
-            // reported_user: req.body.reported_user,
-            // item: req.body.item,
-            // item_type: req.body.item_type,
+            reporter_user: props.currentUser,
+            reported_user: 'admin', //TODO - temp, need to change (req.body.... does not work)
+            item: '', //TODO - temporary, need to change
+            item_type: '', //TODO - temp, need to change
             category: category,
             context: context,
         }
-        // props.postReport(newReport)
-        // .then(props.toggle)
+        props.postReport(newReport)
+        .then(props.toggle)
     }
 
     return(
@@ -92,7 +92,7 @@ function ReportModal(props) {
             <Button
                 color="danger"
                 className="color-secondary-bg"
-                onclick={handleSubmit}
+                onClick={handleSubmit}
             >
                 Submit
             </Button>

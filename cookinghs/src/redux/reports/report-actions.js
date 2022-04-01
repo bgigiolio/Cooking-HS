@@ -42,7 +42,7 @@ export const addReport = (report) => ({
 });
 
 export const postReport = (report) => (dispatch) => {
-  console.log(report)
+  console.log(report) //TODO - get rid of console.log
   return fetch(baseUrl + 'api/reports', {
     method: "POST",
     body: JSON.stringify(report),

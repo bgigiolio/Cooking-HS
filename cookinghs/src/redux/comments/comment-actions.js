@@ -42,7 +42,7 @@ export const addComment = (comment) => ({
 });
 
 export const postComment = (comment) => (dispatch) => {
-  console.log(comment)
+  console.log(comment) //TODO - get rid of console.log
   return fetch(baseUrl + 'api/comments', {
     method: "POST",
     body: JSON.stringify(comment),
