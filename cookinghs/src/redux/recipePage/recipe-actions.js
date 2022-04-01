@@ -41,9 +41,7 @@ export const addRecipe = (recipe) => ({
   payload: recipe
 });
 
-export const postRecipe = (author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image) => (dispatch) => {
-  // console.log(imagefile)
-  
+export const postRecipe = (author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image) => (dispatch) => {  
   // const form = new FormData()
   // form.append('author', author)
   // form.append('parent', parent)
@@ -56,11 +54,9 @@ export const postRecipe = (author, parent, title, description, ingredients, step
   // form.append('preptime', preptime)
   // form.append('cooktime', cooktime)
   // form.append('servings', servings)
-  // form.append('image', imagefile)
+  // form.append('image', image)
   // form.append('averageRating', 0)
   // form.append('difficulty', difficulty)
-
-  // console.log(form.get('image'))
   
   const newRecipe = {
     author: author,

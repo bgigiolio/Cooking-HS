@@ -8,7 +8,6 @@ import '../../styles/colorpalette.css';
 
 function RecipeBrowser(props) {
     const { id } = useParams();
-    console.log(props.users.users)
     if (props.recipes.isLoading || props.users.isLoading) {
         return(
             <div className='container relativeContainer' id='recipeContainer'>
@@ -23,7 +22,7 @@ function RecipeBrowser(props) {
 
         return(
             <div className='container relativeContainer' id='recipeContainer'>
-                {chosenRecipe ? <RecipeSingle users={props.users.users} recipes={recipes} chosenRecipe={chosenRecipe}/> : <p>404 Recipe Not Found</p>}
+                {chosenRecipe ? <RecipeSingle currentUser={props.currentUser} users={props.users.users} recipes={recipes} chosenRecipe={chosenRecipe}/> : <p>404 Recipe Not Found</p>}
             </div>
         )
     }

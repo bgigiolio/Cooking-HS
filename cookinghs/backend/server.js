@@ -36,6 +36,8 @@ const userRouter = require("./routes/users")
 app.use("/api/users", userRouter) // Could change this to just /users
 
 app.use(require('./routes/recipes'))
+
+app.use(require('./routes/comments'))
 // Add model routes here ^^^
 
 // // 404 route at the bottom for anything not found.
