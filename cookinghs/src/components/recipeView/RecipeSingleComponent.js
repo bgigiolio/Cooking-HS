@@ -5,9 +5,10 @@ import { Fraction } from 'fractional';
 import { Link } from 'react-router-dom';
 import '../../styles/recipeview.css';
 import '../../styles/colorpalette.css';
-import ReviewModal from '../recipeForms/ReviewModalComponent';
-import ReportModal from '../report/ReportModalComponent';
+import ReviewModal from '../recipeModals/ReviewModalComponent';
+import ReportModal from '../recipeModals/ReportModalComponent';
 import { postComment } from '../../redux/comments/comment-actions';
+import { postReport } from '../../redux/reports/report-actions';
 
 const starRating = function(rating) {
     return (
@@ -134,17 +135,8 @@ function RecipeSingle(props) {
         )
     });
 
-    const [reportModal, setReportModal] = useState(false);
-    const [reportId, setReportId] = useState();
-    const toggleReport = (e) => {
-        const targetId = Number(e.target.id.slice(-1));
-        setReportId(targetId);
-        setReportModal(!reportModal); 
-    }
-
     const [reviewModal, setReviewModal] = useState(false);
     const toggleReview = () => {props.currentUser ? setReviewModal(!reviewModal) : alert("Please login to leave a comment!")};
-
     let [commentCount, setCommentCount] = useState(3)
 
     const commentsView = chosenComment.slice(0,commentCount).map((comment, index) => {
@@ -177,6 +169,14 @@ function RecipeSingle(props) {
         )
     })
 
+    const [reportModal, setReportModal] = useState(false);
+    const [reportId, setReportId] = useState();
+    const toggleReport = (e) => {
+        const targetId = Number(e.target.id.slice(-1));
+        setReportId(targetId);
+        setReportModal(!reportModal); 
+    }
+
     return(
         <div id='recipeViewContainer'>
             <ReviewModal
@@ -193,7 +193,9 @@ function RecipeSingle(props) {
                 recipeId={props.id}
                 recipeTitle={chosenRecipe.title}
                 reportId={reportId}
+                currentUser={props.currentUser}
                 commentContent={reportId ? chosenComment[reportId-1] : ""}
+                postReport={props.postReport}
             />
             {/* <img src='../report.png' alt=''></img> */}
             <ListGroup>
@@ -306,7 +308,8 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    postComment: (comment) => dispatch(postComment(comment))
+    postComment: (comment) => dispatch(postComment(comment)),
+    postReport: (report) => dispatch(postReport(report))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeSingle);
