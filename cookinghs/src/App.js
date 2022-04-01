@@ -15,7 +15,7 @@ import WriteWrapper from './components/recipeForms/WriteWrapperComponent';
 import FlagDesc from './components/Admin/FlagDesc';
 import defaultProfile from './defaultProfile.png'
 import { baseUrl } from './shared/baseUrl';
-import { getRecipes } from './redux/recipePage/recipe-actions';
+import { getRecipes, getFilteredRecipes } from './redux/recipePage/recipe-actions';
 import { getUsers } from './redux/users/user-actions';
 import { getComments } from './redux/comments/comment-actions';
 import { getReports } from './redux/reports/report-actions';
@@ -29,6 +29,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   getRecipes: () => {dispatch(getRecipes())},
+  // landing page filtering
+  getFilteredRecipes: () => {dispatch(getFilteredRecipes())},
   getUsers: () => {dispatch(getUsers())},
   getComments: () => {dispatch(getComments())},
   getReports: () => {dispatch(getReports())}
@@ -59,6 +61,8 @@ class App extends React.Component {
   componentDidMount() {
     console.log("app mounting")
     this.props.getRecipes();
+    // landing
+    this.props.getFilteredRecipes();
     this.props.getUsers();
     this.props.getComments();
     this.props.getReports();

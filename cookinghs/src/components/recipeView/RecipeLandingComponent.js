@@ -7,22 +7,38 @@ import { Button, Card } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import axios from "axios";
 import { Slider } from '@mui/material';
+import { getFilteredRecipes } from "../../redux/recipePage/recipe-actions"
+import { connect } from "react-redux";
 
 
 class RecipeLanding extends React.Component {
     constructor() {
         super();
         this.state = {
-          name: "React"
+          params: {}
         };
         this.onValueChange = this.onValueChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
       }
     
       onValueChange(event) {
-        this.setState({
-          selectedOption: event.target.value
-        });
+        const params = {
+            ingredients: "cornstarch"
+
+        }
+        getFilteredRecipes(params);
+        // this.setState({
+        //   selectedOption: event.target.value
+        // });
       }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        console.log('You clicked submit.');
+        // this.props.getFilteredRecipes({ingredients:"cornstarch"});
+        this.props.getFilteredRecipes({title: "fried"});
+        console.log("function should be called?")
+    }
 
     
 
@@ -33,6 +49,7 @@ class RecipeLanding extends React.Component {
                     <h5 className={styles.filterHeader}>Filter Recipes</h5>
 
                     {/* Course Filter */}
+                    <Button onClick={this.handleSubmit}>CLICK ME</Button>
                     <div className={styles.courseFilter}>
                         <h6>Course</h6>
 
@@ -170,4 +187,8 @@ class RecipeLanding extends React.Component {
     }
 }
 
-export default RecipeLanding;
+const mapDispatchToProps = (dispatch, params) => ({
+    getFilteredRecipes: (params) => dispatch(getFilteredRecipes(params)),
+})
+
+export default connect(null, mapDispatchToProps)(RecipeLanding);

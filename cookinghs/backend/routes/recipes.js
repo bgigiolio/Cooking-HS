@@ -22,7 +22,20 @@ cloudinary.config({
     api_secret: '_AKSaIR7ptxuEh_CTmQdjFDaaOc'
 });
 
-{
+router.get('/api/recipes', mongoChecker, async (req, res) => {
+	try{
+		var recipes = await Recipe.find()
+        res.send(recipes)
+
+	} catch(error){
+		log(error)
+        res.status(500).send("Internal Server Error")
+
+	}
+
+
+}),
+
 	/*
 	Query Parameters:
 	1. course: (string), ideally a valid course type
@@ -34,8 +47,7 @@ cloudinary.config({
 
 	Note: The query itself has an "AND" relationship between all its parameters
 	*/
-}
-router.get('/api/recipes', mongoChecker, async (req, res) => {
+router.get('/api/recipes/filters', mongoChecker, async (req, res) => {
 	try {
 		let q = req.query;
 		// console.log(q);
@@ -101,7 +113,7 @@ router.get('/api/recipes', mongoChecker, async (req, res) => {
         log(error)
         res.status(500).send("Internal Server Error")
     }
-})
+}),
 
 // post single recipe - called by write page, fork page
 router.post('/api/recipes', mongoChecker, async (req, res) => {
@@ -132,7 +144,7 @@ router.post('/api/recipes', mongoChecker, async (req, res) => {
 			res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
 		}
 	}
-})
+}),
 
 // get single recipe - called by recipe single page
 router.get('/api/recipes/:id', mongoChecker, async (req, res) => {
@@ -156,7 +168,7 @@ router.get('/api/recipes/:id', mongoChecker, async (req, res) => {
 		log(error)
 		res.status(500).send('Internal Server Error')  // server error
     }
-})
+}),
 
 // delete an entire recipe - called by delete recipe page
 router.delete('/api/recipes/:id', mongoChecker, async (req, res) => {
@@ -178,7 +190,7 @@ router.delete('/api/recipes/:id', mongoChecker, async (req, res) => {
 		log(error)
 		res.status(500).send() // server error, could not delete.
 	}
-})
+}),
 
 // edit an entire recipe - called by edit recipe page
 router.put('/api/recipes/:id', mongoChecker, async (req, res) => {
@@ -204,6 +216,6 @@ router.put('/api/recipes/:id', mongoChecker, async (req, res) => {
 			res.status(400).send('Bad Request') // bad request for changing the student.
 		}
 	}
-})
+}),
 
 module.exports = router

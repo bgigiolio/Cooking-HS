@@ -8,6 +8,7 @@ export const getRecipes = () => (dispatch) => {
     })
     .then(response => {
         if (response.ok) {
+          console.log(response);
             return response;
         } else {
             var error = new Error('Error ' + response.status + ': ' + response.statusText);
@@ -22,6 +23,49 @@ export const getRecipes = () => (dispatch) => {
     .catch(error => dispatch(failRecipes(error.message)))
 }
 
+// for the filtered landing page recipes
+
+export const getFilteredRecipes = (p={}) => (dispatch) => {
+  console.log("filter is called")
+  console.log(p);
+  dispatch(recipesLoading(true));
+  if(p == {}){
+    return fetch(baseUrl + 'api/recipes/filters').then(response => {
+      if (response.ok) {
+          return response;
+      } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+      }
+  }, error => {
+      var errmess = new Error(error.message);
+      throw errmess;
+  }).then(response => response.json())
+  .then(filtered_recipes => dispatch(addFilteredRecipes(filtered_recipes)))
+  .catch(error => dispatch(failRecipes(error.message)))
+  }
+  // dispatch(recipesLoading(true));
+  else{
+    return fetch(baseUrl + 'api/recipes/filters' + '?' + new URLSearchParams(p).toString(), {
+      credentials: 'same-origin'
+    }).then(response => {
+      if (response.ok) {
+          return response;
+      } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+      }
+  }, error => {
+      var errmess = new Error(error.message);
+      throw errmess;
+  }).then(response => response.json())
+  .then(filtered_recipes => dispatch(addFilteredRecipes(filtered_recipes)))
+  .catch(error => dispatch(failRecipes(error.message)))
+  }
+}
+
 export const recipesLoading = () => ({
     type: ActionTypes.RECIPES_LOADING
 });
@@ -29,6 +73,12 @@ export const recipesLoading = () => ({
 export const addRecipes = (recipes) => ({
   type: ActionTypes.ADD_RECIPES,
   payload: recipes
+});
+
+// for the landing page filtering
+export const addFilteredRecipes = (filtered_recipes) => ({
+  type: ActionTypes.ADD_FILTERED_RECIPES,
+  payload: filtered_recipes
 });
 
 export const failRecipes = (errmess) => ({

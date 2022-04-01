@@ -4,12 +4,18 @@ export const RecipesReducer = (
     state = { 
         isLoading: true,
         errMess: null, 
-        recipes:[]
+        recipes:[],
+        filtered_recipes:[]
     }, action) => {
     switch (action.type) {
         case ActionTypes.ADD_RECIPES:
             console.log("adding all recipes")
             return {...state, isLoading: false, errMess: null, recipes: action.payload};
+        
+        // for the filtered recipes on the landing page
+        case ActionTypes.ADD_FILTERED_RECIPES:
+        console.log("adding filtered recipes")
+        return {...state, isLoading: false, errMess: null, filtered_recipes: action.payload};
         
         case ActionTypes.RECIPES_LOADING:
             return {...state, isLoading: true, errMess: null, recipes: []}

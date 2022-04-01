@@ -52,7 +52,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = state => {
     return {
-        recipes: state.Recipes.recipes
+        recipes: state.Recipes.filtered_recipes
     }
 
 }
