@@ -25,7 +25,7 @@ class Users extends React.Component {
     state = {
         currentUser: {fullName: "null", username: "null", recipes : []},
         loaded: true,
-        recipes: Recipes.filter((recipe) => recipe.author === currentUser._id)
+        recipes: this.props.Recipes.recipes.filter((recipe) => recipe.author === this.state.currentUser._id)
     }
     componentDidUpdate() {
         // console.log("post mount:")
