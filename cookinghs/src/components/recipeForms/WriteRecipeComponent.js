@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Fraction } from 'fractional'; 
 import { connect } from 'react-redux';
 import { postRecipe, putRecipe } from '../../redux/recipePage/recipe-actions';
-import { addImage } from '../../actions/images-actions';
 
 import RecipeForm from './RecipeFormComponent';
 
@@ -202,12 +201,12 @@ function WriteRecipe(props) {
         const valid = checkForm(recipe)
         if (valid) {
             if (props.flag === "fork" || props.flag === "new") {
-                props.postRecipe(recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, 5, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image);
-                handleRedirect()
+                props.postRecipe(recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.difficulty, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image)
+                .then(handleRedirect())
             }
             else if (props.flag === "edit") {
-                props.putRecipe(recipe._id, recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.difficulty, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image);
-                handleRedirect()
+                props.putRecipe(recipe._id, recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.difficulty, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image)
+                .then(handleRedirect())
             }
         }
         else {

@@ -6,6 +6,19 @@ function ReviewModal(props) {
     const [content, setContent] = useState('');
     // Include a call to pull the comments for the recipe to be able to update the database with a new rating & comment
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('submitting review')
+        const newComment = {
+            recipeid: props.recipeid,
+            user: props.currentUser._id,
+            rating: rating,
+            content: content
+        }
+        props.postComment(newComment)
+        .then(props.toggle)
+    }
+
     return(
         <Modal
             toggle={props.toggle}
@@ -77,7 +90,7 @@ function ReviewModal(props) {
             <Button
                 color="danger"
                 className="color-secondary-bg"
-                
+                onClick={handleSubmit}
             >
                 Submit
             </Button>

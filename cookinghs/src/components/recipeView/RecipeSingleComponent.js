@@ -1,26 +1,56 @@
 import React, { useState } from 'react';
-import { List, ListGroup, ListGroupItem, Card, CardBody, CardHeader, Button, Input, Label, FormGroup, Col, Row } from 'reactstrap';
+import { connect } from 'react-redux';
+import { List, ListGroup, ListGroupItem, Card, CardBody, CardHeader, Button, Input, Label, FormGroup, Col, Row, CardFooter } from 'reactstrap';
 import { Fraction } from 'fractional';
 import { Link } from 'react-router-dom';
 import '../../styles/recipeview.css';
 import '../../styles/colorpalette.css';
 import ReviewModal from '../recipeForms/ReviewModalComponent';
 import ReportModal from '../report/ReportModalComponent';
+import { postComment } from '../../redux/comments/comment-actions';
+
+const starRating = function(rating) {
+    return (
+        <>
+            {[...Array(5)].map((star, index) => {
+                index += 1;
+                if (index <= rating + 0.25) {
+                    return(
+                        <svg className='starIcon' key={index}>
+                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
+                        </svg>
+                    )
+                }
+                else if (rating - index + 1 >= 0.25 & rating - index + 1 <= 0.75){
+                    return(
+                        <svg className='starIcon' key={index}>
+                            <path d="M22 9.74l-7.19-.62L12 2.5 9.19 9.13 2 9.74l5.46 4.73-1.64 7.03L12 17.77l6.18 3.73-1.63-7.03L22 9.74zM12 15.9V6.6l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.9z"></path>
+                        </svg>
+                    )
+                    
+                }
+                else {
+                    return(
+                        <svg className='starIcon' key={index}>
+                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                        </svg>
+                    )
+                }
+            })}
+        </>
+    );
+}
 
 function RecipeSingle(props) {
     const recipes = props.recipes
     const chosenRecipe = props.chosenRecipe;
-    const chosenComment = chosenRecipe.comments
+    let chosenComment = []
+    console.log(props.Comments)
+    if (!props.Comments.isLoading) {
+        chosenComment = props.Comments.comments.filter((comment) => comment.recipeid === chosenRecipe._id)
+    }
     let [servingSize, setServingSize] = useState(chosenRecipe.servings);
     let [scale, setScale] = useState(1);
-
-    // Getting average rating
-    // const sumWithInitial = chosenComment.reduce(
-    //     (previousValue, currentValue) => {
-    //     return(previousValue.rating ? previousValue.rating + currentValue.rating : previousValue + currentValue.rating)
-    //     },
-    // );
-    const averageRating = chosenRecipe.averageRating
 
     const timeline = (par) => {
         let parent = par;
@@ -104,37 +134,6 @@ function RecipeSingle(props) {
         )
     });
 
-    const starRating = function(rating) {
-        return (
-            <>
-                {[...Array(5)].map((star, index) => {
-                    index += 1;
-                    if (index <= rating + 0.25) {
-                        return(
-                            <svg className='starIcon' key={index}>
-                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
-                            </svg>
-                        )
-                    }
-                    else if (rating - index + 1 >= 0.25 & rating - index + 1 <= 0.75){
-                        return(
-                            <svg className='starIcon' key={index}>
-                                <path d="M22 9.74l-7.19-.62L12 2.5 9.19 9.13 2 9.74l5.46 4.73-1.64 7.03L12 17.77l6.18 3.73-1.63-7.03L22 9.74zM12 15.9V6.6l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.9z"></path>
-                            </svg>
-                        )
-                        
-                    }
-                    else {
-                        return(
-                            <svg className='starIcon' key={index}>
-                                <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                            </svg>
-                        )
-                    }
-                })}
-            </>
-        );
-    }
     const [reportModal, setReportModal] = useState(false);
     const [reportId, setReportId] = useState();
     const toggleReport = (e) => {
@@ -144,7 +143,39 @@ function RecipeSingle(props) {
     }
 
     const [reviewModal, setReviewModal] = useState(false);
-    const toggleReview = () => setReviewModal(!reviewModal);
+    const toggleReview = () => {props.currentUser ? setReviewModal(!reviewModal) : alert("Please login to leave a comment!")};
+
+    let [commentCount, setCommentCount] = useState(3)
+
+    const commentsView = chosenComment.slice(0,commentCount).map((comment, index) => {
+        const rating = comment.rating;
+        const reportId = 'reportIcon' + (index + 1);
+        return (
+            <>
+                <Card>
+                    <CardHeader>
+                        {/* link to commenter user profile here */}
+                        {starRating(rating)}
+                        <span className='userLink'>{props.users.filter((user) => user._id === comment.user)[0].fullName}</span> says: 
+                        <Button 
+                            className='reportButton'
+                            onClick={toggleReport}
+                            color="danger"
+                            outline
+                        >
+                            <i id={reportId} className="reportIcon fa-solid fa-triangle-exclamation"></i>
+                        </Button>
+                    </CardHeader>
+                    <CardBody style={{width: "100%", overflow:"hidden", height: "fit-content"}}>
+                        {comment.content}
+                        <br></br>
+                        {comment.date}
+                    </CardBody>
+                </Card>
+                <br></br>
+            </>
+        )
+    })
 
     return(
         <div id='recipeViewContainer'>
@@ -152,7 +183,9 @@ function RecipeSingle(props) {
                 toggle={toggleReview}
                 isOpen={reviewModal}
                 title={chosenRecipe.title}
-                id={props.id}
+                recipeid={chosenRecipe._id}
+                currentUser={props.currentUser}
+                postComment={props.postComment}
             />
             <ReportModal
                 toggle={toggleReport}
@@ -185,7 +218,7 @@ function RecipeSingle(props) {
                         </Col>
                     </Row>
                     <div id='averageRating'>
-                        {starRating(averageRating)}
+                        {starRating(chosenRecipe.averageRating)}
                     </div>
                     {/* link to author user profile here */}
                     {chosenRecipe.author ? <span> By <span className='userLink'>{props.users.filter((user) => user._id === chosenRecipe.author)[0].fullName}</span></span> : null}
@@ -253,9 +286,9 @@ function RecipeSingle(props) {
                     >
                         Add Rating and Review
                     </Button>
-                    {/* {commentsView} */}
+                    {commentsView}
                     <Button
-                        // onClick={() => setCommentCount(commentCount+3)}
+                        onClick={() => setCommentCount(commentCount+3)}
                         id='loadReviewButton'
                     >
                         Load More Reviews
@@ -266,4 +299,14 @@ function RecipeSingle(props) {
     )
 };
 
-export default RecipeSingle;
+const mapStateToProps = state => {
+    return {
+        Comments: state.Comments
+    }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+    postComment: (comment) => dispatch(postComment(comment))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(RecipeSingle);

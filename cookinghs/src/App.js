@@ -14,19 +14,23 @@ import RecipeBrowser from './components/recipeView/RecipeBrowserComponent';
 import WriteWrapper from './components/recipeForms/WriteWrapperComponent';
 import FlagDesc from './components/Admin/FlagDesc';
 import defaultProfile from './defaultProfile.png'
+import { baseUrl } from './shared/baseUrl';
 import { getRecipes } from './redux/recipePage/recipe-actions';
 import { getUsers } from './redux/users/user-actions';
+import { getComments } from './redux/comments/comment-actions';
 
 const mapStateToProps = state => {
   return {
     Recipes: state.Recipes,
-    Users: state.Users
+    Users: state.Users,
+    Comments: state.Comments
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   getRecipes: () => {dispatch(getRecipes())},
-  getUsers: () => {dispatch(getUsers())}
+  getUsers: () => {dispatch(getUsers())},
+  getComments: () => {dispatch(getComments())}
 });
 
 class App extends React.Component {
@@ -35,7 +39,7 @@ class App extends React.Component {
     super(props);
     this.state.currentUser = null
     this.updateCurrentUser = this.updateCurrentUser.bind(this);
-    axios.get('http://localhost:5000/api/users/session', {params :{
+    axios.get(baseUrl + 'api/users/session', {params :{
       want : ["_id", "username", "admin", "fullName", "email", "profilePic"]
     }}).then( async (response) => {
       this.state.currentUser = response.data
@@ -55,6 +59,7 @@ class App extends React.Component {
     console.log("app mounting")
     this.props.getRecipes();
     this.props.getUsers();
+    this.props.getComments();
   }
   logout(){
     console.log("running logout")
@@ -112,7 +117,7 @@ class App extends React.Component {
               <Route exact path="/recipes/newrecipe" element={<WriteWrapper flag={"new"} recipes={this.props.Recipes} user={this.state.currentUser}/>}/>
               <Route exact path="/recipes/:id/editrecipe" element={<WriteWrapper flag={"edit"} recipes={this.props.Recipes} user={this.state.currentUser}/>}/>
               <Route exact path="/recipes/:id/forkrecipe" element={<WriteWrapper flag={"fork"} recipes={this.props.Recipes} user={this.state.currentUser}/>}/>
-              <Route exact path="/recipes/:id" element={<RecipeBrowser recipes={this.props.Recipes} users={this.props.Users}/>}/>
+              <Route exact path="/recipes/:id" element={<RecipeBrowser recipes={this.props.Recipes} users={this.props.Users} currentUser={this.state.currentUser}/>}/>
               <Route exact path="/recipes" element={<RecipeBrowser recipes={this.props.Recipes} users={this.props.Users}/>}/>
               <Route exact path="/*" element={<Landing />}/>
             </Routes>

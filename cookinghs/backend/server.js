@@ -38,8 +38,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Add routes here vvv
 app.use(require('./routes/recipes'))
 
-
-// Add routes here ^^^
+app.use(require('./routes/comments'))
+// Add model routes here ^^^
 
 // // 404 route at the bottom for anything not found.
 app.get('*', (req, res) => {
