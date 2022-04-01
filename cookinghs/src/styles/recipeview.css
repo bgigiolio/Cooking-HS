@@ -50,6 +50,7 @@
     padding-right: var(--bs-gutter-x, 2rem);
     border-radius: 10px;
     padding-bottom: 50px;
+    margin-left: 0px;
 }
 
 #recipeViewContainer {

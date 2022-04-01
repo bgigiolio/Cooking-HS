@@ -17,7 +17,7 @@ const { ObjectId } = require('mongodb');
 	3. difficulty: (string), 2 comma separated numbers b/w 0 and 5 in the form: (lower limit, upper limit) INCLUSIVE
 	4. cooktime: (string), 1 number representing minutes, returns all recipes that take less than this amount
 	5. title [primarily for the search bar]: (string), returns all recipes with the corresponding string
-	5. ingredients: (string), comma separated words, returns recipes that have ANY of the ingredients specified
+	6. ingredients: (string), comma separated words, returns recipes that have ANY of the ingredients specified
 
 	Note: The query itself has an "AND" relationship between all its parameters
 	*/

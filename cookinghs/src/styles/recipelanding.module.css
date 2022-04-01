@@ -1,3 +1,7 @@
+.landingContainer{
+    margin-left: 0px;
+}
+
 .searchBar{
     margin-top: 15px;
     width: 20vw;
@@ -41,6 +45,7 @@
 .addBtn{
     font-size: 42px;
     margin-top: 17px;
+    margin-left: 20px;
     display: flex;
     justify-content: flex-start;
 }
@@ -48,4 +53,33 @@
 .addBtn:hover{
     cursor: pointer;
     color: lightgray;
+}
+
+.mainFilterSection{
+    float: left;
+    width: 14vw;
+    height: 100vh;
+    border-right: 0.5px solid rgb(211, 209, 209);
+    margin-right: 20px;
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26); */
+    box-shadow: 10px 0 5px -2px rgb(235, 233, 233);
+    border-radius: 7px;
+    overflow: scroll;
+}
+
+.filterHeader{
+    /* text-align: center; */
+    margin-left: 0.5rem;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 17px;
+}
+
+.courseFilter{
+    margin-bottom: 15px;
+}
+
+.radioButton{
+    margin-bottom: 0.3rem;
 }
