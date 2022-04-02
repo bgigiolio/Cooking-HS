@@ -102,7 +102,7 @@ router.get('/api/recipes', mongoChecker, async (req, res) => {
 // post single recipe - called by write page, fork page
 router.post('/api/recipes', mongoChecker, async (req, res) => {
 	const imageStr = req.body.imagefile
-	let imageurl = "https://res.cloudinary.com/yongdk1/image/upload/v1648748246/cookinghs/recipe-add-photo_ortqgg.png"
+	let imageurl = "https://res.cloudinary.com/yongdk1/image/upload/v1648748246/cookinghs/recipe-add-photo_ortqgg.png";
 	if (imageStr !== null) {
 		const uploadedResponse = await cloudinary.uploader
 		.upload(imageStr, {
@@ -189,7 +189,31 @@ router.delete('/api/recipes/:id', mongoChecker, async (req, res) => {
 
 // edit an entire recipe - called by edit recipe page
 router.put('/api/recipes/:id', mongoChecker, async (req, res) => {
+	const imageStr = req.body.imagefile
+	let imageurl = req.body.image;
+	if (imageStr !== null) {
+		const uploadedResponse = await cloudinary.uploader
+		.upload(imageStr, {
+			upload_preset: "cookinghs"
+		})
+		console.log(uploadedResponse)
+		imageurl = uploadedResponse.url
+	}
     const id = req.params.id
+
+	const editedRecipe = {
+		"title": req.body.title,
+		"description": req.body.description,
+		"ingredients": req.body.ingredients,
+		"steps": req.body.steps,
+		"course": req.body.course,
+		"cuisine": req.body.cuisine,
+		"preptime": req.body.preptime,
+		"cooktime": req.body.cooktime,
+		"servings": req.body.servings,
+		"image": imageurl,
+		"difficulty": req.body.difficulty
+	}
 
     if (!ObjectId.isValid(id)) {
         res.status(404).send('Resource not found')
@@ -197,7 +221,7 @@ router.put('/api/recipes/:id', mongoChecker, async (req, res) => {
     }
 
     try {
-		const recipe = await Recipe.findOneAndReplace({_id: id}, req.body, {new: true})
+		const recipe = await Recipe.findOneAndUpdate({_id: id}, editedRecipe, {new: true})
 		if (!recipe) {
 			res.status(404).send()
 		} else {   

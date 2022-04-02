@@ -41,7 +41,7 @@ export const addRecipe = (recipe) => ({
   payload: recipe
 });
 
-export const postRecipe = (author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image, imagefile) => async (dispatch) => {  
+export const postRecipe = (author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image, imagefile) => (dispatch) => {  
   const newRecipe = {
     author: author,
     parent: parent,
@@ -60,7 +60,7 @@ export const postRecipe = (author, parent, title, description, ingredients, step
     difficulty: difficulty
   };
 
-  const result = await fetch(baseUrl + 'api/recipes', {
+  return fetch(baseUrl + 'api/recipes', {
     method: "POST",
     body: JSON.stringify(newRecipe),
     headers: {
@@ -84,8 +84,6 @@ export const postRecipe = (author, parent, title, description, ingredients, step
   .then(response => dispatch(addRecipe(response)))
   .then(response => {return true})
   .catch(error => { console.log('recipe creation', error.message); alert('Recipe could not be posted\nError: '+error.message); });
-
-  return result
 }
 
 export const editRecipe = (recipe) => ({
@@ -109,6 +107,7 @@ export const putRecipe = (_id, author, parent, title, description, ingredients, 
     cooktime: cooktime,
     servings: servings,
     image: image,
+    imagefile: imagefile,
     averageRating: 0,
     comments: []
   };

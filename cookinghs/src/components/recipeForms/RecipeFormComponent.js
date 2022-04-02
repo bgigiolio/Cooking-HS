@@ -232,23 +232,26 @@ function RecipeForm(props) {
                 </Col>
                 <Col md={4}>
                     <FormGroup row>
-                        <Label
-                        for="image"
-                        >
-                        <img src={props.imagefile || props.tempimage} 
-                            alt=''
-                            id='uploadImage'
-                        />
-                        </Label>
                         <Col>
-                        <Input
-                            id="image"
-                            name="image"
-                            type="file"
-                            accept="image/*"
-                            style={{display: 'none'}}
-                            onChange={props.handleImageChange}
-                        />
+                        <Button type="button" style={{padding: "2px", width: "fit-content"}}>
+                            <Label
+                            for="image"
+                            style={{cursor: "pointer", height:"fit-content", marginBottom:"-6px"}}
+                            >
+                            <img src={props.imagefile || props.tempimage}
+                                alt=''
+                                id='uploadImage'
+                            />
+                            </Label>
+                            <Input
+                                id="image"
+                                name="image"
+                                type="file"
+                                accept="image/*"
+                                style={{display: 'none'}}
+                                onChange={props.handleImageChange}
+                            />
+                        </Button>
                         <FormText>
                             Give us the tastiest image of your recipe! Use JPEG or PNG.
                         </FormText>

@@ -82,6 +82,7 @@ function WriteRecipe(props) {
 
     const handleImageChange = e => {
         const target = e.target;
+        const name = target.name;
         const file = target.files[0];
         const reader = new FileReader();
         reader.readAsDataURL(file)
@@ -91,7 +92,6 @@ function WriteRecipe(props) {
                 imagefile: reader.result
                 }
             )
-            console.log(recipe.imagefile)
         }
         
     }
@@ -186,7 +186,7 @@ function WriteRecipe(props) {
     }
 
     const checkForm = (recipe) => {
-        console.log(recipe)
+        // console.log(recipe)
         //check required fields: title, ingredient0, step0
         if (recipe.title === '') {return false}
         recipe.ingredients.map((ingredient) => {
