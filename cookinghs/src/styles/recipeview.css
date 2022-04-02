@@ -168,6 +168,13 @@ h1 {
     width: 16rem;
 }
 
+.extra-info{
+    color: slategray;
+    /* font-size: small; */
+    padding: 2px;
+    width: 16rem;
+}
+
 .author-name{
     font-size: medium;
     padding: 2px;

@@ -3,7 +3,7 @@ const log = console.log
 const path = require ('path')
 require('dotenv').config()
 const cors = require("cors")
-const express = require('express');
+const express = require('express')
 const app = express();
 const session = require('express-session')
 app.use(cors({
@@ -26,16 +26,15 @@ const {ObjectID} = require('mongodb')
 const {Recipe} = require('./models/recipe')
 // mongoose.set('bufferCommands', false);
 // ^^^ this has caused some problems for me in the past
+
+
+
 const bodyParser = require('body-parser')
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }));
+// Add model routes here vvv
+const userRouter = require("./routes/users")
+app.use("/api/users", userRouter) // Could change this to just /users
 
-// Add models here vvv
-// const { Recipe } = require('./models/recipe')
-
-// Add models here ^^^
-
-// Add routes here vvv
 app.use(require('./routes/recipes'))
 
 app.use(require('./routes/comments'))
@@ -49,12 +48,6 @@ app.get('*', (req, res) => {
     // you could also send back a fancy 404 webpage here.
 });
 
-const bodyParser = require('body-parser')
-app.use(bodyParser.json())
-// Add model routes here vvv
-const userRouter = require("./routes/users")
-app.use("/api/users", userRouter) // Could change this to just /users
-// Add model routes here ^^^
 
 const port = process.env.PORT || 5000
 app.listen(port, () => {

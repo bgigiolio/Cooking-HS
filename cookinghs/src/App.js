@@ -24,6 +24,7 @@ const mapStateToProps = state => {
   return {
     Recipes: state.Recipes,
     Users: state.Users,
+    Comments: state.Comments
   }
 }
 
@@ -124,7 +125,7 @@ class App extends React.Component {
               <Route exact path="/recipes/:id/editrecipe" element={<WriteWrapper flag={"edit"} recipes={this.props.Recipes} user={this.state.currentUser}/>}/>
               <Route exact path="/recipes/:id/forkrecipe" element={<WriteWrapper flag={"fork"} recipes={this.props.Recipes} user={this.state.currentUser}/>}/>
               <Route exact path="/recipes/:id" element={<RecipeBrowser recipes={this.props.Recipes} users={this.props.Users} currentUser={this.state.currentUser}/>}/>
-              <Route exact path="/recipes" element={<RecipeBrowser recipes={this.props.Recipes} users={this.props.Users}/>}/>
+              <Route exact path="/recipes" element={<RecipeBrowser recipes={this.props.Recipes} users={this.props.Users} comments={this.props.Comments}/>}/>
               <Route exact path="/*" element={<Landing />}/>
             </Routes>
           </ScrollToTop>

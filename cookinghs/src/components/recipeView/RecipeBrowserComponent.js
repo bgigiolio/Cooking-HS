@@ -31,7 +31,7 @@ function RecipeBrowser(props) {
         const recipes = props.recipes.recipes
         return(
             <div className='container relativeContainer' id='recipeContainer'>
-                <RecipeLanding recipes={recipes} users={props.users.users}/>
+                <RecipeLanding recipes={recipes} users={props.users.users} comments={props.comments.comments}/>
             </div>
         )
     }
