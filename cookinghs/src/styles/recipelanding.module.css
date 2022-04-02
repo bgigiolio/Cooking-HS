@@ -20,7 +20,8 @@
 .topCategories{
     display: flex;
     justify-content: space-between;
-    /* margin-left: 15vw; */
+    margin-left: 21vw;
+    margin-right: 5.5vw;
 }
 
 .categoryButton{
@@ -57,22 +58,24 @@
 
 .mainFilterSection{
     float: left;
-    width: 14vw;
-    height: 100vh;
+    width: 18vw;
+    min-height: calc(100vh - 56px);
     border-right: 0.5px solid rgb(211, 209, 209);
     margin-right: 20px;
     /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26); */
     box-shadow: 10px 0 5px -2px rgb(235, 233, 233);
     border-radius: 7px;
     overflow: scroll;
+    padding-left: 15px;
 }
 
 .filterHeader{
     /* text-align: center; */
     margin-left: 0.5rem;
     margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
+    text-align: center;
+    /* display: flex;
+    justify-content: space-between; */
     margin-top: 17px;
 }
 

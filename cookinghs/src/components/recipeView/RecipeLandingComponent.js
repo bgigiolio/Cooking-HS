@@ -15,10 +15,12 @@ class RecipeLanding extends React.Component {
     constructor() {
         super();
         this.state = {
-          params: {}
+          params: {},
+          search: "",
         };
         this.onValueChange = this.onValueChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
       }
     
       onValueChange(event) {
@@ -32,12 +34,21 @@ class RecipeLanding extends React.Component {
         // });
       }
 
+    //   
     handleSubmit(e) {
         e.preventDefault();
         console.log('You clicked submit.');
         // this.props.getFilteredRecipes({ingredients:"cornstarch"});
         this.props.getFilteredRecipes({title: "fried"});
         console.log("function should be called?")
+    }
+
+    // Handler for the Search Bar Querying
+    handleSearch(key) {
+        this.state.params["title"] = key
+        console.log(this.state);
+        this.props.getFilteredRecipes(this.state.params);
+        console.log("end")
     }
 
     
@@ -164,15 +175,19 @@ class RecipeLanding extends React.Component {
                             <i className="fa-regular fa-square-plus"></i>
                         </Link>
                     </div>
-                    <div className={styles.categoryButtons}>
+                    {/* <div className={styles.categoryButtons}> */}
                         {/* all, quick fix and desserts */}
-                        <Button className={styles.categoryButton}>All Recipes</Button>
-                        <Button className={styles.categoryButton}>Quick Fix</Button>
-                        <Button className={styles.categoryButton}>Desserts</Button>
-                    </div>
+                        {/* <Button className={styles.categoryButton}>All Recipes</Button> */}
+                        {/* <Button className={styles.categoryButton}>Quick Fix</Button> */}
+                        {/* <Button className={styles.categoryButton}>Desserts</Button> */}
+                    {/* </div> */}
 
                     <div className={styles.barDiv}>
-                        <SearchBar className={styles.searchBar}></SearchBar>
+                        <SearchBar className={styles.searchBar}
+                        value={this.state.search}
+                        onChange={(newValue) => this.setState({ search: newValue }, () =>console.log("logged: ", this.state.search))}
+                        onRequestSearch={() => this.handleSearch(this.state.search)}
+                        ></SearchBar>
                     </div>
 
                 </div>
