@@ -27,10 +27,9 @@ const {Recipe} = require('./models/recipe')
 // mongoose.set('bufferCommands', false);
 // ^^^ this has caused some problems for me in the past
 
-
-
 const bodyParser = require('body-parser')
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit: '50mb'}))
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
 // Add model routes here vvv
 const userRouter = require("./routes/users")
 app.use("/api/users", userRouter) // Could change this to just /users

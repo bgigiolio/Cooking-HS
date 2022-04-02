@@ -77,7 +77,7 @@ router.delete('/api/reports/:id', mongoChecker, async (req, res) => {
     }
 
     try {
-		const report = await Report.findOneAndUpdate({_id: id}, {deleted: true})
+		const report = await Report.findOneAndUpdate({_id: id}, {resolved: true})
 		if (!report) {
 			res.status(404).send()
 		} else {   

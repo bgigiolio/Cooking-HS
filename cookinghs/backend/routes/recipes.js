@@ -9,10 +9,6 @@ const { mongoChecker, isMongoError } = require("./helpers/mongo_helpers");
 
 const { ObjectId } = require('mongodb');
 
-// multipart middleware: allows you to access uploaded file from req.file
-const multipart = require('connect-multiparty');
-const multipartMiddleware = multipart();
-
 // cloudinary: configure using credentials found on your Cloudinary Dashboard
 // sign up for a free account here: https://cloudinary.com/users/register/free
 const cloudinary = require('cloudinary');
@@ -105,6 +101,17 @@ router.get('/api/recipes', mongoChecker, async (req, res) => {
 
 // post single recipe - called by write page, fork page
 router.post('/api/recipes', mongoChecker, async (req, res) => {
+	const imageStr = req.body.imagefile
+	let imageurl = "https://res.cloudinary.com/yongdk1/image/upload/v1648748246/cookinghs/recipe-add-photo_ortqgg.png"
+	if (imageStr !== null) {
+		const uploadedResponse = await cloudinary.uploader
+		.upload(imageStr, {
+			upload_preset: "cookinghs"
+		})
+		console.log(uploadedResponse)
+		imageurl = uploadedResponse.url
+	}
+
 	const recipe = new Recipe({
 		"author": req.body.author,
 		"parent": req.body.parent,
@@ -117,7 +124,7 @@ router.post('/api/recipes', mongoChecker, async (req, res) => {
 		"preptime": req.body.preptime,
 		"cooktime": req.body.cooktime,
 		"servings": req.body.servings,
-		"image": req.body.image,
+		"image": imageurl,
 		"difficulty": req.body.difficulty
 	})
 
