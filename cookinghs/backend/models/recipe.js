@@ -42,7 +42,6 @@ const RecipeSchema = new mongoose.Schema({
     difficulty: {type: Number, required: true},
     image: String,
     averageRating: Number,
-    // comments: [CommentSchema]
 })
 
 const Recipe = mongoose.model('Recipe', RecipeSchema)
