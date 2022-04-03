@@ -23,23 +23,23 @@ function ReviewModal(props) {
         }
     })
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // const recipe = parseForm()
-        // const valid = checkForm(recipe)
-        // if (valid) {
-        postComment(comment.recipeid, comment.user, comment.rating, comment.content);
-        handleRedirect()
-        // }
-        // else {
-        //     alert("Please double check your recipe!")
-        // }
-    }
-
     let navigate = useNavigate()
     const handleRedirect = () => {
         let path = '/recipes/:id'; 
         navigate(path);
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('submitting review')
+        const newComment = {
+            recipeid: props.recipeid,
+            user: props.currentUser._id,
+            rating: rating,
+            content: content
+        }
+        props.postComment(newComment)
+        .then(props.toggle)
     }
 
     return(
@@ -110,16 +110,13 @@ function ReviewModal(props) {
             <Button onClick={props.toggle}>
                 Cancel
             </Button>
-            {/* <Link to="/comments"> */}
-                <Button
-                    onClick={handleSubmit}
-                    color="danger"
-                    className="color-secondary-bg"
-                    
-                >
-                    Submit
-                </Button>
-            {/* </Link> */}
+            <Button
+                color="danger"
+                className="color-secondary-bg"
+                onClick={handleSubmit}
+            >
+                Submit
+            </Button>
             {' '}
             
             </ModalFooter>

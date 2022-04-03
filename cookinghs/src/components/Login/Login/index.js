@@ -12,40 +12,39 @@ class Login extends React.Component {
         _id: "",
         host: ""
     }
+
     failedLogin = () => {
         this.setState({
             failedLoginSeen: true
         }, () => console.log(this.state.failedLoginSeen))
         axios.get(this.props.host + 'api/users/logout')
         .then(async (response, error) => {
-            console.log(response);
-            console.log(error)
+            this.props.updateUser(null)
         })
     }
     validLogIn = () => {
         axios.get(this.props.host + 'api/users/login/' + this.props._id)
         .then(async (response) => {
-            
+            axios.get(this.props.host + 'api/users/session', {params :{//hmm
+                want : ["_id", "username", "admin", "fullName", "email", "profilePic"]
+              }}).then( async (response) => {
+                  console.log(response.data)
+                  this.props.updateCurrentUser(response.data)
+              })
         })
-        // axios.get(this.props.host + 'api/users/session', {params :{
-        //     want : ["username"]
-        //   }})
+        
     }
     render() {
         const {username, password, recieveInput, valid, routeTo} = this.props
-        // this.setState({
-        //     _id: _id,
-        //     host: host
-        // })
         return(
             <div id='Login' className="tabcontent">
                 <br/>
                 <br/>
                 <h2>Login</h2>
-                Username: <br/>
+                <br/>
                 <TextField id="LoginUsername" label="Username" name="username" placeholder="Username" value={username} onInput={recieveInput}></TextField><br/>
-                Password: <br/>
-                <TextField id="LoginPassword" label="Password" name="password" placeholder="Password" value={password} onInput={recieveInput}></TextField><br/><br/>
+                <br/>
+                <TextField type="password" id="LoginPassword" label="Password" name="password" placeholder="Password" value={password} onInput={recieveInput}></TextField><br/><br/>
 
                     {valid ? 
                     // <Link to="/recipes">Log In</Link>
@@ -55,10 +54,6 @@ class Login extends React.Component {
                                 Log In
                     </Button>}
                     {this.state.failedLoginSeen ? <h4 id="failedLogin">Incorrect username or password</h4> : null}
-                    <Routes>
-                        <Route exact path="/recipes" element={<RecipeBrowser />}/>
-                        <Route exact path="/admin" element={<AdminPage />}/>
-                    </Routes>
             </div>
         )
     }

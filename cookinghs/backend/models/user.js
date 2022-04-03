@@ -29,8 +29,11 @@ const user = new Schema({
     skillLevel: {
         type: Number,
         default: 0
+    },
+    profilePic: {
+        type: String,
+        default: './defaultProfile.png'
     }
-
 
 })
 

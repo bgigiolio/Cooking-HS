@@ -5,6 +5,21 @@ function ReportModal(props) {
     const [category, setCategory] = useState('Hate Speech');
     const [context, setContext] = useState('');
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('submitting report')
+        const newReport = {
+            reporter_user: props.currentUser,
+            reported_user: 'admin', //TODO - temp, need to change (req.body.... does not work)
+            item: '', //TODO - temporary, need to change
+            item_type: '', //TODO - temp, need to change
+            category: category,
+            context: context,
+        }
+        props.postReport(newReport)
+        .then(props.toggle)
+    }
+
     return(
         <Modal
             toggle={props.toggle}
@@ -77,7 +92,7 @@ function ReportModal(props) {
             <Button
                 color="danger"
                 className="color-secondary-bg"
-                
+                onClick={handleSubmit}
             >
                 Submit
             </Button>

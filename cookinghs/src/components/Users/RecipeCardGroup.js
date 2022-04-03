@@ -20,7 +20,7 @@ const RecipeCardGroup = ({ recipes }) => {
 
 const mapStateToProps = state => {
     return {
-        recipes: state.UserRecipes.recipes
+        recipes: state.Recipes.recipes
     }
 
 }

@@ -3,7 +3,9 @@ import { baseUrl } from '../../shared/baseUrl';
 
 export const getRecipes = () => (dispatch) => {
     dispatch(recipesLoading(true));
-    return fetch(baseUrl + 'api/recipes')
+    return fetch(baseUrl + 'api/recipes', {
+      credentials: 'same-origin'
+    })
     .then(response => {
         if (response.ok) {
             return response;
@@ -39,7 +41,7 @@ export const addRecipe = (recipe) => ({
   payload: recipe
 });
 
-export const postRecipe = (author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image) => (dispatch) => {
+export const postRecipe = (author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image, imagefile) => (dispatch) => {  
   const newRecipe = {
     author: author,
     parent: parent,
@@ -47,15 +49,15 @@ export const postRecipe = (author, parent, title, description, ingredients, step
     description: description,
     ingredients: ingredients,
     steps: steps,
-    difficulty: difficulty,
     course: course,
     cuisine: cuisine,
     preptime: preptime,
     cooktime: cooktime,
     servings: servings,
     image: image,
+    imagefile: imagefile,
     averageRating: 0,
-    comments: []
+    difficulty: difficulty
   };
 
   return fetch(baseUrl + 'api/recipes', {
@@ -80,6 +82,7 @@ export const postRecipe = (author, parent, title, description, ingredients, step
     })
   .then(response => response.json())
   .then(response => dispatch(addRecipe(response)))
+  .then(response => {return true})
   .catch(error => { console.log('recipe creation', error.message); alert('Recipe could not be posted\nError: '+error.message); });
 }
 
@@ -88,7 +91,7 @@ export const editRecipe = (recipe) => ({
   payload: recipe
 });
 
-export const putRecipe = (_id, author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image) => (dispatch) => {
+export const putRecipe = (_id, author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image, imagefile) => (dispatch) => {
   const newRecipe = {
     _id: _id,
     author: author,
@@ -104,6 +107,7 @@ export const putRecipe = (_id, author, parent, title, description, ingredients, 
     cooktime: cooktime,
     servings: servings,
     image: image,
+    imagefile: imagefile,
     averageRating: 0,
     comments: []
   };

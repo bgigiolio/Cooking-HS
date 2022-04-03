@@ -9,6 +9,14 @@ const ReportSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    item: { // id of what is being reported: recipe._id or a comment._id
+        type: String,
+        required: true
+    },
+    item_type: { // "recipe" or "comment"
+        type: String,
+        required: true
+    },
     category: {
         type: String,
         required: true
