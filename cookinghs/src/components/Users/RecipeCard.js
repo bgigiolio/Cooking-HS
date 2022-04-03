@@ -17,40 +17,50 @@ class RecipeCard extends React.Component {
             this.state.image = response.data.image
             this.state.title = response.data.title
             this.state.description = response.data.description
+            this.state.deleted = response.data.deleted
             this.forceUpdate()
         })
     }
     state = {
         title: "",
-        description: ""
+        description: "",
+        deleted: false
+    }
+    deleteRecipe(){
+        axios.delete("http://localhost:500/api/recipes/" + this.props.recipeData)
+        .then(this.forceUpdate())
     }
     render(){
-        return (
-            <Card className={styles.user}>
-                <CardImg
-                    alt="Card image cap"
-                    src={this.state.image}
-                    top
-                    className={styles.user_img}
-                />
-                <CardBody>
-                    <CardTitle tag="h5">
-                        <Link to={"/recipes/" + this.props.recipeData}>{this.state.title}</Link>
-                    </CardTitle>
-                    <CardText>
-                    {this.state.description}
-                        {/* This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. */}
-                    </CardText>
-                    {/* <Button onClick={()=>deleteRecipe(recipeData._id)}>
-                        Delete Recipe
-                    </Button> */}
-                </CardBody>
-                <Routes>
-              <Route exact path="/recipes/:id" element={<RecipeBrowser/>}/>
-            </Routes>
-            </Card>
-            
-        )
+        if(!this.state.deleted){
+            return (
+                <Card className={styles.user}>
+                    <CardImg
+                        alt="Card image cap"
+                        src={this.state.image}
+                        top
+                        className={styles.user_img}
+                    />
+                    <CardBody className={styles.body}>
+                        <CardTitle tag="h5">
+                            <Link to={"/recipes/" + this.props.recipeData}>{this.state.title}</Link>
+                        </CardTitle>
+                        <CardText>
+                        {this.state.description.slice(0, 100) + "..."}
+                            {/* This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. */}
+                        </CardText>
+                        <Button onClick={this.deleteRecipe.bind(this)}>
+                            Delete Recipe
+                        </Button>
+                    </CardBody>
+                    <Routes>
+                  <Route exact path="/recipes/:id" element={<RecipeBrowser/>}/>
+                </Routes>
+                </Card>
+                
+            )
+        }else{
+            return(null)
+        }
     }
 
 };

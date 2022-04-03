@@ -14,6 +14,7 @@ import RecipeBrowser from './components/recipeView/RecipeBrowserComponent';
 import WriteWrapper from './components/recipeForms/WriteWrapperComponent';
 import FlagDesc from './components/Admin/FlagDesc';
 import defaultProfile from './defaultProfile.png'
+import PublicUser from './components/Users/publicUser'
 import { baseUrl } from './shared/baseUrl';
 import { getRecipes } from './redux/recipePage/recipe-actions';
 import { getUsers } from './redux/users/user-actions';
@@ -120,6 +121,7 @@ class App extends React.Component {
               <Route exact path="/recipes/:id/editrecipe" element={<WriteWrapper flag={"edit"} recipes={this.props.Recipes} user={this.state.currentUser}/>}/>
               <Route exact path="/recipes/:id/forkrecipe" element={<WriteWrapper flag={"fork"} recipes={this.props.Recipes} user={this.state.currentUser}/>}/>
               <Route exact path="/recipes/:id" element={<RecipeBrowser recipes={this.props.Recipes} users={this.props.Users} currentUser={this.state.currentUser}/>}/>
+              <Route exact path="/users/:id" element={<PublicUser profilePic = {this.state.profilePic}/>} />
               <Route exact path="/recipes" element={<RecipeBrowser recipes={this.props.Recipes} users={this.props.Users}/>}/>
               <Route exact path="/*" element={<Landing />}/>
             </Routes>

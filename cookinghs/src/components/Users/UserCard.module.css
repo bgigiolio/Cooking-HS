@@ -12,7 +12,7 @@
     margin-right: 2rem;
     margin-bottom: 2rem;
     text-align: center;
-
+    min-height: 350px;
 }
 
 .user_img{
@@ -21,4 +21,9 @@
     max-height: 162px;
     width: 100%;
     object-fit: cover;
+}
+
+.body{
+    overflow-y:hidden;
+    overflow-x:hidden;
 }
