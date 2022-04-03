@@ -8,11 +8,24 @@ function ReportModal(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('submitting report')
+
+        //Figuring it out whether its a recipe or a comment
+        let item, itemType, reported_user
+        if (props.reportId === 0) { //Then we know its a recipe
+            item = props.recipeid
+            itemType = "recipe"
+            reported_user = props.chosenRecipe.author
+        } else { //its a comment
+            item = props.chosenComment[(props.reportId)-1]._id
+            itemType = "comment"
+            reported_user = props.chosenComment[(props.reportId)-1].user
+        }
+
         const newReport = {
-            reporter_user: props.currentUser,
-            reported_user: 'admin', //TODO - temp, need to change (req.body.... does not work)
-            item: '', //TODO - temporary, need to change
-            item_type: '', //TODO - temp, need to change
+            reporter_user: props.currentUser._id,
+            reported_user: reported_user,
+            item: item,
+            item_type: itemType,
             category: category,
             context: context,
         }
