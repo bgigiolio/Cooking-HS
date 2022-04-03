@@ -154,6 +154,7 @@ router.route("/:id").get((req, res) => {//#6
 //query ->
 //{attribute: <new value>, attribute2: <new value 2>, ...}
 router.route("/:id").patch((req, res) => {//#7
+    console.log(req.query)
     User.findByIdAndUpdate(req.params.id, req.query, {new: true}, 
         (error, result) => {
         if(error){
@@ -166,20 +167,6 @@ router.route("/:id").patch((req, res) => {//#7
     })
 })
 
-router.route("/recipes/:id/:recipeid").patch((req, res) => {//#7
-    User.findById(req.params.id, 
-        (error, result) => {
-        if(error){
-            res.status(500).send("internal server error")
-        }else if(result === null){
-            res.status(404).send("user not found")
-        }else{
-            result.recipes.push(req.params.recipeid)
-            result.save().then(() => res.status(200).send(result))
-            .catch((error) => res.status(500).send(error))
-        }
-    })
-})
 
 //deletes user with _id equal to the one passed
 //Also very simple :)
@@ -222,6 +209,29 @@ router.route("/login/:id").get((req, res) => {//#9
                 res.status(200).send("session updated!")
             }
         })
+})
+
+router.route("/recipes/:id/:recipeid").patch((req, res) => {//#10
+    User.findById(req.params.id, 
+        (error, result) => {
+        if(error){
+            res.status(500).send("internal server error")
+        }else if(result === null){
+            res.status(404).send("user not found")
+        }else{
+            result.recipes.push(req.params.recipeid)
+            result.save().then(() => res.status(200).send(result))
+            .catch((error) => res.status(500).send(error))
+        }
+    })
+})
+
+router.route("/session/update").patch((req, res) => {//#11
+    for (const [key, value] of Object.entries(req.query)){
+        req.session[key] = value
+    }
+    console.log(req.session)
+    res.status(200).send("session updated!")
 })
 
 
