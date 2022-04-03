@@ -5,7 +5,8 @@ export const RecipesReducer = (
         isLoading: true,
         errMess: null, 
         recipes:[],
-        filtered_recipes:[]
+        filtered_recipes:[],
+        course: ""
     }, action) => {
     switch (action.type) {
         case ActionTypes.ADD_RECIPES:
@@ -16,6 +17,12 @@ export const RecipesReducer = (
         case ActionTypes.ADD_FILTERED_RECIPES:
         console.log("adding filtered recipes")
         return {...state, isLoading: false, errMess: null, filtered_recipes: action.payload};
+
+        // course state for checkbox
+        case ActionTypes.CHANGE_COURSE:
+            const c = action.payload
+            console.log("adding all recipes")
+            return {...state, course: c};
         
         case ActionTypes.RECIPES_LOADING:
             return {...state, isLoading: true, errMess: null, recipes: []}

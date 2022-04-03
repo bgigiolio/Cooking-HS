@@ -81,6 +81,12 @@ export const addFilteredRecipes = (filtered_recipes) => ({
   payload: filtered_recipes
 });
 
+export const changeCourse = (course) => ({
+  type: ActionTypes.CHANGE_COURSE,
+  payload: course
+
+})
+
 export const failRecipes = (errmess) => ({
     type: ActionTypes.RECIPES_FAILED,
     payload: errmess

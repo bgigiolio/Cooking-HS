@@ -71,7 +71,7 @@ const RecipesPageCardGroup = ({ recipes, users, comments }) => {
                         <CardFooter className='extra-info-footer'>
                             <span>{starRating(value.averageRating)} {comments.filter((comment) => comment.recipeid === value._id).length} ratings <span className='fork-span'> 0 forks</span></span>
                             <span></span>
-                            <span><i class="fa-solid fa-bookmark bookmark-icon"></i></span>
+                            <span><i className="fa-solid fa-bookmark bookmark-icon"></i></span>
                             </CardFooter>
                     </Link>
                     </Card>
