@@ -46,7 +46,7 @@ class Admin extends React.Component {
             <div className={styles.AdminContainer}>
                 <h1>Only cookHS admins may access this page!</h1>
                 <br/>
-                <Button color="success" className={styles.refresh} onClick={this.adminCheck.bind(this)}>I am an admin</Button>
+                <Button color="success" className={styles.refresh} onClick={this.adminCheck.bind(this)}>Verify Admin Status</Button>
 
             </div>
             )

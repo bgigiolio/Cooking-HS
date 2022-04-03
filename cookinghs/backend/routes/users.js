@@ -211,6 +211,7 @@ router.route("/login/:id").get((req, res) => {//#9
         })
 })
 
+//Adds recipe recipeid to user id's recipes
 router.route("/recipes/:id/:recipeid").patch((req, res) => {//#10
     User.findById(req.params.id, 
         (error, result) => {
@@ -226,7 +227,28 @@ router.route("/recipes/:id/:recipeid").patch((req, res) => {//#10
     })
 })
 
-router.route("/session/update").patch((req, res) => {//#11
+//Adds recipe recipeid to user id's bookmarked
+router.route("/bookmarked/:id/:recipeid").patch((req, res) => {//#11
+    User.findById(req.params.id, 
+        (error, result) => {
+        if(error){
+            res.status(500).send("internal server error")
+        }else if(result === null){
+            res.status(404).send("user not found")
+        }else{
+            result.bookmarked.push(req.params.recipeid)
+            result.save().then(() => res.status(200).send(result))
+            .catch((error) => res.status(500).send(error))
+        }
+    })
+})
+
+//Takes in a key and value, adding it to the current session
+//The key passed in does not need to already exist in the session
+//Usage:
+//query->
+//{session param : <param value>, ...}
+router.route("/session/update").patch((req, res) => {//#12
     for (const [key, value] of Object.entries(req.query)){
         req.session[key] = value
     }

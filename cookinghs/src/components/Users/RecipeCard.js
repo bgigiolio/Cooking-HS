@@ -14,6 +14,7 @@ class RecipeCard extends React.Component {
         super(props)
         axios.get("http://localhost:5000/api/recipes/" + this.props.recipeData)
         .then((response) => {
+            this.state.image = response.data.image
             this.state.title = response.data.title
             this.state.description = response.data.description
             this.forceUpdate()
@@ -26,12 +27,12 @@ class RecipeCard extends React.Component {
     render(){
         return (
             <Card className={styles.user}>
-                {/* <CardImg
+                <CardImg
                     alt="Card image cap"
-                    src={recipeData.img}
+                    src={this.state.image}
                     top
                     className={styles.user_img}
-                /> */}
+                />
                 <CardBody>
                     <CardTitle tag="h5">
                         <Link to={"/recipes/" + this.props.recipeData}>{this.state.title}</Link>
