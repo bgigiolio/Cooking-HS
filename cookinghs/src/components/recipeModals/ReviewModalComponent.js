@@ -1,33 +1,10 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Form, Label, Input, Col } from 'reactstrap';
-import { postComment } from '../../redux/CommentPage/comment-actions';
 
 function ReviewModal(props) {
     const [rating, setRating] = useState(5);
     const [content, setContent] = useState('');
     // Include a call to pull the comments for the recipe to be able to update the database with a new rating & comment
-    //TODO - get rid of sample data here for actual data
-    const USER = 'admin'
-    const RATING = 4
-    const CONTENT = "Oh my, this was very good!"
-
-
-    const comment = useState(() => 
-    {
-        return {
-            recipeid: props.id,
-            user: USER,
-            rating: RATING,
-            content: CONTENT
-        }
-    })
-
-    let navigate = useNavigate()
-    const handleRedirect = () => {
-        let path = '/recipes/:id'; 
-        navigate(path);
-    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -125,13 +102,3 @@ function ReviewModal(props) {
 }
 
 export default ReviewModal;
-
-// const mapDispatchtoProps = (dispatch) => {
-//     return{
-//         postRecipe: (author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image) => {dispatch(postRecipe(author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image))},
-//         putRecipe: (_id, author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image) => {dispatch(putRecipe(_id, author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image))},
-//     }
-// }
-
-
-// export default connect(null, mapDispatchtoProps)(WriteRecipe);

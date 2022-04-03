@@ -20,9 +20,6 @@ function RecipeBrowser(props) {
         const recipes = props.recipes.recipes
         let chosenRecipe = recipes.filter(recipe => recipe._id === id)[0]
 
-        const comments = props.comments.comments
-        let chosenComments = comments.filter(comment => comment.recipeid === id)
-
         return(
             <div className='container relativeContainer' id='recipeContainer'>
                 {chosenRecipe ? <RecipeSingle currentUser={props.currentUser} users={props.users.users} recipes={recipes} chosenRecipe={chosenRecipe}/> : <p>404 Recipe Not Found</p>}

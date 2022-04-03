@@ -270,7 +270,6 @@ function RecipeSingle(props) {
                     >
                         Load More Reviews
                     </Button>
-                    {/* <CommentForm/> */}
                 </ListGroupItem>
             </ListGroup>
         </div>
