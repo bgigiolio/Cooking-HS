@@ -14,7 +14,7 @@ class Users extends React.Component {
         super(props);
 
         axios.get('http://localhost:5000/api/users/session', {params :{
-            want : ["_id", "username", "admin", "fullName", "email", "profilePic", "recipes"]
+            want : ["_id", "username", "admin", "fullName", "email", "profilePic", "recipes", "bookmarked"]
         }}).then( async (response) => {
             this.state.currentUser = response.data
             // console.log(this.state.currentUser)
@@ -25,7 +25,7 @@ class Users extends React.Component {
     })
     }
     state = {
-        currentUser: {fullName: "", username: "null", recipes : []},
+        currentUser: {fullName: "", username: "null", recipes : [], bookmarked : []},
         loaded: true,
         popup: false
         // recipes: this.props.Recipes.recipes.filter((recipe) => recipe.author === this.state.currentUser._id)
@@ -64,8 +64,13 @@ class Users extends React.Component {
                     <p id="username">{"@" + this.state.currentUser.username}</p>
                     <UserProgress/>
     
-                    <h4 className="title">My Recipes</h4>
+                    {this.state.currentUser.recipes.length !== 0 ? <h4 className="title">My Recipes</h4> : null}
                     {RecipeCardGroup(this.state.currentUser.recipes)}
+                    <br/>
+
+                    {this.state.currentUser.bookmarked.length !== 0 ? <h4 className="title">Bookmarked Recipes</h4> : null}
+                    {RecipeCardGroup(this.state.currentUser.bookmarked)}
+                    <br/>
                 </div>
             )
         }else{
