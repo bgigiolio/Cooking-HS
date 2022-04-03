@@ -9,10 +9,11 @@ import { connect } from "react-redux";
 import { setInitialRecipes } from "../../redux/RecipesPage/RecipesPage-actions";
 
 
-const RecipesPageCardGroup = ({ recipes, users, comments }) => {
+const RecipesPageCardGroup = ({ recipes, users, comments, all_recipes }) => {
     const recipestoRender = recipes.filter((recipe) => recipe.deleted === false)
-    console.log("recipe print:", recipestoRender);
-    console.log("comment print", comments)
+    // console.log("recipe print:", recipestoRender);
+    // console.log("comment print", comments)
+    console.log("ALLRECIPE PRINT:", all_recipes)
 
     const starRating = function(rating) {
         return (
@@ -69,7 +70,8 @@ const RecipesPageCardGroup = ({ recipes, users, comments }) => {
                             </CardSubtitle>
                         </CardBody>
                         <CardFooter className='extra-info-footer'>
-                            <span>{starRating(value.averageRating)} {comments.filter((comment) => comment.recipeid === value._id).length} ratings <span className='fork-span'> 0 forks</span></span>
+                            <span>{starRating(value.averageRating)} {comments.filter((comment) => comment.recipeid === value._id).length} ratings 
+                            <span className='fork-span'> {all_recipes.filter((recipe) => recipe.parent.includes(value._id)).length} fork(s)</span></span>
                             <span></span>
                             <span><i className="fa-solid fa-bookmark bookmark-icon"></i></span>
                             </CardFooter>

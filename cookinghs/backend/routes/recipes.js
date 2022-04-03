@@ -39,11 +39,11 @@ router.get('/api/recipes', mongoChecker, async (req, res) => {
 	/*
 	Query Parameters:
 	1. course: (string), ideally a valid course type
-	2. cuisine: (string), could be Italian, Asian etc [currently case sensitive, first letter caps!!]
+	2. cuisine: [String], could be Italian, Asian etc [currently case sensitive, first letter caps!!]
 	3. difficulty: (string), 2 comma separated numbers b/w 0 and 5 in the form: (lower limit, upper limit) INCLUSIVE
 	4. cooktime: (string), 1 number representing minutes, returns all recipes that take less than this amount
 	5. title [primarily for the search bar]: (string), returns all recipes with the corresponding string
-	6. ingredients: (string), comma separated words, returns recipes that have ANY of the ingredients specified
+	6. ingredients: [String], comma separated array, returns recipes that have ANY of the ingredients specified
 
 	Note: The query itself has an "AND" relationship between all its parameters
 	*/
@@ -55,7 +55,11 @@ router.get('/api/recipes/filters', mongoChecker, async (req, res) => {
 		// cuisine query 
 		if(q.hasOwnProperty("cuisine")){
 			// do something
-			q["cuisine"] = {$regex: q.cuisine, $options: "i"}
+			// q["cuisine"] = {$regex: q.cuisine, $options: "i"}
+			if(q["cuisine"].includes("Other")){
+				// query for everything thats not asian, french, .... 
+			}
+			q["cuisine"] = {$in: q["cuisine"]}
 		}
 
 		// course query (entree, main, dessert etc)
@@ -88,7 +92,9 @@ router.get('/api/recipes/filters', mongoChecker, async (req, res) => {
 		// querying ingredients
 		if(q.hasOwnProperty("ingredients")){
 			// turn ingredients into a list
-			var ings = q["ingredients"].split(",")
+			// var ings = q["ingredients"].split(",")
+			var ings = q["ingredients"]
+			console.log(q["ingredients"])
 			var ingredient_querys = []
 			for (let index = 0; index < ings.length; index++) {
 				let ing_query = {
@@ -104,6 +110,23 @@ router.get('/api/recipes/filters', mongoChecker, async (req, res) => {
 			}
 			q["ingredients"] = { $elemMatch: final_ings }
 		}
+
+		// if(q.hasOwnProperty("cuisine")){
+		// 	// turn ingredients into a list
+		// 	var cuisines = q["cuisine"].split(",")
+		// 	var cuisine_querys = []
+		// 	for (let index = 0; index < cuisines.length; index++) {
+		// 		let cus_query = {$regex: cuisines[index], $options: "i"}
+					
+		// 		cuisine_querys.push(cus_query)
+		// 	}
+
+		// 	// ingredients object with an or to query the ingredients list
+		// 	var final_cus = {
+		// 		$or: cuisine_querys
+		// 	}
+		// 	q["cuisine"] = { cuisine_querys }
+		// }
 		
 		// "get" the recipes
 		var recipes = await Recipe.find(q).exec()

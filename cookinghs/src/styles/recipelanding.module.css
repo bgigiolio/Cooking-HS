@@ -96,7 +96,7 @@
 
 .radioButtonDessert{
     margin-bottom: 0.3rem;
-    margin-left: 3.8rem;
+    margin-left: 0.9rem;
 }
 
 .twoRadioButtons2{
@@ -106,7 +106,7 @@
 
 .radioButtonEntree{
     margin-bottom: 0.3rem;
-    margin-left: 1.6rem;
+    margin-left: 0.8rem;
 }
 
 .twoRadioButtons1{
@@ -116,5 +116,72 @@
 
 .radioButtonAllRecipes{
     margin-bottom: 0.3rem;
-    margin-left: 1.7rem;
+    margin-left: 3rem;
+}
+
+.CheckBoxCuisineOther{
+    margin-left: 2.02rem;
+}
+
+.CheckBoxCuisineIndian{
+    margin-left: 2.67rem;
+}
+
+.CheckBoxCuisineItalian{
+    margin-left: 3.35rem;
+}
+
+input{
+    margin-right: 3px;
+}
+
+.DifficultySlider{
+    margin-top: 1rem;
+    color: lightgray
+}
+
+.DifficultySlider.MuiSlider-thumb{
+    width: 1rem;
+    height: 1rem;
+
+}
+
+.ingredientCategoryHeader{
+    margin-top: 1rem;
+    font-size: medium;
+    margin-bottom: 0px;
+    font-weight: 500;
+
+}
+
+.CheckBoxIngredients{
+    display: flex;
+}
+
+.CheckBoxIngredientsBeef{
+    margin-left: 3rem;
+}
+
+.CheckBoxIngredientsFish{
+    margin-left: 4.55rem;
+}
+
+.CheckBoxIngredientsCarrot{
+    margin-left: 1.8rem;
+}
+
+.CheckBoxIngredientsPotato{
+    margin-left: 3.28rem;
+}
+
+.CheckBoxIngredientsOnion{
+    margin-left: 3.27rem;
+}
+
+.CheckBoxIngredientsGinger{
+    margin-left: 4rem;
+}
+
+.CheckBoxIngredientsRice{
+    margin-left: 2.25rem;
 }
