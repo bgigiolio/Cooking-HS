@@ -25,6 +25,8 @@ function WriteRecipe(props) {
             case "edit":
                 return {
                     ...chosenRecipe,
+                    tempimage: chosenRecipe.image,
+                    imagefile: null
                 }
             default:
                 return {
@@ -80,6 +82,7 @@ function WriteRecipe(props) {
 
     const handleImageChange = e => {
         const target = e.target;
+        const name = target.name;
         const file = target.files[0];
         const reader = new FileReader();
         reader.readAsDataURL(file)
@@ -89,7 +92,6 @@ function WriteRecipe(props) {
                 imagefile: reader.result
                 }
             )
-            console.log(recipe.imagefile)
         }
         
     }
@@ -184,7 +186,7 @@ function WriteRecipe(props) {
     }
 
     const checkForm = (recipe) => {
-        console.log(recipe)
+        // console.log(recipe)
         //check required fields: title, ingredient0, step0
         if (recipe.title === '') {return false}
         recipe.ingredients.map((ingredient) => {
@@ -195,18 +197,21 @@ function WriteRecipe(props) {
         return true
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const recipe = parseForm()
         const valid = checkForm(recipe)
         if (valid) {
             if (props.flag === "fork" || props.flag === "new") {
-                props.postRecipe(recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.difficulty, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image)
-                .then(handleRedirect())
+                const result = await props.postRecipe(recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.difficulty, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image, recipe.imagefile)
+                console.log(result)
+                if (result) {
+                    handleRedirect()
+                }
             }
             else if (props.flag === "edit") {
-                props.putRecipe(recipe._id, recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.difficulty, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image)
-                .then(handleRedirect())
+                props.putRecipe(recipe._id, recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.difficulty, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image, recipe.imagefile)
+                // handleRedirect()
             }
         }
         else {
@@ -268,8 +273,8 @@ function WriteRecipe(props) {
 
 const mapDispatchtoProps = (dispatch) => {
     return{
-        postRecipe: (author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image) => {dispatch(postRecipe(author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image))},
-        putRecipe: (_id, author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image) => {dispatch(putRecipe(_id, author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image))},
+        postRecipe: (author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image, imagefile) => {dispatch(postRecipe(author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image, imagefile))},
+        putRecipe: (_id, author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image, imagefile) => {dispatch(putRecipe(_id, author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image, imagefile))},
     }
 }
 
