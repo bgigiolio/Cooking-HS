@@ -28,6 +28,7 @@ class Users extends React.Component {
         currentUser: {fullName: "", username: "null", recipes : [], bookmarked : [], profilePic : this.props.profilePic},
         loaded: true,
         popup: false
+
     }
 
 

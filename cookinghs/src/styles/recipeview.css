@@ -104,9 +104,13 @@ h1 {
     margin-top: 0.5em;
 }
 
-#averageRating {
+#averageStarRating {
     margin-top: -10px;
     margin-bottom: 5px;
+}
+
+#averageRating {
+    vertical-align: middle;
 }
 
 .reportButton {
@@ -209,4 +213,24 @@ h1 {
 
 .bookmark-icon:hover{
     color: rgb(170, 206, 212);
+}
+
+.stepsListItem {
+    margin-top: 1em
+}
+
+.stepImage {
+    width:95%; 
+    border-radius: 10px;
+    margin: 5px
+}
+
+.commentBody {
+    width: 100%;
+    overflow: hidden;
+    height: fit-content;
+}
+
+.recipeDifficulty {
+    float:right;
 }

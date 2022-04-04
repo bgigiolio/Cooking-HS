@@ -139,23 +139,7 @@ export const addRecipe = (recipe) => ({
   payload: recipe
 });
 
-export const postRecipe = (author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image) => (dispatch) => {  
-  // const form = new FormData()
-  // form.append('author', author)
-  // form.append('parent', parent)
-  // form.append('title', title)
-  // form.append('description', description)
-  // form.append('ingredients', ingredients)
-  // form.append('steps', steps)
-  // form.append('course', course)
-  // form.append('cuisine', cuisine)
-  // form.append('preptime', preptime)
-  // form.append('cooktime', cooktime)
-  // form.append('servings', servings)
-  // form.append('image', image)
-  // form.append('averageRating', 0)
-  // form.append('difficulty', difficulty)
-  
+export const postRecipe = (author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image, imagefile) => async (dispatch) => {  
   const newRecipe = {
     author: author,
     parent: parent,
@@ -169,6 +153,7 @@ export const postRecipe = (author, parent, title, description, ingredients, step
     cooktime: cooktime,
     servings: servings,
     image: image,
+    imagefile: imagefile,
     averageRating: 0,
     difficulty: difficulty
   };
@@ -195,6 +180,7 @@ export const postRecipe = (author, parent, title, description, ingredients, step
     })
   .then(response => response.json())
   .then(response => dispatch(addRecipe(response)))
+  .then(response => {return true})
   .catch(error => { console.log('recipe creation', error.message); alert('Recipe could not be posted\nError: '+error.message); });
 }
 
@@ -203,7 +189,7 @@ export const editRecipe = (recipe) => ({
   payload: recipe
 });
 
-export const putRecipe = (_id, author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image) => (dispatch) => {
+export const putRecipe = (_id, author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image, imagefile) => (dispatch) => {
   const newRecipe = {
     _id: _id,
     author: author,
@@ -219,6 +205,7 @@ export const putRecipe = (_id, author, parent, title, description, ingredients, 
     cooktime: cooktime,
     servings: servings,
     image: image,
+    imagefile: imagefile,
     averageRating: 0,
     comments: []
   };

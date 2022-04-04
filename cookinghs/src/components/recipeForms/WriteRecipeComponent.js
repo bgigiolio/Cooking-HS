@@ -25,6 +25,8 @@ function WriteRecipe(props) {
             case "edit":
                 return {
                     ...chosenRecipe,
+                    tempimage: chosenRecipe.image,
+                    imagefile: null
                 }
             default:
                 return {
@@ -43,9 +45,9 @@ function WriteRecipe(props) {
                         }
                     ],
                     steps: [
-                        '',
-                        '',
-                        ''
+                        {step: ''},
+                        {step: ''},
+                        {step: ''}
                     ],
                     course: 'Main',
                     cuisine: '',
@@ -80,6 +82,7 @@ function WriteRecipe(props) {
 
     const handleImageChange = e => {
         const target = e.target;
+        const name = target.name;
         const file = target.files[0];
         const reader = new FileReader();
         reader.readAsDataURL(file)
@@ -89,9 +92,7 @@ function WriteRecipe(props) {
                 imagefile: reader.result
                 }
             )
-            console.log(recipe.imagefile)
         }
-        
     }
 
     const handleIngredientChange = (index, e) => {
@@ -114,11 +115,32 @@ function WriteRecipe(props) {
         const target = e.target;
         const value = target.value;
         let steps = [...recipe.steps];
-        steps[index] = value;
+        steps[index] = {
+            ...steps[index],
+            step: value
+        };
         setRecipe({
             ...recipe,
             steps: steps
         })
+    }
+
+    const handleStepImage = (index, e) => {
+        const target = e.target;
+        const file = target.files[0];
+        let steps = [...recipe.steps];
+        const reader = new FileReader();
+        reader.readAsDataURL(file)
+        reader.onloadend = () => {
+            steps[index] = {
+                ...steps[index],
+                stepimage: reader.result
+            }
+            setRecipe({
+                ...recipe,
+                steps: steps
+            })
+        }
     }
 
     const removeIngredient = (index, e) => {
@@ -176,15 +198,20 @@ function WriteRecipe(props) {
             else {
                 ingredient.quantity = ''
             }
+            ingredient.name = ingredient.name.toLowerCase()
+            if (ingredient.unit !== "" && ingredient.unit !== undefined) {
+                console.log(ingredient.name)
+                ingredient.unit = ingredient.unit.toLowerCase()
+            }
         })
         //remove empty steps
-        checkedRecipe.steps = checkedRecipe.steps.filter((step) => step.trim() !== '')
+        checkedRecipe.steps = checkedRecipe.steps.filter((step) => step.step.trim() !== "");
 
         return checkedRecipe
     }
 
     const checkForm = (recipe) => {
-        console.log(recipe)
+        // console.log(recipe)
         //check required fields: title, ingredient0, step0
         if (recipe.title === '') {return false}
         recipe.ingredients.map((ingredient) => {
@@ -195,18 +222,18 @@ function WriteRecipe(props) {
         return true
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const recipe = parseForm()
         const valid = checkForm(recipe)
         if (valid) {
             if (props.flag === "fork" || props.flag === "new") {
-                props.postRecipe(recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.difficulty, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image)
-                .then(handleRedirect())
+                props.postRecipe(recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.difficulty, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image, recipe.imagefile)
+                // handleRedirect()
             }
             else if (props.flag === "edit") {
-                props.putRecipe(recipe._id, recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.difficulty, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image)
-                .then(handleRedirect())
+                props.putRecipe(recipe._id, recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.difficulty, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image, recipe.imagefile)
+                // handleRedirect()
             }
         }
         else {
@@ -257,6 +284,7 @@ function WriteRecipe(props) {
                 handleImageChange = {handleImageChange}
                 handleIngredientChange = {handleIngredientChange}
                 handleStepChange = {handleStepChange}
+                handleStepImage = {handleStepImage}
                 addIngredient = {addIngredient}
                 removeIngredient = {removeIngredient}
                 addStep = {addStep}
@@ -268,8 +296,8 @@ function WriteRecipe(props) {
 
 const mapDispatchtoProps = (dispatch) => {
     return{
-        postRecipe: (author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image) => {dispatch(postRecipe(author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image))},
-        putRecipe: (_id, author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image) => {dispatch(putRecipe(_id, author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image))},
+        postRecipe: (author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image, imagefile) => {dispatch(postRecipe(author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image, imagefile))},
+        putRecipe: (_id, author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image, imagefile) => {dispatch(putRecipe(_id, author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image, imagefile))},
     }
 }
 
