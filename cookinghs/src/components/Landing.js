@@ -26,14 +26,14 @@ class Landing extends React.Component {
                     CookingHS
                 </div>
                 <span className={styles.landingButtons}>
-                    {/* <Link to={"/recipes"}>
+                    <Link to={"/recipes"}>
                     <Button className={styles.landingButton}>Let's get Cooking!</Button>
-                    </Link> */}
-                    <SearchBar className={styles.search}
+                    </Link>
+                    {/* <SearchBar className={styles.search}
                         value={this.state.search}
                         onChange={(newValue) => this.setState({ search: newValue }, () =>console.log("logged"))}
                         onRequestSearch={() => this.jump(this.state.search)}
-                    />
+                    /> */}
                     {this.state.toRender}
                    
                 </span>

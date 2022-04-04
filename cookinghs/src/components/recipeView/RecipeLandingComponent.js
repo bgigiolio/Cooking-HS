@@ -989,7 +989,7 @@ class RecipeLanding extends React.Component {
                 </div>
 
                 <div className={styles.secondaryHead}>
-                    <h6 className={styles.TodayCook}>Today I'll be Cooking:</h6>
+                    <h6 className={styles.TodayCook}>Today, I'll be Cooking:</h6>
                 <div className={styles.sortDropDown}>
 
                 <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
