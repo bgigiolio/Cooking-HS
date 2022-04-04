@@ -1,41 +1,69 @@
 import { Button } from 'reactstrap';
 import { Card } from 'reactstrap';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { CardBody, CardTitle, CardText, CardImg } from 'reactstrap';
 import React from 'react';
 import styles from './UserCard.module.css';
 import {deleteRecipe} from "../../redux/UserPage/UserRecipes/UserRecipes-actions";
 import {connect} from 'react-redux';
+import RecipeBrowser from '../recipeView/RecipeBrowserComponent';
+import axios from 'axios'; // new!!
+import { baseUrl } from '../../shared/baseUrl';
 
-const RecipeCard = ({recipeData, deleteRecipe}) => {
-    return(
-    <Card className={styles.user}>
-        <CardImg
-            alt="Card image cap"
-            src={recipeData.img}
-            top
-            className={styles.user_img}
-        />
-        <CardBody>
-            <CardTitle tag="h5">
-                {recipeData.name}
-            </CardTitle>
-            <CardText>
-            {recipeData.desc}
-                {/* This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. */}
-            </CardText>
-            <Button onClick={()=>deleteRecipe(recipeData.id)}>
-                Delete Recipe
-            </Button>
-        </CardBody>
-    </Card>
+class RecipeCard extends React.Component {
+    constructor(props){
+        super(props)
+        axios.get(baseUrl + "api/recipes/" + this.props.recipeData)
+        .then((response) => {
+            this.state.image = response.data.image
+            this.state.title = response.data.title
+            this.state.description = response.data.description
+            this.state.deleted = response.data.deleted
+            this.forceUpdate()
+        })
+    }
+    state = {
+        title: "",
+        description: "",
+        deleted: false
+    }
+    deleteRecipe(){
+        axios.delete(baseUrl + "api/recipes/" + this.props.recipeData)
+        .then(this.forceUpdate())
+    }
+    render(){
+        if(!this.state.deleted){
+            return (
+                <Card className={styles.user}>
+                    <CardImg
+                        alt="Card image cap"
+                        src={this.state.image}
+                        top
+                        className={styles.user_img}
+                    />
+                    <CardBody className={styles.body}>
+                        <CardTitle tag="h5">
+                            <Link to={"/recipes/" + this.props.recipeData}>{this.state.title}</Link>
+                        </CardTitle>
+                        <CardText>
+                        {this.state.description.slice(0, 100) + "..."}
+                            {/* This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. */}
+                        </CardText>
+                        <Button onClick={this.deleteRecipe.bind(this)}>
+                            Delete Recipe
+                        </Button>
+                    </CardBody>
+                    <Routes>
+                  <Route exact path="/recipes/:id" element={<RecipeBrowser/>}/>
+                </Routes>
+                </Card>
                 
-    );
+            )
+        }else{
+            return(null)
+        }
+    }
 
 };
 
-const mapDispatchtoProps = dispatch => {
-  return {
-      deleteRecipe: (id) => dispatch(deleteRecipe(id)),
-  };
-};
-export default connect(null,mapDispatchtoProps)(RecipeCard);
+export default RecipeCard;

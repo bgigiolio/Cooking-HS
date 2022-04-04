@@ -1,0 +1,8 @@
+export const REPORTS_LOADING = "REPORTS_LOADING"
+export const REPORTS_FAILED = "REPORTS_FAILED"
+export const ADD_REPORTS = "ADD_REPORTS"
+
+export const ADD_REPORT = "ADD_REPORT"
+export const EDIT_REPORT = "EDIT_REPORT"
+export const DELETE_REPORT = "DELETE_REPORT"
+export const LOAD_REPORT = "LOAD_REPORT"

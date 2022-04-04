@@ -5,6 +5,7 @@ import axios from 'axios'; // new!!
 import RecipeBrowser from '../../recipeView/RecipeBrowserComponent';
 import AdminPage from '../../Admin/index'
 import {Routes, Route, Link} from 'react-router-dom';
+import { baseUrl } from '../../../shared/baseUrl';
 
 class Login extends React.Component {
     state = {
@@ -23,12 +24,11 @@ class Login extends React.Component {
         })
     }
     validLogIn = () => {
-        axios.get(this.props.host + 'api/users/login/' + this.props._id)
+        axios.get(baseUrl + 'api/users/login/' + this.props._id)
         .then(async (response) => {
             axios.get(this.props.host + 'api/users/session', {params :{//hmm
                 want : ["_id", "username", "admin", "fullName", "email", "profilePic"]
               }}).then( async (response) => {
-                  console.log(response.data)
                   this.props.updateCurrentUser(response.data)
               })
         })
@@ -41,10 +41,10 @@ class Login extends React.Component {
                 <br/>
                 <br/>
                 <h2>Login</h2>
-                Username: <br/>
+                <br/>
                 <TextField id="LoginUsername" label="Username" name="username" placeholder="Username" value={username} onInput={recieveInput}></TextField><br/>
-                Password: <br/>
-                <TextField id="LoginPassword" label="Password" name="password" placeholder="Password" value={password} onInput={recieveInput}></TextField><br/><br/>
+                <br/>
+                <TextField type="password" id="LoginPassword" label="Password" name="password" placeholder="Password" value={password} onInput={recieveInput}></TextField><br/><br/>
 
                     {valid ? 
                     // <Link to="/recipes">Log In</Link>
@@ -54,10 +54,6 @@ class Login extends React.Component {
                                 Log In
                     </Button>}
                     {this.state.failedLoginSeen ? <h4 id="failedLogin">Incorrect username or password</h4> : null}
-                    <Routes>
-                        <Route exact path="/recipes" element={<RecipeBrowser />}/>
-                        <Route exact path="/admin" element={<AdminPage />}/>
-                    </Routes>
             </div>
         )
     }

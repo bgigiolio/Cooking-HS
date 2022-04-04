@@ -32,11 +32,4 @@ const UserProgress = ({ recipes }) => {
     );
 };
 
-const mapStateToProps = state => {
-    return {
-        recipes: state.UserRecipes.recipes
-    }
-
-}
-
-export default connect(mapStateToProps)(UserProgress);
+export default UserProgress;

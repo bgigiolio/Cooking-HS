@@ -23,16 +23,16 @@ const user = new Schema({
         type: String,
         required: true
     },
-    recipes: [{String}], // Store recipe _ids here
-    liked: [{String}],
-    bookmarked: [{String}],
+    recipes: [String], // Store recipe _ids here
+    liked: [String],
+    bookmarked: [String],
     skillLevel: {
         type: Number,
         default: 0
     },
     profilePic: {
         type: String,
-        default: './defaultProfile.png'
+        default: 'https://res.cloudinary.com/yongdk1/image/upload/v1649020580/cookinghs/defaultProfile_hfixae.png'
     }
 
 })

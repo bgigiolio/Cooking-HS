@@ -5,6 +5,7 @@ import { Navbar, NavbarBrand, Nav, NavItem, NavLink, NavbarToggler, Collapse } f
 import axios from 'axios'; // new!!
 import './App.css';
 
+
 import LoginMain from './components/Login/LoginMain/index';
 import AdminPage from './components/Admin/index';
 import Landing from './components/Landing';
@@ -14,17 +15,25 @@ import RecipeBrowser from './components/recipeView/RecipeBrowserComponent';
 import WriteWrapper from './components/recipeForms/WriteWrapperComponent';
 import FlagDesc from './components/Admin/FlagDesc';
 import defaultProfile from './defaultProfile.png'
-import { getRecipes, deleteRecipe } from './redux/recipePage/recipe-actions';
+import PublicUser from './components/Users/publicUser'
+import { baseUrl } from './shared/baseUrl';
+import { getRecipes } from './redux/recipePage/recipe-actions';
+import { getUsers } from './redux/users/user-actions';
+import { getComments } from './redux/comments/comment-actions';
+import { getReports } from './redux/reports/report-actions';
 
 const mapStateToProps = state => {
   return {
-    Recipes: state.Recipes
+    Recipes: state.Recipes,
+    Users: state.Users,
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   getRecipes: () => {dispatch(getRecipes())},
-  deleteRecipe: (id) => {dispatch(deleteRecipe(id))}
+  getUsers: () => {dispatch(getUsers())},
+  getComments: () => {dispatch(getComments())},
+  getReports: () => {dispatch(getReports())}
 });
 
 class App extends React.Component {
@@ -33,15 +42,21 @@ class App extends React.Component {
     super(props);
     this.state.currentUser = null
     this.updateCurrentUser = this.updateCurrentUser.bind(this);
-    axios.get('http://localhost:5000/api/users/session', {params :{
+    axios.get(baseUrl + 'api/users/session', {params :{
       want : ["_id", "username", "admin", "fullName", "email", "profilePic"]
-    }}).then( async (response) => {
+    }}).then( (response) => {
       this.state.currentUser = response.data
+      this.state.profilePic = response.data.profilePic
       console.log(this.state.currentUser)
-    }).catch(function (error) {
+      this.forceUpdate();
+    })
+    .then( () => this.forceUpdate())
+    .catch(function (error) {
       this.state.currentUser = null
     })
+
   }
+
   state = {
     isOpen: false,
     currentUser: null,
@@ -51,26 +66,21 @@ class App extends React.Component {
   componentDidMount() {
     console.log("app mounting")
     this.props.getRecipes();
+    this.props.getUsers();
+    this.props.getComments();
+    this.props.getReports();
   }
   logout(){
-    console.log("running logout")
-    axios.get('http://localhost:5000/' + 'api/users/logout') //WIll need to change on deploy
+    axios.get(baseUrl + 'api/users/logout') //WIll need to change on deploy
     this.setState({
       currentUser: null
     }, () => console.log(this.state.currentUser))
   }
   updateCurrentUser(user){
-    console.log(this)
     this.setState({
-      currentUser : user
+      currentUser : user,
+      profilePic : user.profilePic
     }, () => console.log(this.state.currentUser))
-    // import(this.state.currentUser.profilePic)
-    // .then((profilePic) => {
-    //   console.log(profilePic)
-    //   this.setState({
-    //     profilePic : profilePic
-    //   }, () => console.log(this.state.profilePic))
-    // }))
   }
   
   render() {
@@ -82,18 +92,19 @@ class App extends React.Component {
             <NavbarToggler onClick={() => { this.setState({isOpen: !this.state.isOpen}) }} />
             <Collapse className='navItems' isOpen={this.state.isOpen} navbar>
                     <Nav  navbar>
-                        <NavItem>
-                            {this.state.currentUser === null 
-                            ? <NavLink><Link to="/login/*">Sign in</Link></NavLink> 
-                            : <NavLink><Link to="/login/*" onClick={this.logout}>Log out </Link></NavLink>}
-                        </NavItem>
+
                         <NavItem>
                             <NavLink><Link to="/recipes">Recipes</Link></NavLink>
                         </NavItem>
                         <NavItem>
                             {this.state.currentUser === null 
+                            ? <NavLink><Link to="/login/*">Log in</Link></NavLink> 
+                            : <NavLink><Link to="/login/*" onClick={this.logout}>Sign out </Link></NavLink>}
+                        </NavItem>
+                        <NavItem>
+                            {this.state.currentUser === null 
                             ? null 
-                            : <NavLink><Link to="/users"><a href=""><img className="profilePic" src={this.state.profilePic}/></a></Link></NavLink>}
+                            : <NavLink><Link to="/users"><img alt="" className="profilePic" src={this.state.profilePic}/></Link></NavLink>}
                         </NavItem>
                     </Nav>
                 </Collapse>
@@ -104,11 +115,12 @@ class App extends React.Component {
               <Route exact path="/admin/:id" element={<FlagDesc />}/>
               <Route exact path="/admin" element={<AdminPage />}/>  
               <Route exact path="/users" element={<Users currentUser={this.state.currentUser} profilePic = {this.state.profilePic}/>}/>
-              <Route exact path="/recipes/newrecipe" element={<WriteWrapper flag={"new"} recipes={this.props.Recipes}/>}/>
-              <Route exact path="/recipes/:id/editrecipe" element={<WriteWrapper flag={"edit"} recipes={this.props.Recipes}/>}/>
-              <Route exact path="/recipes/:id/forkrecipe" element={<WriteWrapper flag={"fork"} recipes={this.props.Recipes}/>}/>
-              <Route exact path="/recipes/:id" element={<RecipeBrowser recipes={this.props.Recipes}/>}/>
-              <Route exact path="/recipes" element={<RecipeBrowser recipes={this.props.Recipes}/>}/>
+              <Route exact path="/recipes/newrecipe" element={<WriteWrapper flag={"new"} recipes={this.props.Recipes} user={this.state.currentUser}/>}/>
+              <Route exact path="/recipes/:id/editrecipe" element={<WriteWrapper flag={"edit"} recipes={this.props.Recipes} user={this.state.currentUser}/>}/>
+              <Route exact path="/recipes/:id/forkrecipe" element={<WriteWrapper flag={"fork"} recipes={this.props.Recipes} user={this.state.currentUser}/>}/>
+              <Route exact path="/recipes/:id" element={<RecipeBrowser recipes={this.props.Recipes} users={this.props.Users} currentUser={this.state.currentUser}/>}/>
+              <Route exact path="/users/:id" element={<PublicUser profilePic = {this.state.profilePic}/>} />
+              <Route exact path="/recipes" element={<RecipeBrowser recipes={this.props.Recipes} users={this.props.Users}/>}/>
               <Route exact path="/*" element={<Landing />}/>
             </Routes>
           </ScrollToTop>

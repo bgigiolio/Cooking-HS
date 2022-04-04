@@ -15,19 +15,27 @@ function WriteWrapper(props) {
         )
     }
 
+    else if (!props.user) {
+        return(
+            <div className='container relativeContainer' id='recipeContainer'>
+                Please log in or sign up to be able to post recipes!
+            </div>
+        )
+    }
+
     else if (id) {
         const recipes = props.recipes.recipes
         const chosenRecipe = recipes.filter(recipe => recipe._id === id)[0]
         return(
             <>
-                {chosenRecipe ? <WriteRecipe flag={props.flag} chosenRecipe={chosenRecipe}/> : <p>404 Recipe Not Found</p>}
+                {chosenRecipe ? <WriteRecipe flag={props.flag} chosenRecipe={chosenRecipe} user={props.user}/> : <p>404 Recipe Not Found</p>}
             </>
         )
     }
 
     else {
         return(
-            <WriteRecipe flag={props.flag} chosenRecipe={null}/> 
+            <WriteRecipe flag={props.flag} chosenRecipe={null} user={props.user}/> 
         )
     }
     
