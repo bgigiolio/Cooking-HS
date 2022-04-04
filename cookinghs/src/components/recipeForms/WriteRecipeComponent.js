@@ -198,6 +198,8 @@ function WriteRecipe(props) {
             else {
                 ingredient.quantity = ''
             }
+            ingredient.name = ingredient.name.toLowerCase()
+            ingredient.unit = ingredient.unit.toLowerCase()
         })
         //remove empty steps
         checkedRecipe.steps = checkedRecipe.steps.filter((step) => step.step.trim() !== "");
@@ -220,7 +222,6 @@ function WriteRecipe(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const recipe = parseForm()
-        console.log(recipe.steps)
         const valid = checkForm(recipe)
         if (valid) {
             if (props.flag === "fork" || props.flag === "new") {
