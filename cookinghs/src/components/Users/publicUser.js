@@ -16,10 +16,9 @@ class PublicUser extends React.Component {
         axios.get(baseUrl + 'api/users/' + id)
         .then( async (response) => {
             this.state.currentUser = response.data
-            // console.log(this.state.currentUser)
             this.forceUpdate()
         }).catch(function (error) {
-            console.log("uh oh")
+            console.log(error)
     })
     }
     state = {
@@ -30,7 +29,6 @@ class PublicUser extends React.Component {
     }
     render() {
         const {profilePic} = this.props
-        console.log("start of render:")
         if(this.state.currentUser.fullName !== ""){
 
             return(

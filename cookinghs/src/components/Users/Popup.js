@@ -27,7 +27,7 @@ const buttonMode = {
 }
 export default class Popup extends Component {
     componentDidMount(){
-        console.log("popup!!!")
+        console.log("popup")
     }
     state = {
         username : this.props.currentUser.username,
@@ -80,7 +80,6 @@ export default class Popup extends Component {
                     succText : "Successfully Updated!",
                     failText : ""
                 })
-                console.log(response)
                 axios.patch(baseUrl + "api/users/session/update", null, {params : {
                     [name] : this.state[name]
                 }})

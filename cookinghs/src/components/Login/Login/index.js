@@ -29,7 +29,6 @@ class Login extends React.Component {
             axios.get(this.props.host + 'api/users/session', {params :{//hmm
                 want : ["_id", "username", "admin", "fullName", "email", "profilePic"]
               }}).then( async (response) => {
-                  console.log(response.data)
                   this.props.updateCurrentUser(response.data)
               })
         })

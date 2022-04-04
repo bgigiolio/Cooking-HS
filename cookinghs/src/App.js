@@ -71,14 +71,12 @@ class App extends React.Component {
     this.props.getReports();
   }
   logout(){
-    console.log("running logout")
     axios.get(baseUrl + 'api/users/logout') //WIll need to change on deploy
     this.setState({
       currentUser: null
     }, () => console.log(this.state.currentUser))
   }
   updateCurrentUser(user){
-    console.log(this)
     this.setState({
       currentUser : user,
       profilePic : user.profilePic
@@ -86,7 +84,6 @@ class App extends React.Component {
   }
   
   render() {
-    console.log(this.state.profilePic)
     return(
       <div id="container">
         <BrowserRouter>

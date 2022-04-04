@@ -164,7 +164,6 @@ router.route("/:id").get((req, res) => {//#6
 //query ->
 //{attribute: <new value>, attribute2: <new value 2>, ...}
 router.route("/:id").patch((req, res) => {//#7
-    console.log(req.query)
     User.findByIdAndUpdate(req.params.id, req.query, {new: true}, 
         (error, result) => {
         if(error){
@@ -203,7 +202,6 @@ router.route("/login/:id").get((req, res) => {//#9
             if(error){
                 res.status(500).send("internal server error")
             }else{
-                console.log(user.recipes)
                 req.session._id = user._id.toString();
                 req.session.admin = user.admin;
                 req.session.username = user.username;
@@ -277,7 +275,6 @@ router.route("/session/update").patch((req, res) => {//#12
 //body->
 //{imagefile: <image data>}
 router.route("/image/:id").patch( async (req, res) => {//#13
-    console.log("uploading image!")
     const imageStr = req.body.imagefile
     let imageurl = "https://res.cloudinary.com/yongdk1/image/upload/v1649020580/cookinghs/defaultProfile_hfixae.png";
     if (imageStr !== null) {
@@ -286,7 +283,6 @@ router.route("/image/:id").patch( async (req, res) => {//#13
             upload_preset: "cookinghs"
         })
         // .then(() => {
-            console.log(uploadedResponse)
             imageurl = uploadedResponse.url
             User.findByIdAndUpdate(req.params.id, {profilePic : imageurl}, {new: true}, 
                 (error, result) => {

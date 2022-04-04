@@ -15,11 +15,10 @@ class Admin extends React.Component {
             want : ["admin"]
         }}).then( async (response) => {
             this.state.admin = response.data.admin
-            // console.log(this.state.currentUser)
-            console.log("user loaded from state ;)")
+            console.log("user loaded from state")
             this.forceUpdate();
         }).catch(function (error) {
-            console.log("uh oh")
+            console.log(error)
     })
     }
     state = {

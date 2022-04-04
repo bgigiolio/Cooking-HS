@@ -18,18 +18,16 @@ class Users extends React.Component {
             want : ["_id", "username", "admin", "fullName", "email", "profilePic", "recipes", "bookmarked"]
         }}).then( async (response) => {
             this.state.currentUser = response.data
-            // console.log(this.state.currentUser)
-            console.log("user loaded from state ;)")
+            console.log("user loaded from state")
             this.forceUpdate()
         }).catch(function (error) {
-            console.log("uh oh")
+            console.log(error)
     })
     }
     state = {
         currentUser: {fullName: "", username: "null", recipes : [], bookmarked : [], profilePic : this.props.profilePic},
         loaded: true,
         popup: false
-        // recipes: this.props.Recipes.recipes.filter((recipe) => recipe.author === this.state.currentUser._id)
     }
 
 
@@ -45,7 +43,6 @@ class Users extends React.Component {
 
     render() {
         const {profilePic} = this.props
-        console.log("start of render:")
         if(this.state.currentUser.fullName !== ""){
 
             return(
