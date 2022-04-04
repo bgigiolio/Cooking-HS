@@ -9,8 +9,9 @@ import React, { Component } from 'react'
 export default class AdminPage extends Component {
   render() {
     return (
-
-      <Admin className={styles.bodyy}/>
+    <>
+        {this.props.users.isLoading? null : <Admin users={this.props.users.users} className={styles.bodyy}/> }
+    </>
     )
   }
 }
