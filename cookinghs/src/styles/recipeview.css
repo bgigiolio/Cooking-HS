@@ -47,8 +47,8 @@
 
 #recipeContainer {
     display: contents;
-    padding-left: var(--bs-gutter-x, 2rem);
-    padding-right: var(--bs-gutter-x, 2rem);
+    /* padding-left: var(--bs-gutter-x, 2rem);
+    padding-right: var(--bs-gutter-x, 2rem); */
     border-radius: 10px;
     padding-bottom: 50px;
     margin-left: 0px;
@@ -56,7 +56,7 @@
 
 #recipeViewContainer {
     max-width: 720px;
-    margin: auto;
+    /* margin: auto; */
     position: relative;
 }
 
