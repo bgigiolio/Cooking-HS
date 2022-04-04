@@ -2,6 +2,7 @@ import React from 'react';
 import RecipesPageCardGroup from './RecipesPageCardGroup';
 import SearchBar from "material-ui-search-bar";
 import styles from '../../styles/recipelanding.module.css';
+
 import { Button, Card, Input } from 'reactstrap';
 // import { Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
@@ -11,7 +12,6 @@ import { getFilteredRecipes, updateCookTime, updateCourse, updateSort } from "..
 import { connect } from "react-redux";
 import { addCuisines, removeCuisines, addIngredients, removeIngredients, updateDifficulty } from '../../redux/recipePage/recipe-actions';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-
 
 
 class RecipeLanding extends React.Component {
@@ -965,7 +965,6 @@ class RecipeLanding extends React.Component {
                         <Link to="/recipes/newrecipe">
                             <i className="fa-regular fa-square-plus"></i> 
                         </Link>
-                        
                     </div>
                     <h6 className={styles.addHeader}>Add a Recipe!</h6>
 
@@ -1010,6 +1009,7 @@ class RecipeLanding extends React.Component {
                
                
                 <RecipesPageCardGroup users={this.props.users} comments={this.props.comments} all_recipes={this.props.recipes}/>
+
     
             </div>
 

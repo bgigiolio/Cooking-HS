@@ -32,7 +32,7 @@ const user = new Schema({
     },
     profilePic: {
         type: String,
-        default: './defaultProfile.png'
+        default: 'https://res.cloudinary.com/yongdk1/image/upload/v1649020580/cookinghs/defaultProfile_hfixae.png'
     }
 
 })

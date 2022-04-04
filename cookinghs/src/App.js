@@ -5,6 +5,7 @@ import { Navbar, NavbarBrand, Nav, NavItem, NavLink, NavbarToggler, Collapse } f
 import axios from 'axios'; // new!!
 import './App.css';
 
+
 import LoginMain from './components/Login/LoginMain/index';
 import AdminPage from './components/Admin/index';
 import Landing from './components/Landing';
@@ -14,6 +15,7 @@ import RecipeBrowser from './components/recipeView/RecipeBrowserComponent';
 import WriteWrapper from './components/recipeForms/WriteWrapperComponent';
 import FlagDesc from './components/Admin/FlagDesc';
 import defaultProfile from './defaultProfile.png'
+import PublicUser from './components/Users/publicUser'
 import { baseUrl } from './shared/baseUrl';
 import { getRecipes, getFilteredRecipes } from './redux/recipePage/recipe-actions';
 import { getUsers } from './redux/users/user-actions';
@@ -45,10 +47,14 @@ class App extends React.Component {
     this.updateCurrentUser = this.updateCurrentUser.bind(this);
     axios.get(baseUrl + 'api/users/session', {params :{
       want : ["_id", "username", "admin", "fullName", "email", "profilePic"]
-    }}).then( async (response) => {
+    }}).then( (response) => {
       this.state.currentUser = response.data
+      this.state.profilePic = response.data.profilePic
       console.log(this.state.currentUser)
-    }).catch(function (error) {
+      this.forceUpdate();
+    })
+    .then( () => this.forceUpdate())
+    .catch(function (error) {
       this.state.currentUser = null
     })
   }
@@ -69,24 +75,18 @@ class App extends React.Component {
     this.props.getReports();
   }
   logout(){
-    console.log("running logout")
-    axios.get('http://localhost:5000/' + 'api/users/logout') //WIll need to change on deploy
+    axios.get(baseUrl + 'api/users/logout') //WIll need to change on deploy
+
     this.setState({
       currentUser: null
     }, () => console.log(this.state.currentUser))
   }
   updateCurrentUser(user){
-    console.log(this)
     this.setState({
-      currentUser : user
+      currentUser : user,
+      profilePic : user.profilePic
     }, () => console.log(this.state.currentUser))
-    // import(this.state.currentUser.profilePic)
-    // .then((profilePic) => {
-    //   console.log(profilePic)
-    //   this.setState({
-    //     profilePic : profilePic
-    //   }, () => console.log(this.state.profilePic))
-    // }))
+
   }
   
   render() {
@@ -125,6 +125,7 @@ class App extends React.Component {
               <Route exact path="/recipes/:id/editrecipe" element={<WriteWrapper flag={"edit"} recipes={this.props.Recipes} user={this.state.currentUser}/>}/>
               <Route exact path="/recipes/:id/forkrecipe" element={<WriteWrapper flag={"fork"} recipes={this.props.Recipes} user={this.state.currentUser}/>}/>
               <Route exact path="/recipes/:id" element={<RecipeBrowser recipes={this.props.Recipes} users={this.props.Users} currentUser={this.state.currentUser}/>}/>
+              <Route exact path="/users/:id" element={<PublicUser profilePic = {this.state.profilePic}/>} />
               <Route exact path="/recipes" element={<RecipeBrowser recipes={this.props.Recipes} users={this.props.Users} comments={this.props.Comments}/>}/>
               <Route exact path="/*" element={<Landing />}/>
             </Routes>

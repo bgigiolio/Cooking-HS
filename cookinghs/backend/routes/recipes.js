@@ -75,7 +75,6 @@ router.get('/api/recipes/filters', mongoChecker, async (req, res) => {
 			// if(q["cuisine"].includes("Other")){
 			// 	// query for everything thats not asian, french, .... 
 			// }
-			
 		}
 
 		// course query (entree, main, dessert etc)
@@ -86,7 +85,7 @@ router.get('/api/recipes/filters', mongoChecker, async (req, res) => {
 			if(q['course'].length == 2){
 				q['course'] = ""
 				console.log("if stmt: ", q['course'])
-			}
+      }
 			q["course"] = {$regex: q.course, $options: "i"}
 		}
 
@@ -120,7 +119,6 @@ router.get('/api/recipes/filters', mongoChecker, async (req, res) => {
 			
 
 			}
-			
 		}
 
 		// recipe title query: used in the searchbar!!!
@@ -194,6 +192,7 @@ router.get('/api/recipes/filters', mongoChecker, async (req, res) => {
     }
 }),
 
+
 // post single recipe - called by write page, fork page
 router.post('/api/recipes', mongoChecker, async (req, res) => {
 	const recipe = new Recipe({
@@ -224,7 +223,6 @@ router.post('/api/recipes', mongoChecker, async (req, res) => {
 		}
 	}
 }),
-
 // get single recipe - called by recipe single page
 router.get('/api/recipes/:id', mongoChecker, async (req, res) => {
     const id = req.params.id
@@ -294,7 +292,8 @@ router.put('/api/recipes/:id', mongoChecker, async (req, res) => {
 		} else {
 			res.status(400).send('Bad Request') // bad request for changing the student.
 		}
-	}
+  }
 }),
+
 
 module.exports = router

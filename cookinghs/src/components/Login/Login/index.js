@@ -5,6 +5,7 @@ import axios from 'axios'; // new!!
 import RecipeBrowser from '../../recipeView/RecipeBrowserComponent';
 import AdminPage from '../../Admin/index'
 import {Routes, Route, Link} from 'react-router-dom';
+import { baseUrl } from '../../../shared/baseUrl';
 
 class Login extends React.Component {
     state = {
@@ -23,12 +24,11 @@ class Login extends React.Component {
         })
     }
     validLogIn = () => {
-        axios.get(this.props.host + 'api/users/login/' + this.props._id)
+        axios.get(baseUrl + 'api/users/login/' + this.props._id)
         .then(async (response) => {
             axios.get(this.props.host + 'api/users/session', {params :{//hmm
                 want : ["_id", "username", "admin", "fullName", "email", "profilePic"]
               }}).then( async (response) => {
-                  console.log(response.data)
                   this.props.updateCurrentUser(response.data)
               })
         })
