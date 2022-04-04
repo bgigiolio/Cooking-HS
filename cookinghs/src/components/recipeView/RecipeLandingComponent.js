@@ -577,7 +577,7 @@ class RecipeLanding extends React.Component {
                                 checked={this.props.course[this.props.course.length -1] === ""}
                                 onChange={this.onCourseChange}
                                 />
-                                 All Recipes
+                                All Recipes
                             </label>
                             </div>
 
@@ -979,7 +979,7 @@ class RecipeLanding extends React.Component {
                     {/* </div> */}
 
                     <div className={styles.barDiv}>
-                        <SearchBar className={styles.searchBar}
+                        <SearchBar className={styles.searchBar} placeholder="Search for a recipe"
                         value={this.state.search}
                         onChange={(newValue) => this.setState({ search: newValue }, () => console.log("logged: ", this.state.search))}
                         onRequestSearch={() => this.handleSearch(this.state.search)}
