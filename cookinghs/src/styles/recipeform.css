@@ -8,13 +8,6 @@
     height: 10px;
 }
 
-.removeButton {
-    height: 24px;
-    width: 24px;
-    fill:000;
-    fill-opacity:.65;
-}
-
 .numberedLabel {
     text-align: right;
 }
@@ -30,4 +23,24 @@
     max-height: 175px; 
     object-fit:cover; 
     margin: auto;
+}
+
+.imageLabel {
+    cursor: pointer;
+    height: fit-content;
+    margin-bottom: -6px;
+}
+
+.imageButton {
+    padding: 2px;
+    width: fit-content
+}
+
+.imageInput {
+    display: none
+}
+
+.difficultyInput {
+    display:flex;
+    align-items: center
 }

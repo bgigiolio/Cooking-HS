@@ -1,57 +1,36 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { List, ListGroup, ListGroupItem, Card, CardBody, CardHeader, Button, Input, Label, FormGroup, Col, Row, CardFooter } from 'reactstrap';
+import { List, ListGroup, ListGroupItem, Card, CardBody, CardHeader, Button, Input, Label, FormGroup, Col, Row } from 'reactstrap';
 import { Fraction } from 'fractional';
 import { Link } from 'react-router-dom';
 import '../../styles/recipeview.css';
 import '../../styles/colorpalette.css';
 import ReviewModal from '../recipeModals/ReviewModalComponent';
 import ReportModal from '../recipeModals/ReportModalComponent';
+import StarRating from './StarRatingComponent';
 import { postComment } from '../../redux/comments/comment-actions';
 import { postReport } from '../../redux/reports/report-actions';
 
-const starRating = function(rating) {
-    return (
-        <>
-            {[...Array(5)].map((star, index) => {
-                index += 1;
-                if (index <= rating + 0.25) {
-                    return(
-                        <svg className='starIcon' key={index}>
-                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
-                        </svg>
-                    )
-                }
-                else if (rating - index + 1 >= 0.25 & rating - index + 1 <= 0.75){
-                    return(
-                        <svg className='starIcon' key={index}>
-                            <path d="M22 9.74l-7.19-.62L12 2.5 9.19 9.13 2 9.74l5.46 4.73-1.64 7.03L12 17.77l6.18 3.73-1.63-7.03L22 9.74zM12 15.9V6.6l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.9z"></path>
-                        </svg>
-                    )
-                    
-                }
-                else {
-                    return(
-                        <svg className='starIcon' key={index}>
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>
-                    )
-                }
-            })}
-        </>
-    );
-}
 
 function RecipeSingle(props) {
     const recipes = props.recipes
     const chosenRecipe = props.chosenRecipe;
     let chosenComment = []
-    console.log(props.Comments)
+    let averageRating = 0
+    let averageRatingString = ""
     if (!props.Comments.isLoading) {
         chosenComment = props.Comments.comments.filter((comment) => comment.recipeid === chosenRecipe._id)
+        if (chosenComment.length) {
+            chosenComment.map((comment) => averageRating += comment.rating)
+            averageRating /= chosenComment.length
+            averageRatingString = averageRating.toFixed(2)
+        }
+        else {
+            averageRatingString = "No ratings yet"
+        }
     }
-    let [servingSize, setServingSize] = useState(chosenRecipe.servings);
-    let [scale, setScale] = useState(1);
+    const [servingSize, setServingSize] = useState(chosenRecipe.servings);
+    const [scale, setScale] = useState(1);
 
     const timeline = (par) => {
         let parent = par;
@@ -62,11 +41,13 @@ function RecipeSingle(props) {
         }
         line.reverse()
         const timelineView = line.map((step, index) => {
-            const parentTitle = recipes.filter(recipe => recipe._id === step)[0].title
+            const parentRecipe = recipes.filter(recipe => recipe._id === step)[0]
+            const parentTitle = parentRecipe.title
+            const parentDeleted = parentRecipe.deleted
             const link = '../recipes/' + step
             return (
                 <li key={index}>
-                    {index !== line.length - 1 ? <Link to={link}>{parentTitle}</Link> : <>{parentTitle} (Current)</>}
+                    {index !== line.length - 1 ? <Link to={link}>{parentTitle}<span>{parentDeleted}</span></Link> : <>{parentTitle} (Current)</>}
                 </li>
             )
         })
@@ -96,8 +77,8 @@ function RecipeSingle(props) {
                 if (quantity%1 === 0){
                     amount = new Fraction(quantity).toString();
                 }
-                else if (quantity*3%1 === 0) {
-                    amount = (quantity*3).toString();
+                else if (quantity*3%1 === 0 || quantity*3%1 > 0.999) {
+                    amount = Math.round(quantity*3).toString();
                     amount = new Fraction(amount.concat('/3')).toString()
                 }
                 else {
@@ -129,8 +110,9 @@ function RecipeSingle(props) {
 
     const stepsView = chosenRecipe.steps.map((step, index) => {
         return (
-            <li className='stepsList' key={index}>
-                <span>{step}</span>
+            <li className='stepsListItem' key={index}>
+                <span>{step.step}</span>
+                {step.stepimage ? <img src = {step.stepimage} className="stepImage"/> : null}
             </li>
         )
     });
@@ -154,7 +136,7 @@ function RecipeSingle(props) {
                 <Card>
                     <CardHeader>
                         {/* link to commenter user profile here */}
-                        <span className='userLink'>{props.users.filter((user) => user._id === comment.user)[0].fullName}</span> rates this: {starRating(rating)}
+                        <span className='userLink'>{props.users.filter((user) => user._id === comment.user)[0].fullName}</span> rates this: <StarRating rating={rating}/>
                         <Button 
                             className='reportButton'
                             onClick={toggleReport}
@@ -164,7 +146,7 @@ function RecipeSingle(props) {
                             <i id={reportId} className="reportIcon fa-solid fa-triangle-exclamation"></i>
                         </Button>
                     </CardHeader>
-                    <CardBody style={{width: "100%", overflow:"hidden", height: "fit-content"}}>
+                    <CardBody className="commentBody">
                         {comment.content}
                         <br></br>
                         {comment.date}
@@ -217,12 +199,12 @@ function RecipeSingle(props) {
                             </Link>
                         </Col>
                     </Row>
-                    <div id='averageRating'>
-                        {starRating(chosenRecipe.averageRating)}
+                    <div id='averageStarRating'>
+                    <StarRating rating={averageRating}/> <span id="averageRating">{averageRatingString}</span>
                     </div>
                     {/* link to author user profile here */}
                     {chosenRecipe.author ? <span> By <span className='userLink'>{props.users.filter((user) => user._id === chosenRecipe.author)[0].fullName}</span></span> : null}
-                    {chosenRecipe.difficulty ? <span style={{float: "right"}}> Difficulty: {chosenRecipe.difficulty}/10 </span> : null}
+                    {chosenRecipe.difficulty ? <span className="recipeDifficulty"> Difficulty: {chosenRecipe.difficulty}/10 </span> : null}
                 </ListGroupItem>
                 <ListGroupItem>
                     {timeline(chosenRecipe.parent)}

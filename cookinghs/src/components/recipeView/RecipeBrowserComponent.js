@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import {Loading} from '../LoadingComponent';
 import RecipeSingle from './RecipeSingleComponent';
 import RecipeLanding from './RecipeLandingComponent';
+import NotFound from '../NotFoundComponent';
 import '../../styles/recipeview.css';
 import '../../styles/colorpalette.css';
 
@@ -22,7 +23,7 @@ function RecipeBrowser(props) {
 
         return(
             <div className='container relativeContainer' id='recipeContainer'>
-                {chosenRecipe ? <RecipeSingle currentUser={props.currentUser} users={props.users.users} recipes={recipes} chosenRecipe={chosenRecipe}/> : <p>404 Recipe Not Found</p>}
+                {chosenRecipe ? <RecipeSingle currentUser={props.currentUser} users={props.users.users} recipes={recipes} chosenRecipe={chosenRecipe}/> : <NotFound/>}
             </div>
         )
     }
