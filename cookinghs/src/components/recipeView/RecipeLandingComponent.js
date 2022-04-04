@@ -31,26 +31,22 @@ class RecipeLanding extends React.Component {
           marks: [
             {
               value: 0,
-              label: '0',
-            },
-            {
-              value: 1,
               label: '1',
             },
             {
-              value: 2,
+              value: 1,
               label: '2',
             },
             {
-              value: 3,
+              value: 2,
               label: '3',
             },
             {
+              value: 3,
+              label: '4',
+            },
+            {
                 value: 4,
-                label: '4',
-              },
-              {
-                value: 5,
                 label: '5',
               },
           ],
@@ -134,7 +130,7 @@ class RecipeLanding extends React.Component {
     onSortChange(e){
         console.log(e.target.value)
         var s = e.target.value;
-        var d = this.props.difficulty[this.props.difficulty.length-1]
+        var d = this.state.dropdownOpen[this.props.difficulty[this.props.difficulty.length-1]].label
         var c = this.props.cuisines
         var ings = this.props.ingredients
         var crse = this.props.course[this.props.course.length-1]
@@ -187,7 +183,7 @@ class RecipeLanding extends React.Component {
         var diff = this.state.cookingTime[idx].label;
         this.props.updateCookTime(idx)
         var pass_prop = diff;
-        var d = this.props.difficulty[this.props.difficulty.length-1]
+        var d = this.state.dropdownOpen[this.props.difficulty[this.props.difficulty.length-1]].label
         var c = this.props.cuisines
         var ings = this.props.ingredients
         var crse = this.props.course[this.props.course.length-1]
@@ -209,7 +205,7 @@ class RecipeLanding extends React.Component {
       onDifficultyChange(e,val){
         var diff = val;
         this.props.updateDifficulty(diff)
-        var pass_prop = diff;
+        var pass_prop = this.state.marks[diff].label;
         // var d = this.props.difficulty[this.props.difficulty.length-1]
         var c = this.props.cuisines
         var ings = this.props.ingredients
@@ -240,7 +236,7 @@ class RecipeLanding extends React.Component {
         var c = this.props.cuisines
         var ings = this.props.ingredients
         var ct = this.state.cookingTimeEval[this.props.cooktime[this.props.cooktime.length - 1]].label
-        var d = this.props.difficulty[this.props.difficulty.length-1]
+        var d = this.state.dropdownOpen[this.props.difficulty[this.props.difficulty.length-1]].label
         this.props.updateCourse(course);
 
         this.setState({params: {course: course,
@@ -252,33 +248,6 @@ class RecipeLanding extends React.Component {
                 () => {
                     console.log(" i updated the params and heres the state now: ", this.state)
                     console.log("value retention check!!!!: ", course)
-    
-                    // switch(course) {
-                    //     case "Appetizer":
-                    //         document.getElementById("radio-button-appetizer").firstChild.firstChild.checked = true
-                    //         break;
-                    //     case "Entree":
-                    //       document.getElementById("radio-button-entree").firstChild.firstChild.checked = true
-                    //       break;
-                    //     case "Main":
-                    //         document.getElementById("radio-button-main").firstChild.firstChild.checked = true
-                    //         break;
-                    //     case "Dessert":
-                    //         document.getElementById("radio-button-dessert").firstChild.firstChild.checked = true
-                    //     // code block
-                    //     break;
-                    //     case "Beverage":
-                    //         document.getElementById("radio-button-bev").firstChild.firstChild.checked = true
-                    //         // code block
-                    //     break;
-                    //     case "":
-                    //         document.getElementById("radio-button-all").firstChild.firstChild.checked = true
-                    //         // code block
-                    //     break;
-                    //     default:
-                    //         break;
-                    //       // code block
-                    //   }
                     this.setState({selectedCourse: course})
                 }
             )
@@ -294,7 +263,7 @@ class RecipeLanding extends React.Component {
         console.log("event target val:", e.target.value)
         var ings = this.props.ingredients
         var ct = this.state.cookingTimeEval[this.props.cooktime[this.props.cooktime.length - 1]].label
-        var d = this.props.difficulty[this.props.difficulty.length-1]
+        var d = this.state.dropdownOpen[this.props.difficulty[this.props.difficulty.length-1]].label
         var crse = this.props.course[this.props.course.length - 1]
         if(this.props.cuisines.includes(e.target.value)){
             // call delete and remove filter
@@ -400,7 +369,7 @@ class RecipeLanding extends React.Component {
         // if it's checked, uncheck it 
         console.log("event target val:", e.target.value)
         var ct = this.state.cookingTimeEval[this.props.cooktime[this.props.cooktime.length - 1]].label
-        var d = this.props.difficulty[this.props.difficulty.length-1]
+        var d = this.state.dropdownOpen[this.props.difficulty[this.props.difficulty.length-1]].label
         var crse = this.props.course[this.props.course.length - 1]
         var cus = this.props.cuisines
         if(this.props.ingredients.includes(e.target.value)){
@@ -710,7 +679,7 @@ class RecipeLanding extends React.Component {
                     }}
                     // onChange={this.onDifficultyChange}
                     onChangeCommitted={this.onDifficultyChange}
-                    max={5}
+                    max={4}
                     aria-labelledby="discrete-slider"
                     defaultValue={this.props.difficulty[this.props.difficulty.length - 1]}
                     // value={this.props.difficulty}
