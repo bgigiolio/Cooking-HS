@@ -130,6 +130,7 @@ class RecipeLanding extends React.Component {
     onSortChange(e){
         console.log(e.target.value)
         var s = e.target.value;
+        console.log("s")
         var d = this.state.marks[this.props.difficulty[this.props.difficulty.length-1]].label
         var c = this.props.cuisines
         var ings = this.props.ingredients
@@ -286,7 +287,8 @@ class RecipeLanding extends React.Component {
                             () => {
                                 // console.log(" i updated the params and heres the state now: ", this.state)
                                 // console.log("value retention check!!!!: ", cuisines)
-                                this.state.selectedCuisine = this.props.cuisines;
+                                this.setState({selectedCuisine: this.props.cuisines});
+                                // this.state.selectedCuisine = this.props.cuisines;
                             })})
                         
                         // checkboxes need to be on!!!
@@ -968,7 +970,7 @@ class RecipeLanding extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu>
                 <DropdownItem onClick={this.onSortChange} className={styles.sortButton} value='Date'>Date (Most Recent)</DropdownItem>
-                <DropdownItem onClick={this.onSortChange} className={styles.sortButton} value='Rating'>Ratings (High to Low)</DropdownItem>
+                <DropdownItem onClick={this.onSortChange} className={styles.sortButton} value='Difficulty'>Difficulty (High to Low)</DropdownItem>
                 </DropdownMenu>
                 </Dropdown>
 
