@@ -451,6 +451,7 @@ class RecipeLanding extends React.Component {
             <div className={styles.landingContainer}>
                 <div className={styles.mainFilterSection}>
                     <h5 className={styles.filterHeader}>Filter Recipes</h5>
+                    <h6 className={styles.filterSubHeader}>(scroll for more!)</h6>
 
                     {/* Course Filter */}
 
