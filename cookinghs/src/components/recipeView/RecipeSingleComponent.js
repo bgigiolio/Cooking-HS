@@ -17,14 +17,16 @@ function RecipeSingle(props) {
     const chosenRecipe = props.chosenRecipe;
     let chosenComment = []
     let averageRating = 0
+    let averageRatingString = ""
     if (!props.Comments.isLoading) {
         chosenComment = props.Comments.comments.filter((comment) => comment.recipeid === chosenRecipe._id)
         if (chosenComment.length) {
             chosenComment.map((comment) => averageRating += comment.rating)
             averageRating /= chosenComment.length
+            averageRatingString = averageRating.toFixed(2)
         }
         else {
-            averageRating = "No ratings yet"
+            averageRatingString = "No ratings yet"
         }
     }
     const [servingSize, setServingSize] = useState(chosenRecipe.servings);
@@ -73,11 +75,12 @@ function RecipeSingle(props) {
                 if (quantity%1 === 0){
                     amount = new Fraction(quantity).toString();
                 }
-                else if (quantity*3%1 === 0) {
-                    amount = (quantity*3).toString();
+                else if (quantity*3%1 === 0 || quantity*3%1 > 0.999) {
+                    amount = Math.round(quantity*3).toString();
                     amount = new Fraction(amount.concat('/3')).toString()
                 }
                 else {
+                    console.log(quantity*3%1)
                     amount = new Fraction(quantity).toString();
                 }
             }
@@ -107,7 +110,8 @@ function RecipeSingle(props) {
     const stepsView = chosenRecipe.steps.map((step, index) => {
         return (
             <li className='stepsList' key={index}>
-                <span>{step}</span>
+                <span>{step.step}</span>
+                {step.stepimage ? <img src = {step.stepimage} style={{width:"95%", borderRadius: "10px"}}/> : null}
             </li>
         )
     });
@@ -195,7 +199,7 @@ function RecipeSingle(props) {
                         </Col>
                     </Row>
                     <div id='averageStarRating'>
-                    <StarRating rating={averageRating}/> <span id="averageRating">{averageRating}</span>
+                    <StarRating rating={averageRating}/> <span id="averageRating">{averageRatingString}</span>
                     </div>
                     {/* link to author user profile here */}
                     {chosenRecipe.author ? <span> By <span className='userLink'>{props.users.filter((user) => user._id === chosenRecipe.author)[0].fullName}</span></span> : null}

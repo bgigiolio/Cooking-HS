@@ -41,7 +41,7 @@ export const addRecipe = (recipe) => ({
   payload: recipe
 });
 
-export const postRecipe = (author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image, imagefile) => (dispatch) => {  
+export const postRecipe = (author, parent, title, description, ingredients, steps, difficulty, course, cuisine, preptime, cooktime, servings, image, imagefile) => async (dispatch) => {  
   const newRecipe = {
     author: author,
     parent: parent,

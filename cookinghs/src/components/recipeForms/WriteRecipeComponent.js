@@ -45,9 +45,9 @@ function WriteRecipe(props) {
                         }
                     ],
                     steps: [
-                        '',
-                        '',
-                        ''
+                        {step: ''},
+                        {step: ''},
+                        {step: ''}
                     ],
                     course: 'Main',
                     cuisine: '',
@@ -93,7 +93,6 @@ function WriteRecipe(props) {
                 }
             )
         }
-        
     }
 
     const handleIngredientChange = (index, e) => {
@@ -116,11 +115,32 @@ function WriteRecipe(props) {
         const target = e.target;
         const value = target.value;
         let steps = [...recipe.steps];
-        steps[index] = value;
+        steps[index] = {
+            ...steps[index],
+            step: value
+        };
         setRecipe({
             ...recipe,
             steps: steps
         })
+    }
+
+    const handleStepImage = (index, e) => {
+        const target = e.target;
+        const file = target.files[0];
+        let steps = [...recipe.steps];
+        const reader = new FileReader();
+        reader.readAsDataURL(file)
+        reader.onloadend = () => {
+            steps[index] = {
+                ...steps[index],
+                stepimage: reader.result
+            }
+            setRecipe({
+                ...recipe,
+                steps: steps
+            })
+        }
     }
 
     const removeIngredient = (index, e) => {
@@ -180,7 +200,7 @@ function WriteRecipe(props) {
             }
         })
         //remove empty steps
-        checkedRecipe.steps = checkedRecipe.steps.filter((step) => step.trim() !== '')
+        checkedRecipe.steps = checkedRecipe.steps.filter((step) => step.step.trim() !== "");
 
         return checkedRecipe
     }
@@ -200,14 +220,12 @@ function WriteRecipe(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const recipe = parseForm()
+        console.log(recipe.steps)
         const valid = checkForm(recipe)
         if (valid) {
             if (props.flag === "fork" || props.flag === "new") {
-                const result = await props.postRecipe(recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.difficulty, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image, recipe.imagefile)
-                console.log(result)
-                if (result) {
-                    handleRedirect()
-                }
+                props.postRecipe(recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.difficulty, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image, recipe.imagefile)
+                // handleRedirect()
             }
             else if (props.flag === "edit") {
                 props.putRecipe(recipe._id, recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.difficulty, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image, recipe.imagefile)
@@ -262,6 +280,7 @@ function WriteRecipe(props) {
                 handleImageChange = {handleImageChange}
                 handleIngredientChange = {handleIngredientChange}
                 handleStepChange = {handleStepChange}
+                handleStepImage = {handleStepImage}
                 addIngredient = {addIngredient}
                 removeIngredient = {removeIngredient}
                 addStep = {addStep}

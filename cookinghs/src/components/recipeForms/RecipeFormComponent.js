@@ -8,7 +8,7 @@ function RecipeForm(props) {
             return(
                 <FormGroup row key={index}>
                     <Label
-                        for="ingredient"
+                        for={"ingredient"+index}
                         md={1}
                         className='numberedLabel'
                     >
@@ -18,7 +18,7 @@ function RecipeForm(props) {
                         {!index ?
                         <>
                             <Input
-                                id="ingredientname"
+                                id={"ingredientname"+index}
                                 name='name'
                                 type="text"
                                 placeholder='Ingredient e.g. Chicken Wings'
@@ -32,7 +32,7 @@ function RecipeForm(props) {
                         </>
                          :
                         <Input
-                            id="ingredientname"
+                            id={"ingredientname"+index}
                             name='name'
                             type="text"
                             placeholder='Ingredient e.g. Chicken Wings'
@@ -45,7 +45,7 @@ function RecipeForm(props) {
                     </Col>
                     <Col md={2}>
                         <Input
-                            id="quantity"
+                            id={"ingredientquantity"+index}
                             name="quantity"
                             type="text"
                             placeholder='Amount'
@@ -55,7 +55,7 @@ function RecipeForm(props) {
                     </Col>
                     <Col md={3}>
                         <Input
-                            id="unit"
+                            id={"ingredientunit"+index}
                             name="unit"
                             type="text"
                             placeholder='Unit'
@@ -72,9 +72,7 @@ function RecipeForm(props) {
                             color="transparent"
                             onClick={(e) => props.removeIngredient(index, e)}
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="removeButton">
-                            <path d="M14.59 8L12 10.59 9.41 8 8 9.41 10.59 12 8 14.59 9.41 16 12 13.41 14.59 16 16 14.59 13.41 12 16 9.41 14.59 8zM12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
-                            </svg>
+                            <i className="fa-regular fa-circle-xmark removeButton"></i>
                         </Button>
                         : null
                     }
@@ -108,7 +106,7 @@ function RecipeForm(props) {
             return(
                 <FormGroup row key={index}>
                     <Label
-                        for="steps"
+                        for={"step"+index}
                         md={1}
                         className='numberedLabel'
                     >
@@ -118,12 +116,12 @@ function RecipeForm(props) {
                         {!index ? 
                         <>
                             <Input
-                                id="steps"
-                                name="steps"
+                                id={"step"+index}
+                                name={"step"+index}
                                 type="textarea"
                                 rows="3"
                                 placeholder='e.g. Preheat oven to 350 degrees F...'
-                                value={step}
+                                value={step.step}
                                 onChange={(e) => props.handleStepChange(index, e)}
                                 invalid={step === ""}
                             />
@@ -132,18 +130,37 @@ function RecipeForm(props) {
                             </FormFeedback>
                         </> :
                         <Input
-                            id="steps"
-                            name="steps"
+                            id={"step"+index}
+                            name={"step"+index}
                             type="textarea"
                             rows="3"
                             placeholder='e.g. Preheat oven to 350 degrees F...'
-                            value={step}
+                            value={step.step}
                             onChange={(e) => props.handleStepChange(index, e)}
                         />
                         }
                     
                     </Col>
                     <Col md={1}>
+                    {/* <Button type="button" style={{padding: "2px", width: "fit-content"}}> */}
+                        <Label
+                        for={"stepimage"+index}
+                        style={{cursor: "pointer", height:"fit-content", marginBottom:"-6px"}}
+                        >
+                        <img src={step.stepimage || props.tempimage}
+                            alt=''
+                            id='uploadImage'
+                        />
+                        </Label>
+                        <Input
+                            id={"stepimage"+index}
+                            name={"stepimage"+index}
+                            type="file"
+                            accept="image/*"
+                            style={{display: 'none'}}
+                            onChange={(e) => props.handleStepImage(index, e)}
+                        />
+                    {/* </Button> */}
                     {
                         index ?
                         <Button 
@@ -152,9 +169,7 @@ function RecipeForm(props) {
                             color="transparent"
                             onClick={(e) => props.removeStep(index, e)}
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" className='removeButton'>
-                            <path d="M14.59 8L12 10.59 9.41 8 8 9.41 10.59 12 8 14.59 9.41 16 12 13.41 14.59 16 16 14.59 13.41 12 16 9.41 14.59 8zM12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
-                            </svg>
+                            <i className="fa-regular fa-circle-xmark removeButton"></i>
                         </Button>
                         : null
                     }

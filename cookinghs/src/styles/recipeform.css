@@ -8,13 +8,6 @@
     height: 10px;
 }
 
-.removeButton {
-    height: 24px;
-    width: 24px;
-    fill:000;
-    fill-opacity:.65;
-}
-
 .numberedLabel {
     text-align: right;
 }
