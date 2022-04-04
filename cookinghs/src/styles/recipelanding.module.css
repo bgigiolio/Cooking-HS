@@ -1,12 +1,10 @@
 .landingContainer{
     margin-left: 0px;
-    display: flex;
 }
 
 .searchBar{
     margin-top: 15px;
     width: 20vw;
-    margin-right: -48px;
 }
 
 .barDiv{
@@ -48,7 +46,7 @@
 .addBtn{
     font-size: 40px;
     margin-top: 13px;
-    margin-left: -260px;
+    margin-left: 20px;
     display: flex;
     justify-content: flex-start;
 }
@@ -60,7 +58,7 @@
 
 .mainFilterSection{
     float: left;
-    width: 20vw;
+    width: 18vw;
     min-height: calc(100vh - 56px);
     border-right: 0.5px solid rgb(211, 209, 209);
     margin-right: 20px;
@@ -207,8 +205,7 @@ input{
 .sortDropDown{
     display: flex;
     justify-content: end;
-    margin-right: 2rem;
-    
+    margin-right:5.5vw;
 }
 
 .sortButton:focus{
