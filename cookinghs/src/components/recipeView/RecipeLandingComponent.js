@@ -24,7 +24,7 @@ class RecipeLanding extends React.Component {
           selectedCourse: null,
           selectedCuisine: [],
           selectedIngredients: [],
-          difficulty: "0,5",
+          difficulty: "4",
           cooktime: "0",
           dropdownOpen: false,
           sort: "Date",
@@ -130,7 +130,7 @@ class RecipeLanding extends React.Component {
     onSortChange(e){
         console.log(e.target.value)
         var s = e.target.value;
-        var d = this.state.dropdownOpen[this.props.difficulty[this.props.difficulty.length-1]].label
+        var d = this.state.marks[this.props.difficulty[this.props.difficulty.length-1]].label
         var c = this.props.cuisines
         var ings = this.props.ingredients
         var crse = this.props.course[this.props.course.length-1]
@@ -183,7 +183,7 @@ class RecipeLanding extends React.Component {
         var diff = this.state.cookingTime[idx].label;
         this.props.updateCookTime(idx)
         var pass_prop = diff;
-        var d = this.state.dropdownOpen[this.props.difficulty[this.props.difficulty.length-1]].label
+        var d = this.state.marks[this.props.difficulty[this.props.difficulty.length-1]].label
         var c = this.props.cuisines
         var ings = this.props.ingredients
         var crse = this.props.course[this.props.course.length-1]
@@ -236,7 +236,7 @@ class RecipeLanding extends React.Component {
         var c = this.props.cuisines
         var ings = this.props.ingredients
         var ct = this.state.cookingTimeEval[this.props.cooktime[this.props.cooktime.length - 1]].label
-        var d = this.state.dropdownOpen[this.props.difficulty[this.props.difficulty.length-1]].label
+        var d = this.state.marks[this.props.difficulty[this.props.difficulty.length-1]].label
         this.props.updateCourse(course);
 
         this.setState({params: {course: course,
@@ -263,7 +263,7 @@ class RecipeLanding extends React.Component {
         console.log("event target val:", e.target.value)
         var ings = this.props.ingredients
         var ct = this.state.cookingTimeEval[this.props.cooktime[this.props.cooktime.length - 1]].label
-        var d = this.state.dropdownOpen[this.props.difficulty[this.props.difficulty.length-1]].label
+        var d = this.state.marks[this.props.difficulty[this.props.difficulty.length-1]].label
         var crse = this.props.course[this.props.course.length - 1]
         if(this.props.cuisines.includes(e.target.value)){
             // call delete and remove filter
@@ -369,7 +369,8 @@ class RecipeLanding extends React.Component {
         // if it's checked, uncheck it 
         console.log("event target val:", e.target.value)
         var ct = this.state.cookingTimeEval[this.props.cooktime[this.props.cooktime.length - 1]].label
-        var d = this.state.dropdownOpen[this.props.difficulty[this.props.difficulty.length-1]].label
+        console.log(this.props.difficulty[this.props.difficulty.length-1])
+        var d = this.state.marks[this.props.difficulty[this.props.difficulty.length-1]].label
         var crse = this.props.course[this.props.course.length - 1]
         var cus = this.props.cuisines
         if(this.props.ingredients.includes(e.target.value)){
