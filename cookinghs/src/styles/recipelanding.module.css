@@ -20,12 +20,12 @@
 .topCategories{
     display: flex;
     justify-content: space-between;
-    margin-left: 21vw;
-    margin-right: 5.5vw;
+    /* margin-left: 21vw; */
+    margin-right: 2rem;
 }
 
 .categoryButton{
-   margin-right: 10px;
+   /* margin-right: 10px; */
    margin-top: 15px;
    background-color: white;
    color: black;
@@ -46,7 +46,8 @@
 .addBtn{
     font-size: 40px;
     margin-top: 13px;
-    margin-left: 20px;
+    margin-left: 2rem;
+    padding-left: calc(var(--bs-gutter-x) * .5);
     display: flex;
     justify-content: flex-start;
 }
@@ -220,7 +221,7 @@ input{
 .sortDropDown{
     display: flex;
     justify-content: end;
-    margin-right:5.5vw;
+    margin-right:2rem;
 }
 
 .sortButton:focus{
@@ -235,7 +236,7 @@ input{
 }
 
 .TodayCook{
-    margin-left: 2.8rem;
+    margin-left: 2rem;
     margin-top: 1rem;
     font-size: larger;
 

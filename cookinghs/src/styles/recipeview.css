@@ -210,3 +210,14 @@ h1 {
 .bookmark-icon:hover{
     color: rgb(170, 206, 212);
 }
+
+.card-group-container{
+    margin-right: 0px;
+    margin-left: 0px;
+    max-width: 100vw;
+    padding: 0px;
+}
+
+.card-col{
+    padding: 0px;
+}
