@@ -199,7 +199,7 @@ h1 {
 
 .card-body{
     width: 20rem;
-    overflow: scroll;
+    /* overflow: scroll; */
     height: 130px;
 }
 

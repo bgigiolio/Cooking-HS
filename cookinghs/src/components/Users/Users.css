@@ -5,8 +5,8 @@
 #editProfileButton {
     position: absolute;
     width: 120px;
-    margin-top: 320px;
-    margin-left: 90%;
+    top: 380px;
+    right: 0px;
 }
 
 #foodBanner {

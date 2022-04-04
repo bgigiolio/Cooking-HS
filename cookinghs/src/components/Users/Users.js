@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styles from './Users.css';
 import RecipeCardGroup from './RecipeCardGroup';
 import UserProgress from './UserProgress';
-import { Button } from 'reactstrap';
+import { Button, Container } from 'reactstrap';
 import Popup from './Popup';
 import { baseUrl } from '../../shared/baseUrl';
 import axios from 'axios'; // new!!
@@ -28,7 +28,6 @@ class Users extends React.Component {
         currentUser: {fullName: "", username: "null", recipes : [], bookmarked : [], profilePic : this.props.profilePic},
         loaded: true,
         popup: false
-
     }
 
 
@@ -43,6 +42,8 @@ class Users extends React.Component {
 
 
     render() {
+        const currentUserRecipes = this.props.Recipes.recipes.filter((recipe) => recipe.author === this.state.currentUser._id)
+        console.log(currentUserRecipes)
         const {profilePic} = this.props
         if(this.state.currentUser.fullName !== ""){
 
@@ -66,11 +67,14 @@ class Users extends React.Component {
                     <UserProgress recipes = {this.state.currentUser.recipes}/>
     
                     {this.state.currentUser.recipes.length !== 0 ? <h4 className="title">My Recipes</h4> : null}
-                    {RecipeCardGroup(this.state.currentUser.recipes)}
+                    <Container>
+                        <RecipeCardGroup isLoading={this.props.Recipes.isLoading} recipes={currentUserRecipes} />
+                    </Container>
+                    
                     <br/>
 
                     {this.state.currentUser.bookmarked.length !== 0 ? <h4 className="title">Bookmarked Recipes</h4> : null}
-                    {RecipeCardGroup(this.state.currentUser.bookmarked)}
+                    {/* {RecipeCardGroup(this.state.currentUser.bookmarked)} */}
                     <br/>
                 </div>
             )
