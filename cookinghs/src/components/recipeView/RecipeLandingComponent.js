@@ -7,9 +7,10 @@ import { Button, Card, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import axios from "axios";
 import { Slider } from '@mui/material';
-import { getFilteredRecipes, updateCookTime, updateCourse } from "../../redux/recipePage/recipe-actions"
+import { getFilteredRecipes, updateCookTime, updateCourse, updateSort } from "../../redux/recipePage/recipe-actions"
 import { connect } from "react-redux";
 import { addCuisines, removeCuisines, addIngredients, removeIngredients, updateDifficulty } from '../../redux/recipePage/recipe-actions';
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 
 
@@ -25,6 +26,8 @@ class RecipeLanding extends React.Component {
           selectedIngredients: [],
           difficulty: "0,5",
           cooktime: "0",
+          dropdownOpen: false,
+          sort: "Date",
           marks: [
             {
               value: 0,
@@ -109,14 +112,46 @@ class RecipeLanding extends React.Component {
           ],
         };
         this.onCourseChange = this.onCourseChange.bind(this);
+        this.onSortChange = this.onSortChange.bind(this);
         this.onDifficultyChange = this.onDifficultyChange.bind(this);
         this.onCookTimeChange = this.onCookTimeChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
         this.setParamState = this.setParamState.bind(this);
         this.onCuisineChange = this.onCuisineChange.bind(this);
         this.onIngredientChange = this.onIngredientChange.bind(this)
+        this.toggle = this.toggle.bind(this)
       }
+
+
+    toggle(){
+        console.log("toggled!")
+        this.setState(prevState => ({
+            dropdownOpen: !prevState.dropdownOpen
+          }));
+
+    }
+
+    onSortChange(e){
+        console.log(e.target.value)
+        var s = e.target.value;
+        var d = this.props.difficulty[this.props.difficulty.length-1]
+        var c = this.props.cuisines
+        var ings = this.props.ingredients
+        var crse = this.props.course[this.props.course.length-1]
+        var ct = this.state.cookingTimeEval[this.props.cooktime[this.props.cooktime.length - 1]].label
+
+        this.setState({
+            sort: e.target.value
+          }, () => {
+            this.props.updateSort(s)
+              this.setState({params: {cooktime: ct, difficulty: d, cuisine: c, ingredients: ings, course: crse, sort: s}}, () => {
+                  console.log("param update: ", this.state.params)
+                  this.props.getFilteredRecipes(this.state.params).then(
+                      console.log("acquired filtered recipes")
+                  )
+              })
+          });
+    }
 
     // adds in the new query parameter and makes a server call to fetch appropriate data
       setParamState(newEl, param_key){
@@ -432,23 +467,6 @@ class RecipeLanding extends React.Component {
         }
 
 
-    }
-
-    //   tester function
-    handleSubmit(e) {
-        e.preventDefault();
-        console.log('You clicked submit.');
-        // document.getElementById('radio-button').label.input.checked=true;
-        // this.state.params['course'] = "Appetizer";
-        // console.log(this.state)
-        
-        // // this.state.selectedCourse = e.target.value;
-        // var course = this.state.selectedCourse
-        // // this.props.getFilteredRecipes({ingredients:"cornstarch"});
-        // this.props.getFilteredRecipes(this.state.params);
-        // this.setState({selectedCourse: course}, () =>console.log("logged: ", this.state.selectedCourse))
-
-       
     }
 
     // Handler for the Search Bar Querying
@@ -941,11 +959,18 @@ class RecipeLanding extends React.Component {
 
                 <div className={styles.mainRecipeSection}>
                 <div className={styles.topCategories}>
+                    <div className={styles.addDiv}>
+
                     <div className={styles.addBtn}>
                         <Link to="/recipes/newrecipe">
-                            <i className="fa-regular fa-square-plus"></i>
+                            <i className="fa-regular fa-square-plus"></i> 
                         </Link>
+                        
                     </div>
+                    <h6 className={styles.addHeader}>Add a Recipe!</h6>
+
+                    </div>
+                    
                     {/* <div className={styles.categoryButtons}> */}
                         {/* all, quick fix and desserts */}
                         {/* <Button className={styles.categoryButton}>All Recipes</Button> */}
@@ -962,6 +987,27 @@ class RecipeLanding extends React.Component {
                     </div>
 
                 </div>
+
+                <div className={styles.secondaryHead}>
+                    <h6 className={styles.TodayCook}>Today I'll be Cooking:</h6>
+                <div className={styles.sortDropDown}>
+
+                <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                <DropdownToggle caret>
+                Filter By
+                </DropdownToggle>
+                <DropdownMenu>
+                <DropdownItem onClick={this.onSortChange} className={styles.sortButton} value='Date'>Date (Most Recent)</DropdownItem>
+                <DropdownItem onClick={this.onSortChange} className={styles.sortButton} value='Rating'>Ratings (High to Low)</DropdownItem>
+                </DropdownMenu>
+                </Dropdown>
+
+
+
+                </div>
+
+                </div>
+               
                
                 <RecipesPageCardGroup users={this.props.users} comments={this.props.comments} all_recipes={this.props.recipes}/>
     
@@ -982,11 +1028,12 @@ const mapStateToProps = state => {
         difficulty: state.Recipes.difficulty,
         cooktime: state.Recipes.cooktime,
         course: state.Recipes.course,
+        sort: state.Recipes.sort,
     }
 
 }
 
-const mapDispatchToProps = (dispatch, params, cuisine, ingredient, diff, ct, course) => ({
+const mapDispatchToProps = (dispatch, params, cuisine, ingredient, diff, ct, course, sort) => ({
     getFilteredRecipes: (params) => dispatch(getFilteredRecipes(params)),
     addCuisines: (cuisine) => dispatch(addCuisines(cuisine)),
     removeCuisines: (cuisine) => dispatch(removeCuisines(cuisine)),
@@ -995,6 +1042,7 @@ const mapDispatchToProps = (dispatch, params, cuisine, ingredient, diff, ct, cou
     updateDifficulty: (diff) => dispatch(updateDifficulty(diff)),
     updateCookTime: (ct) => dispatch(updateCookTime(ct)),
     updateCourse: (course) => dispatch(updateCourse(course)),
+    updateSort: (sort) => dispatch(updateSort(sort)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeLanding);

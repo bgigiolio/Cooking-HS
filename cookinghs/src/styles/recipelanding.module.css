@@ -44,8 +44,8 @@
 }
 
 .addBtn{
-    font-size: 42px;
-    margin-top: 17px;
+    font-size: 40px;
+    margin-top: 13px;
     margin-left: 20px;
     display: flex;
     justify-content: flex-start;
@@ -184,4 +184,44 @@ input{
 
 .CheckBoxIngredientsRice{
     margin-left: 2.25rem;
+}
+
+.addHeader{
+    display: flex;
+    margin-top: 2.1rem;
+    margin-left: 0.5rem;
+
+}
+
+.addHeader:hover{
+    color: black;
+    cursor: default;
+}
+
+.addDiv{
+    display: flex;
+}
+
+.sortDropDown{
+    display: flex;
+    justify-content: end;
+    margin-right:5.5vw;
+}
+
+.sortButton:focus{
+    background-color: rgb(183, 194, 197)
+
+}
+
+.secondaryHead{
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.TodayCook{
+    margin-left: 2.8rem;
+    margin-top: 1rem;
+    font-size: larger;
+
 }

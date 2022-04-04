@@ -124,6 +124,11 @@ export const updateCourse = (c) => ({
   payload: c
 });
 
+export const updateSort = (c) => ({
+  type: ActionTypes.UPDATE_SORT,
+  payload: c
+});
+
 export const failRecipes = (errmess) => ({
     type: ActionTypes.RECIPES_FAILED,
     payload: errmess

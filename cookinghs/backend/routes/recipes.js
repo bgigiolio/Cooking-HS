@@ -169,8 +169,23 @@ router.get('/api/recipes/filters', mongoChecker, async (req, res) => {
 		// }
 		
 		// "get" the recipes
+		if(q.hasOwnProperty("sort")){
+			// sort by date
+			if(q["sort"].length == 6){
+				delete q["sort"];
+				var recipes = await Recipe.find(q).sort([['difficulty', -1]]).exec()
+			}
+			else{
+				delete q["sort"];
+				var recipes = await Recipe.find(q).sort([['date', -1]]).exec()
+			}
+		}
+		else{
+			var recipes = await Recipe.find(q).sort([['date', -1]]).exec()
+
+		}
+		console.log("recipes", recipes);
 		console.log(q);
-		var recipes = await Recipe.find(q).exec()
 
         res.send(recipes)
     } catch(error) {

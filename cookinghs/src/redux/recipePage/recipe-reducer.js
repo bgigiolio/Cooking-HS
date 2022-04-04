@@ -12,6 +12,7 @@ export const RecipesReducer = (
         cooktime: [6],
         difficulty: [5],
         course: [""],
+        sort:["date"]
     }, action) => {
     switch (action.type) {
         case ActionTypes.ADD_RECIPES:
@@ -48,11 +49,15 @@ export const RecipesReducer = (
         
         case ActionTypes.UPDATE_COOKTIME:
         const ct = action.payload
-        return { ...state, cooktime: state.difficulty.concat(ct)};
+        return { ...state, cooktime: state.cooktime.concat(ct)};
 
         case ActionTypes.UPDATE_COURSE:
             const course = action.payload
-            return { ...state, course: state.difficulty.concat(course)};
+            return { ...state, course: state.course.concat(course)};
+        
+        case ActionTypes.UPDATE_SORT:
+        const s = action.payload
+        return { ...state, sort: state.sort.concat(s)};
 
 
         
