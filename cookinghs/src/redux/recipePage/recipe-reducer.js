@@ -10,7 +10,7 @@ export const RecipesReducer = (
         cuisines: [],
         ingredients: [],
         cooktime: [6],
-        difficulty: [5],
+        difficulty: [4],
         course: [""],
         sort:["date"]
     }, action) => {
