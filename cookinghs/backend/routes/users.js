@@ -37,6 +37,7 @@ http://localhost:5000/api/users/search
 -Add a single recipe to a user's bookmarked list: route #11
 -Update the current session: route #12
 -Add an imagefile to a user's profile pic: route #13
+-Remove a recipe from a user's bookmarked recipes: route #14
 
 */
 
@@ -302,6 +303,27 @@ router.route("/image/:id").patch( async (req, res) => {//#13
     }else{
         res.status(422).send("invalid image")
     }
+})
+
+//Removes recipe recipeid from user id's bookmarked
+router.route("/bookmarked/:id/:recipeid").delete((req, res) => {//#14
+    User.findById(req.params.id, 
+        (error, result) => {
+        if(error){
+            res.status(500).send("internal server error")
+        }else if(result === null){
+            res.status(404).send("user not found")
+        }else{
+            result.bookmarked.filter(id => id === req.params.recipeid);
+            result.save().then(() => { 
+                res.status(200).send(result)
+                if(req.params.id === req.session._id){
+                    req.session.bookmarked = result.bookmarked
+                }
+            })
+            .catch((error) => res.status(500).send(error))
+        }
+    })
 })
 
 
