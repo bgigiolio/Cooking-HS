@@ -65,7 +65,7 @@ class Users extends React.Component {
                     {/** The name, username will depend on info from backend per user */}
                     <h1 id="name">{this.state.currentUser.fullName}</h1>
                     <p id="username">{"@" + this.state.currentUser.username}</p>
-                    <UserProgress/>
+                    <UserProgress recipes = {this.state.currentUser.recipes}/>
     
                     {this.state.currentUser.recipes.length !== 0 ? <h4 className="title">My Recipes</h4> : null}
                     {RecipeCardGroup(this.state.currentUser.recipes)}
