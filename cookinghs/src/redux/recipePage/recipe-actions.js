@@ -87,6 +87,43 @@ export const changeCourse = (course) => ({
 
 })
 
+export const addCuisines = (cuisine) => ({
+  type: ActionTypes.ADD_CUISINES,
+  payload: cuisine
+
+})
+
+export const removeCuisines = (cuisine) => ({
+  type: ActionTypes.REMOVE_CUISINES,
+  payload: cuisine
+});
+
+export const addIngredients = (ing) => ({
+  type: ActionTypes.ADD_INGREDIENTS,
+  payload: ing
+
+})
+
+export const removeIngredients = (ing) => ({
+  type: ActionTypes.REMOVE_INGREDIENTS,
+  payload: ing
+});
+
+export const updateDifficulty = (diff) => ({
+  type: ActionTypes.UPDATE_DIFFICULTY,
+  payload: diff
+});
+
+export const updateCookTime = (ct) => ({
+  type: ActionTypes.UPDATE_COOKTIME,
+  payload: ct
+});
+
+export const updateCourse = (c) => ({
+  type: ActionTypes.UPDATE_COURSE,
+  payload: c
+});
+
 export const failRecipes = (errmess) => ({
     type: ActionTypes.RECIPES_FAILED,
     payload: errmess

@@ -7,8 +7,9 @@ import { Button, Card, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import axios from "axios";
 import { Slider } from '@mui/material';
-import { getFilteredRecipes } from "../../redux/recipePage/recipe-actions"
+import { getFilteredRecipes, updateCookTime, updateCourse } from "../../redux/recipePage/recipe-actions"
 import { connect } from "react-redux";
+import { addCuisines, removeCuisines, addIngredients, removeIngredients, updateDifficulty } from '../../redux/recipePage/recipe-actions';
 
 
 
@@ -22,6 +23,8 @@ class RecipeLanding extends React.Component {
           selectedCourse: null,
           selectedCuisine: [],
           selectedIngredients: [],
+          difficulty: "0,5",
+          cooktime: "0",
           marks: [
             {
               value: 0,
@@ -71,11 +74,43 @@ class RecipeLanding extends React.Component {
               },
               {
                 value: 5,
-                label: '60',
+                label: '>60',
               },
+          ],
+          cookingTimeEval: [
+            {
+              value: 0,
+              label: '10',
+            },
+            {
+              value: 1,
+              label: '20',
+            },
+            {
+              value: 2,
+              label: '30',
+            },
+            {
+              value: 3,
+              label: '40',
+            },
+            {
+                value: 4,
+                label: '50',
+              },
+              {
+                value: 5,
+                label: '>60',
+              },
+              {
+                  value: 6,
+                  label: "500",
+              }
           ],
         };
         this.onCourseChange = this.onCourseChange.bind(this);
+        this.onDifficultyChange = this.onDifficultyChange.bind(this);
+        this.onCookTimeChange = this.onCookTimeChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
         this.setParamState = this.setParamState.bind(this);
@@ -111,6 +146,54 @@ class RecipeLanding extends React.Component {
 
       }
 
+      onCookTimeChange(e, val){
+        var idx = val;
+        console.log("idx: ", idx)
+        var diff = this.state.cookingTime[idx].label;
+        this.props.updateCookTime(idx)
+        var pass_prop = diff;
+        var d = this.props.difficulty[this.props.difficulty.length-1]
+        var c = this.props.cuisines
+        var ings = this.props.ingredients
+        var crse = this.props.course[this.props.course.length-1]
+        console.log("diff: ", diff);
+        this.setState({
+            cooktime: e.target.value
+          }, () => {
+            this.props.updateCookTime(idx)
+              this.setState({params: {cooktime: pass_prop, difficulty: d, cuisine: c, ingredients: ings, course: crse}}, () => {
+                  console.log("param update: ", this.state.params)
+                  this.props.getFilteredRecipes(this.state.params).then(
+                      console.log("acquired filtered recipes")
+                  )
+              })
+          });
+
+      }
+      
+      onDifficultyChange(e,val){
+        var diff = val;
+        this.props.updateDifficulty(diff)
+        var pass_prop = diff;
+        // var d = this.props.difficulty[this.props.difficulty.length-1]
+        var c = this.props.cuisines
+        var ings = this.props.ingredients
+        var crse = this.props.course[this.props.course.length-1]
+        var ct = this.state.cookingTimeEval[this.props.cooktime[this.props.cooktime.length - 1]].label
+        console.log("diff: ", diff);
+        this.setState({
+            difficulty: e.target.value
+          }, () => {
+            this.props.updateDifficulty(diff)
+              this.setState({params: {difficulty: pass_prop, cuisine: c, course: crse, ingredients: ings, cooktime:ct}}, () => {
+                  console.log("param update new: ", this.state.params)
+                  this.props.getFilteredRecipes(this.state.params).then(
+                      console.log("a")
+                  )
+              })
+          });
+      }
+
     //   setting the course, making fetch call for corresponding filtered recipes
     
       onCourseChange(e) {
@@ -119,40 +202,48 @@ class RecipeLanding extends React.Component {
         });
 
         var course = e.target.value;
+        var c = this.props.cuisines
+        var ings = this.props.ingredients
+        var ct = this.state.cookingTimeEval[this.props.cooktime[this.props.cooktime.length - 1]].label
+        var d = this.props.difficulty[this.props.difficulty.length-1]
+        this.props.updateCourse(course);
 
-        this.setState({params: {course: e.target.value}}, () => {
+        this.setState({params: {course: course,
+            cuisine: c, ingredients: ings, cooktime: ct, diffficulty: d
+
+        }}, () => {
 
             this.props.getFilteredRecipes(this.state.params).then(
                 () => {
                     console.log(" i updated the params and heres the state now: ", this.state)
                     console.log("value retention check!!!!: ", course)
     
-                    switch(course) {
-                        case "Appetizer":
-                            document.getElementById("radio-button-appetizer").firstChild.firstChild.checked = true
-                            break;
-                        case "Entree":
-                          document.getElementById("radio-button-entree").firstChild.firstChild.checked = true
-                          break;
-                        case "Main":
-                            document.getElementById("radio-button-main").firstChild.firstChild.checked = true
-                            break;
-                        case "Dessert":
-                            document.getElementById("radio-button-dessert").firstChild.firstChild.checked = true
-                        // code block
-                        break;
-                        case "Beverage":
-                            document.getElementById("radio-button-bev").firstChild.firstChild.checked = true
-                            // code block
-                        break;
-                        case "":
-                            document.getElementById("radio-button-all").firstChild.firstChild.checked = true
-                            // code block
-                        break;
-                        default:
-                            break;
-                          // code block
-                      }
+                    // switch(course) {
+                    //     case "Appetizer":
+                    //         document.getElementById("radio-button-appetizer").firstChild.firstChild.checked = true
+                    //         break;
+                    //     case "Entree":
+                    //       document.getElementById("radio-button-entree").firstChild.firstChild.checked = true
+                    //       break;
+                    //     case "Main":
+                    //         document.getElementById("radio-button-main").firstChild.firstChild.checked = true
+                    //         break;
+                    //     case "Dessert":
+                    //         document.getElementById("radio-button-dessert").firstChild.firstChild.checked = true
+                    //     // code block
+                    //     break;
+                    //     case "Beverage":
+                    //         document.getElementById("radio-button-bev").firstChild.firstChild.checked = true
+                    //         // code block
+                    //     break;
+                    //     case "":
+                    //         document.getElementById("radio-button-all").firstChild.firstChild.checked = true
+                    //         // code block
+                    //     break;
+                    //     default:
+                    //         break;
+                    //       // code block
+                    //   }
                     this.setState({selectedCourse: course})
                 }
             )
@@ -165,14 +256,97 @@ class RecipeLanding extends React.Component {
     // cuisine filtering, same process as course, fetch call for corresponding cuisine
     onCuisineChange(e){
         // if it's checked, uncheck it 
-        if(!this.state.selectedCuisine.includes(e.target.value)){
-            this.setState({ selectedCuisine: [...this.state.selectedCuisine, e.target.value] })
-        }
-        else{
+        console.log("event target val:", e.target.value)
+        var ings = this.props.ingredients
+        var ct = this.state.cookingTimeEval[this.props.cooktime[this.props.cooktime.length - 1]].label
+        var d = this.props.difficulty[this.props.difficulty.length-1]
+        var crse = this.props.course[this.props.course.length - 1]
+        if(this.props.cuisines.includes(e.target.value)){
+            // call delete and remove filter
+            var c = e.target.value;
+           
+            var q_cuisines = this.props.cuisines.filter((cuisine) => cuisine != c);
+
             this.setState({selectedCuisine: this.state.selectedCuisine.filter(function(cuisine) { 
                 return cuisine !== e.target.value 
-            })});
+            })}, () => {
+
+                this.props.removeCuisines(c)
+                    this.setState({params: {cuisine: q_cuisines,
+                        course: crse, ingredients: ings, cooktime: ct, difficulty: d
+
+                    }}, () => {
+                   
+
+                        this.props.getFilteredRecipes(this.state.params).then(
+                            () => {
+                                // console.log(" i updated the params and heres the state now: ", this.state)
+                                // console.log("value retention check!!!!: ", cuisines)
+                                this.state.selectedCuisine = this.props.cuisines;
+                            })})
+                        
+                        // checkboxes need to be on!!!
+
+                
+
+                })
         }
+        else{
+            // call add and add filter
+            this.setState({ selectedCuisine: [...this.state.selectedCuisine, e.target.value] }, () => {
+                console.log("check for correct state passing: ", this.state.selectedCuisine)
+                var c = e.target.value;
+                this.props.addCuisines(c);
+                var q_cuisines = this.props.cuisines;
+                q_cuisines.push(e.target.value)
+
+                this.setState({params: {cuisine: q_cuisines,
+                    course: crse, ingredients: ings, cooktime: ct, difficulty: d
+                
+                }}, () => {
+
+                    var cuisines = this.state.selectedCuisine
+                    // console.log("value retention check!!!!: ", cuisines)
+                    console.log("filter params:", this.state.params)
+                   
+                    console.log(this.props.cuisines);
+
+                    this.props.getFilteredRecipes(this.state.params).then(
+                        () => {
+                            console.log(" i updated the params and heres the state now: ", this.state)
+                            console.log("value retention check!!!!: ", cuisines)
+                            // change to setstate
+                            this.state.selectedCuisine = cuisines;
+                            for(var i = 0; i < cuisines.length; i++){
+                                // mark the buttons checked?
+
+                            }
+                        })
+                    })
+                
+
+            })
+
+        }
+
+
+
+
+
+        // if(!this.state.selectedCuisine.includes(e.target.value)){
+            // this.setState({params: {course: newEl}}, () => {
+            //     this.props.getFilteredRecipes(this.state.params);
+            //     console.log("this print should be before")
+            //   }); 
+            // { ...state, recipes: state.recipes.concat(recipe)}
+
+            // ISSUE: STATE IS LOST ON FETCH CALL
+            
+        // }
+        // else{
+            // }
+
+          
 
         // STEPS: update state for params to include or uninclude the thing based on if it was already there in state
         // call the props function for updated query results
@@ -189,17 +363,78 @@ class RecipeLanding extends React.Component {
 
     onIngredientChange(e){
         // if it's checked, uncheck it 
-        if(!this.state.selectedIngredients.includes(e.target.value)){
-            this.setState({ selectedIngredients: [...this.state.selectedIngredients, e.target.value] })
-        }
-        else{
+        console.log("event target val:", e.target.value)
+        var ct = this.state.cookingTimeEval[this.props.cooktime[this.props.cooktime.length - 1]].label
+        var d = this.props.difficulty[this.props.difficulty.length-1]
+        var crse = this.props.course[this.props.course.length - 1]
+        var cus = this.props.cuisines
+        if(this.props.ingredients.includes(e.target.value)){
+            // call delete and remove filter
+            var c = e.target.value;
+            var q_ingredients = this.props.ingredients.filter((ingredient) => ingredient != c);
+
             this.setState({selectedIngredients: this.state.selectedIngredients.filter(function(ingredient) { 
                 return ingredient !== e.target.value 
-            })});
+            })}, () => {
+
+                this.props.removeIngredients(c)
+                    this.setState({params: {ingredients: q_ingredients,
+                        difficulty: d, cooktime: ct, course: crse, cuisine: cus
+                    
+                    }}, () => {
+                   
+
+                        this.props.getFilteredRecipes(this.state.params).then(
+                            () => {
+                                // console.log(" i updated the params and heres the state now: ", this.state)
+                                // console.log("value retention check!!!!: ", cuisines)
+                                this.state.selectedIngredients = this.props.ingredients;
+                            })})
+                        
+                        // checkboxes need to be on!!!
+
+                
+
+                })
         }
+        else{
+            // call add and add filter
+            this.setState({ selectedIngredients: [...this.state.selectedIngredients, e.target.value] }, () => {
+                console.log("check for correct state passing: ", this.state.selectedIngredients)
+                var c = e.target.value;
+                this.props.addIngredients(c);
+                var q_ingredients = this.props.ingredients;
+                console.log("qings:", q_ingredients)
+                q_ingredients.push(e.target.value)
+
+                this.setState({params: {ingredients: q_ingredients,
+                    difficulty: d, cooktime: ct, course: crse, cuisine: cus
+                
+                }}, () => {
+
+                    var ingredients = this.state.selectedIngredients
+                    // console.log("value retention check!!!!: ", cuisines)
+                    console.log("filter params:", this.state.params)
+                   
+                    console.log(this.props.ingredients);
+
+                    this.props.getFilteredRecipes(this.state.params).then(
+                        () => {
+                            console.log(" i updated the params and heres the state now: ", this.state)
+                            // change to setstate
+                            this.state.selectedIngredients = ingredients;
+                        })
+                    })
+                
+
+            })
+
+        }
+
+
     }
 
-    //   
+    //   tester function
     handleSubmit(e) {
         e.preventDefault();
         console.log('You clicked submit.');
@@ -218,18 +453,7 @@ class RecipeLanding extends React.Component {
 
     // Handler for the Search Bar Querying
     handleSearch(key) {
-        // this.setState({...this.state.params, title: "chicken"});
-        // console.log("params after setstate: ", this.state.params)
         this.setParamState(key, "title");
-
-
-        // this.setState({params: {title: key}}, () => {
-        //     console.log(this.state);
-        //     console.log("params after setstate: ", this.state.params)
-        //     this.props.getFilteredRecipes(this.state.params);
-        //   }); 
-
-       
         
     }
 
@@ -257,7 +481,7 @@ class RecipeLanding extends React.Component {
                                 <input
                                 type="radio"
                                 value="Appetizer"
-                                checked={this.state.selectedCourse === "Appetizer"}
+                                checked={this.props.course[this.props.course.length -1] === "Appetizer"}
                                 onChange={this.onCourseChange}
                                 />
                                 Appetizer
@@ -269,7 +493,7 @@ class RecipeLanding extends React.Component {
                                 <input
                                 type="radio"
                                 value="Entree"
-                                checked={this.state.selectedCourse === "Entree"}
+                                checked={this.props.course[this.props.course.length -1] === "Entree"}
                                 onChange={this.onCourseChange}
                                 />
                                 Entree
@@ -285,7 +509,7 @@ class RecipeLanding extends React.Component {
                                 <input
                                 type="radio"
                                 value="Beverage"
-                                checked={this.state.selectedCourse === "Beverage"}
+                                checked={this.props.course[this.props.course.length -1] === "Beverage"}
                                 onChange={this.onCourseChange}
                                 />
                                 Beverage
@@ -300,7 +524,7 @@ class RecipeLanding extends React.Component {
                                 <input
                                 type="radio"
                                 value="Dessert"
-                                checked={this.state.selectedCourse === "Dessert"}
+                                checked={this.props.course[this.props.course.length -1] === "Dessert"}
                                 onChange={this.onCourseChange}
                                 />
                                 Dessert
@@ -317,7 +541,7 @@ class RecipeLanding extends React.Component {
                                 <input
                                 type="radio"
                                 value="Main"
-                                checked={this.state.selectedCourse === "Main"}
+                                checked={this.props.course[this.props.course.length -1] === "Main"}
                                 onChange={this.onCourseChange}
                                 />
                                 Main
@@ -332,7 +556,7 @@ class RecipeLanding extends React.Component {
                                 <input
                                 type="radio"
                                 value=""
-                                checked={this.state.selectedCourse === ""}
+                                checked={this.props.course[this.props.course.length -1] === ""}
                                 onChange={this.onCourseChange}
                                 />
                                  All Recipes
@@ -356,7 +580,7 @@ class RecipeLanding extends React.Component {
                                 <input
                                 type="checkbox"
                                 value="Asian"
-                                checked={this.state.selectedCuisine.includes("Asian")}
+                                checked={this.props.cuisines.includes("Asian")}
                                 onChange={this.onCuisineChange}
                                 />
                                 Asian
@@ -368,7 +592,7 @@ class RecipeLanding extends React.Component {
                                 <input
                                 type="checkbox"
                                 value="Italian"
-                                checked={this.state.selectedCuisine.includes("Italian")}
+                                checked={this.props.cuisines.includes("Italian")}
                                 onChange={this.onCuisineChange}
                                 />
                                 Italian
@@ -385,7 +609,7 @@ class RecipeLanding extends React.Component {
                                 <input
                                 type="checkbox"
                                 value="French"
-                                checked={this.state.selectedCuisine.includes("French")}
+                                checked={this.props.cuisines.includes("French")}
                                 onChange={this.onCuisineChange}
                                 />
                                 French
@@ -397,7 +621,7 @@ class RecipeLanding extends React.Component {
                                 <input
                                 type="checkbox"
                                 value="Indian"
-                                checked={this.state.selectedCuisine.includes("Indian")}
+                                checked={this.props.cuisines.includes("Indian")}
                                 onChange={this.onCuisineChange}
                                 />
                                 Indian
@@ -416,7 +640,7 @@ class RecipeLanding extends React.Component {
                                 <input
                                 type="checkbox"
                                 value="Western"
-                                checked={this.state.selectedCuisine.includes("Western")}
+                                checked={this.props.cuisines.includes("Western")}
                                 onChange={this.onCuisineChange}
                                 />
                                 Western
@@ -428,10 +652,10 @@ class RecipeLanding extends React.Component {
                                 <input
                                 type="checkbox"
                                 value="Other"
-                                checked={this.state.selectedCuisine.includes("Other")}
+                                checked={this.props.cuisines.includes("Other")}
                                 onChange={this.onCuisineChange}
                                 />
-                                Other
+                                All
                             </label>
                         </div>
 
@@ -447,11 +671,11 @@ class RecipeLanding extends React.Component {
 
                     {/* Difficulty Filter */}
                     <div className={styles.courseFilter}>
-                    <h6>Difficulty</h6>
+                    <h6>Max Difficulty</h6>
 
                     {/* https://www.geeksforgeeks.org/range-slider-using-material-ui-in-react/ */}
                     <div className={styles.DifficultySlider}>
-                    <Slider
+                    <Slider id="difficulty-slider"
                     // getAriaLabel={() => 'Difficulty Level'}
                     sx={{
                         color: "lightgray",
@@ -466,11 +690,13 @@ class RecipeLanding extends React.Component {
                             height: "1rem"
                           }
                     }}
-                    onChange={console.log("hehe")}
+                    // onChange={this.onDifficultyChange}
+                    onChangeCommitted={this.onDifficultyChange}
                     max={5}
                     aria-labelledby="discrete-slider"
+                    defaultValue={this.props.difficulty[this.props.difficulty.length - 1]}
+                    // value={this.props.difficulty}
                     marks={this.state.marks}
-                    // marks={[{one: 1}, {two: 2}, {two: 3}, {two: 4}, {two: 5}]}
                    
                     
                     />
@@ -482,7 +708,7 @@ class RecipeLanding extends React.Component {
 
                     {/* Cooking Time Filter */}
                     <div className={styles.courseFilter}>
-                    <h6>Cooking Time (Minutes)</h6>
+                    <h6>Max Cooking Time (mins)</h6>
 
                       {/* https://www.geeksforgeeks.org/range-slider-using-material-ui-in-react/ */}
                       <div className={styles.DifficultySlider}>
@@ -495,7 +721,8 @@ class RecipeLanding extends React.Component {
                             height: "1rem"
                           },
                     }}
-                    onChange={console.log("hehe")}
+                    onChangeCommitted={this.onCookTimeChange}
+                    defaultValue={this.props.cooktime[this.props.cooktime.length - 1]}
                     max={5}
                     aria-labelledby="discrete-slider"
                     marks={this.state.cookingTime}
@@ -520,7 +747,7 @@ class RecipeLanding extends React.Component {
                                 <input
                                 type="checkbox"
                                 value="Chicken"
-                                checked={this.state.selectedIngredients.includes("Chicken")}
+                                checked={this.props.ingredients.includes("Chicken")}
                                 onChange={this.onIngredientChange}
                                 />
                                 Chicken
@@ -532,7 +759,7 @@ class RecipeLanding extends React.Component {
                                 <input
                                 type="checkbox"
                                 value="Beef"
-                                checked={this.state.selectedIngredients.includes("Beef")}
+                                checked={this.props.ingredients.includes("Beef")}
                                 onChange={this.onIngredientChange}
                                 />
                                 Beef
@@ -546,7 +773,7 @@ class RecipeLanding extends React.Component {
                                     <input
                                     type="checkbox"
                                     value="Pork"
-                                    checked={this.state.selectedIngredients.includes("Pork")}
+                                    checked={this.props.ingredients.includes("Pork")}
                                     onChange={this.onIngredientChange}
                                     />
                                     Pork
@@ -558,7 +785,7 @@ class RecipeLanding extends React.Component {
                                     <input
                                     type="checkbox"
                                     value="Fish"
-                                    checked={this.state.selectedIngredients.includes("Fish")}
+                                    checked={this.props.ingredients.includes("Fish")}
                                     onChange={this.onIngredientChange}
                                     />
                                     Fish
@@ -575,7 +802,7 @@ class RecipeLanding extends React.Component {
                                     <input
                                     type="checkbox"
                                     value="Mushroom"
-                                    checked={this.state.selectedIngredients.includes("Mushroom")}
+                                    checked={this.props.ingredients.includes("Mushroom")}
                                     onChange={this.onIngredientChange}
                                     />
                                     Mushroom
@@ -587,7 +814,7 @@ class RecipeLanding extends React.Component {
                                     <input
                                     type="checkbox"
                                     value="Carrot"
-                                    checked={this.state.selectedIngredients.includes("Carrot")}
+                                    checked={this.props.ingredients.includes("Carrot")}
                                     onChange={this.onIngredientChange}
                                     />
                                     Carrot
@@ -602,7 +829,7 @@ class RecipeLanding extends React.Component {
                                     <input
                                     type="checkbox"
                                     value="Brocolli"
-                                    checked={this.state.selectedIngredients.includes("Brocolli")}
+                                    checked={this.props.ingredients.includes("Brocolli")}
                                     onChange={this.onIngredientChange}
                                     />
                                     Brocolli
@@ -614,7 +841,7 @@ class RecipeLanding extends React.Component {
                                     <input
                                     type="checkbox"
                                     value="Potato"
-                                    checked={this.state.selectedIngredients.includes("Potato")}
+                                    checked={this.props.ingredients.includes("Potato")}
                                     onChange={this.onIngredientChange}
                                     />
                                     Potato
@@ -629,7 +856,7 @@ class RecipeLanding extends React.Component {
                                     <input
                                     type="checkbox"
                                     value="Tomato"
-                                    checked={this.state.selectedIngredients.includes("Tomato")}
+                                    checked={this.props.ingredients.includes("Tomato")}
                                     onChange={this.onIngredientChange}
                                     />
                                     Tomato
@@ -641,7 +868,7 @@ class RecipeLanding extends React.Component {
                                     <input
                                     type="checkbox"
                                     value="Onion"
-                                    checked={this.state.selectedIngredients.includes("Onion")}
+                                    checked={this.props.ingredients.includes("Onion")}
                                     onChange={this.onIngredientChange}
                                     />
                                     Onion
@@ -657,7 +884,7 @@ class RecipeLanding extends React.Component {
                                     <input
                                     type="checkbox"
                                     value="Garlic"
-                                    checked={this.state.selectedIngredients.includes("Garlic")}
+                                    checked={this.props.ingredients.includes("Garlic")}
                                     onChange={this.onIngredientChange}
                                     />
                                     Garlic
@@ -669,7 +896,7 @@ class RecipeLanding extends React.Component {
                                     <input
                                     type="checkbox"
                                     value="Ginger"
-                                    checked={this.state.selectedIngredients.includes("Ginger")}
+                                    checked={this.props.ingredients.includes("Ginger")}
                                     onChange={this.onIngredientChange}
                                     />
                                     Ginger
@@ -684,7 +911,7 @@ class RecipeLanding extends React.Component {
                                     <input
                                     type="checkbox"
                                     value="Spaghetti"
-                                    checked={this.state.selectedIngredients.includes("Spaghetti")}
+                                    checked={this.props.ingredients.includes("Spaghetti")}
                                     onChange={this.onIngredientChange}
                                     />
                                     Spaghetti
@@ -696,7 +923,7 @@ class RecipeLanding extends React.Component {
                                     <input
                                     type="checkbox"
                                     value="Rice"
-                                    checked={this.state.selectedIngredients.includes("Rice")}
+                                    checked={this.props.ingredients.includes("Rice")}
                                     onChange={this.onIngredientChange}
                                     />
                                     Rice
@@ -746,8 +973,28 @@ class RecipeLanding extends React.Component {
     }
 }
 
-const mapDispatchToProps = (dispatch, params) => ({
+
+const mapStateToProps = state => {
+    return {
+        recipes: state.Recipes.filtered_recipes,
+        cuisines: state.Recipes.cuisines,
+        ingredients: state.Recipes.ingredients,
+        difficulty: state.Recipes.difficulty,
+        cooktime: state.Recipes.cooktime,
+        course: state.Recipes.course,
+    }
+
+}
+
+const mapDispatchToProps = (dispatch, params, cuisine, ingredient, diff, ct, course) => ({
     getFilteredRecipes: (params) => dispatch(getFilteredRecipes(params)),
+    addCuisines: (cuisine) => dispatch(addCuisines(cuisine)),
+    removeCuisines: (cuisine) => dispatch(removeCuisines(cuisine)),
+    addIngredients: (ingredient) => dispatch(addIngredients(ingredient)),
+    removeIngredients: (ingredient) => dispatch(removeIngredients(ingredient)),
+    updateDifficulty: (diff) => dispatch(updateDifficulty(diff)),
+    updateCookTime: (ct) => dispatch(updateCookTime(ct)),
+    updateCourse: (course) => dispatch(updateCourse(course)),
 })
 
-export default connect(null, mapDispatchToProps)(RecipeLanding);
+export default connect(mapStateToProps, mapDispatchToProps)(RecipeLanding);

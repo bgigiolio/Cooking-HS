@@ -6,7 +6,12 @@ export const RecipesReducer = (
         errMess: null, 
         recipes:[],
         filtered_recipes:[],
-        course: ""
+        title: "",
+        cuisines: [],
+        ingredients: [],
+        cooktime: [6],
+        difficulty: [5],
+        course: [""],
     }, action) => {
     switch (action.type) {
         case ActionTypes.ADD_RECIPES:
@@ -18,11 +23,39 @@ export const RecipesReducer = (
         console.log("adding filtered recipes")
         return {...state, isLoading: false, errMess: null, filtered_recipes: action.payload};
 
-        // course state for checkbox
-        case ActionTypes.CHANGE_COURSE:
+
+        case ActionTypes.ADD_CUISINES:
+            const cus = action.payload
+            return { ...state, cuisines: state.cuisines.concat(cus)};
+
+        
+        case ActionTypes.REMOVE_CUISINES:
             const c = action.payload
-            console.log("adding all recipes")
-            return {...state, course: c};
+            return {...state, cuisines: state.cuisines.filter((cuisine) => cuisine !== c)};
+
+        case ActionTypes.ADD_INGREDIENTS:
+            const ing = action.payload
+            return { ...state, ingredients: state.ingredients.concat(ing)};
+
+        
+        case ActionTypes.REMOVE_INGREDIENTS:
+            const ingr = action.payload
+            return {...state, ingredients: state.ingredients.filter((ingredient) => ingredient !== ingr)};
+
+        case ActionTypes.UPDATE_DIFFICULTY:
+            const d = action.payload
+            return { ...state, difficulty: state.difficulty.concat(d)};
+        
+        case ActionTypes.UPDATE_COOKTIME:
+        const ct = action.payload
+        return { ...state, cooktime: state.difficulty.concat(ct)};
+
+        case ActionTypes.UPDATE_COURSE:
+            const course = action.payload
+            return { ...state, course: state.difficulty.concat(course)};
+
+
+        
         
         case ActionTypes.RECIPES_LOADING:
             return {...state, isLoading: true, errMess: null, recipes: []}

@@ -39,8 +39,8 @@ router.get('/api/recipes', mongoChecker, async (req, res) => {
 	/*
 	Query Parameters:
 	1. course: (string), ideally a valid course type
-	2. cuisine: [String], could be Italian, Asian etc [currently case sensitive, first letter caps!!]
-	3. difficulty: (string), 2 comma separated numbers b/w 0 and 5 in the form: (lower limit, upper limit) INCLUSIVE
+	2. cuisine: (string), comma separated list, could be Italian, Asian etc [currently case sensitive, first letter caps!!]
+	3. difficulty: (string), 1 number bw 0 and 5, gives recipes <= that difficulty level
 	4. cooktime: (string), 1 number representing minutes, returns all recipes that take less than this amount
 	5. title [primarily for the search bar]: (string), returns all recipes with the corresponding string
 	6. ingredients: [String], comma separated array, returns recipes that have ANY of the ingredients specified
@@ -56,31 +56,71 @@ router.get('/api/recipes/filters', mongoChecker, async (req, res) => {
 		if(q.hasOwnProperty("cuisine")){
 			// do something
 			// q["cuisine"] = {$regex: q.cuisine, $options: "i"}
-			if(q["cuisine"].includes("Other")){
-				// query for everything thats not asian, french, .... 
+			// if an empty array is being passedd, do nothing!!
+			var flag = q['cuisine'].length == 0
+			if(flag){
+				delete q["cuisine"];
 			}
-			q["cuisine"] = {$in: q["cuisine"]}
+			// TODO: FIX
+			else if(q['cuisine'].includes("Other")){
+				delete q["cuisine"];
+
+			}
+
+			else{
+				q['cuisine'] = q['cuisine'].split(",")
+				q["cuisine"] = {$in: q["cuisine"]}
+
+			}
+			// if(q["cuisine"].includes("Other")){
+			// 	// query for everything thats not asian, french, .... 
+			// }
+			
 		}
 
 		// course query (entree, main, dessert etc)
 		if(q.hasOwnProperty("course")){
 			// do something
+			console.log("course:", q['course'].length)
+			// its the empty character
+			if(q['course'].length == 2){
+				q['course'] = ""
+				console.log("if stmt: ", q['course'])
+			}
 			q["course"] = {$regex: q.course, $options: "i"}
 		}
 
 		// difficulty query (0-5)
 		if(q.hasOwnProperty("difficulty")){
-			var diff = q["difficulty"].split(",")
-			diff[0] = parseInt(diff[0]);
-			diff[1] = parseInt(diff[1]);
-			q["difficulty"] = {$gte: diff[0], $lte: diff[1]}
+			var diff = q["difficulty"]
+			// diff[0] = parseInt(diff[0]);
+			// diff[1] = parseInt(diff[1]);
+			q["difficulty"] = {$lte: diff}
 		}
 
 		// cooktime query (in minutes)
 		if(q.hasOwnProperty("cooktime")){
-			var time = parseInt(q['cooktime']);
-			console.log(time);
-			q["cooktime"] = {$lte: time}
+			if(q["cooktime"] === ">60"){
+				var time = q['cooktime'].slice(1,q["cooktime"].length);
+				console.log(time)
+				q["cooktime"] = {$gte: time}
+
+			}
+			
+			else{
+				var time = parseInt(q['cooktime']);
+				console.log(time);
+				if(time === 500){
+					delete q['cooktime']
+				}
+				else{
+					q["cooktime"] = {$lte: time}
+
+				}
+			
+
+			}
+			
 		}
 
 		// recipe title query: used in the searchbar!!!
@@ -92,9 +132,8 @@ router.get('/api/recipes/filters', mongoChecker, async (req, res) => {
 		// querying ingredients
 		if(q.hasOwnProperty("ingredients")){
 			// turn ingredients into a list
-			// var ings = q["ingredients"].split(",")
-			var ings = q["ingredients"]
-			console.log(q["ingredients"])
+			var ings = q["ingredients"].split(",")
+			// var ings = q["ingredients"]
 			var ingredient_querys = []
 			for (let index = 0; index < ings.length; index++) {
 				let ing_query = {
@@ -108,6 +147,7 @@ router.get('/api/recipes/filters', mongoChecker, async (req, res) => {
 			var final_ings = {
 				$or: ingredient_querys
 			}
+			console.log(ingredient_querys)
 			q["ingredients"] = { $elemMatch: final_ings }
 		}
 
@@ -129,6 +169,7 @@ router.get('/api/recipes/filters', mongoChecker, async (req, res) => {
 		// }
 		
 		// "get" the recipes
+		console.log(q);
 		var recipes = await Recipe.find(q).exec()
 
         res.send(recipes)
