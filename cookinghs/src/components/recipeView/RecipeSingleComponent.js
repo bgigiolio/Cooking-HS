@@ -41,11 +41,13 @@ function RecipeSingle(props) {
         }
         line.reverse()
         const timelineView = line.map((step, index) => {
-            const parentTitle = recipes.filter(recipe => recipe._id === step)[0].title
+            const parentRecipe = recipes.filter(recipe => recipe._id === step)[0]
+            const parentTitle = parentRecipe.title
+            const parentDeleted = parentRecipe.deleted
             const link = '../recipes/' + step
             return (
                 <li key={index}>
-                    {index !== line.length - 1 ? <Link to={link}>{parentTitle}</Link> : <>{parentTitle} (Current)</>}
+                    {index !== line.length - 1 ? <Link to={link}>{parentTitle}<span>{parentDeleted}</span></Link> : <>{parentTitle} (Current)</>}
                 </li>
             )
         })
@@ -80,7 +82,6 @@ function RecipeSingle(props) {
                     amount = new Fraction(amount.concat('/3')).toString()
                 }
                 else {
-                    console.log(quantity*3%1)
                     amount = new Fraction(quantity).toString();
                 }
             }
@@ -109,9 +110,9 @@ function RecipeSingle(props) {
 
     const stepsView = chosenRecipe.steps.map((step, index) => {
         return (
-            <li className='stepsList' key={index}>
+            <li className='stepsListItem' key={index}>
                 <span>{step.step}</span>
-                {step.stepimage ? <img src = {step.stepimage} style={{width:"95%", borderRadius: "10px"}}/> : null}
+                {step.stepimage ? <img src = {step.stepimage} className="stepImage"/> : null}
             </li>
         )
     });
@@ -145,7 +146,7 @@ function RecipeSingle(props) {
                             <i id={reportId} className="reportIcon fa-solid fa-triangle-exclamation"></i>
                         </Button>
                     </CardHeader>
-                    <CardBody style={{width: "100%", overflow:"hidden", height: "fit-content"}}>
+                    <CardBody className="commentBody">
                         {comment.content}
                         <br></br>
                         {comment.date}
@@ -203,7 +204,7 @@ function RecipeSingle(props) {
                     </div>
                     {/* link to author user profile here */}
                     {chosenRecipe.author ? <span> By <span className='userLink'>{props.users.filter((user) => user._id === chosenRecipe.author)[0].fullName}</span></span> : null}
-                    {chosenRecipe.difficulty ? <span style={{float: "right"}}> Difficulty: {chosenRecipe.difficulty}/10 </span> : null}
+                    {chosenRecipe.difficulty ? <span className="recipeDifficulty"> Difficulty: {chosenRecipe.difficulty}/10 </span> : null}
                 </ListGroupItem>
                 <ListGroupItem>
                     {timeline(chosenRecipe.parent)}

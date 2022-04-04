@@ -139,28 +139,29 @@ function RecipeForm(props) {
                             onChange={(e) => props.handleStepChange(index, e)}
                         />
                         }
-                    
-                    </Col>
-                    <Col md={1}>
-                    {/* <Button type="button" style={{padding: "2px", width: "fit-content"}}> */}
                         <Label
                         for={"stepimage"+index}
-                        style={{cursor: "pointer", height:"fit-content", marginBottom:"-6px"}}
+                        className="imageLabel"
+                        style={{marginTop: "5px", padding: "6px 12px", borderStyle:"solid", borderColor:"grey", borderWidth: "1px", borderRadius: "5px"}}
                         >
-                        <img src={step.stepimage || props.tempimage}
-                            alt=''
-                            id='uploadImage'
-                        />
+                            {step.stepimage ? 
+                                <img src={step.stepimage}
+                                    alt=''
+                                    id='uploadImage'
+                                /> :
+                                <span>Add Image</span>
+                            }
                         </Label>
                         <Input
                             id={"stepimage"+index}
                             name={"stepimage"+index}
                             type="file"
                             accept="image/*"
-                            style={{display: 'none'}}
+                            className="imageInput"
                             onChange={(e) => props.handleStepImage(index, e)}
                         />
-                    {/* </Button> */}
+                    </Col>
+                    <Col md={1}>
                     {
                         index ?
                         <Button 
@@ -248,10 +249,10 @@ function RecipeForm(props) {
                 <Col md={4}>
                     <FormGroup row>
                         <Col>
-                        <Button type="button" style={{padding: "2px", width: "fit-content"}}>
+                        <Button type="button" className="imageButton">
                             <Label
                             for="image"
-                            style={{cursor: "pointer", height:"fit-content", marginBottom:"-6px"}}
+                            className="imageLabel"
                             >
                             <img src={props.imagefile || props.tempimage}
                                 alt=''
@@ -263,7 +264,7 @@ function RecipeForm(props) {
                                 name="image"
                                 type="file"
                                 accept="image/*"
-                                style={{display: 'none'}}
+                                className="imageInput"
                                 onChange={props.handleImageChange}
                             />
                         </Button>
@@ -389,7 +390,7 @@ function RecipeForm(props) {
                 >
                     Difficulty
                 </Label>
-                <Col md={6} style={{display:"flex", alignItems: "center"}}>
+                <Col md={6} className="difficultyInput">
                     <Input
                         id="difficulty"
                         name="difficulty"

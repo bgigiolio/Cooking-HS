@@ -199,7 +199,10 @@ function WriteRecipe(props) {
                 ingredient.quantity = ''
             }
             ingredient.name = ingredient.name.toLowerCase()
-            ingredient.unit = ingredient.unit.toLowerCase()
+            if (ingredient.unit !== "" && ingredient.unit !== undefined) {
+                console.log(ingredient.name)
+                ingredient.unit = ingredient.unit.toLowerCase()
+            }
         })
         //remove empty steps
         checkedRecipe.steps = checkedRecipe.steps.filter((step) => step.step.trim() !== "");

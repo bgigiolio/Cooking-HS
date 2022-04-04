@@ -187,3 +187,24 @@ h1 {
 #forkButton {
     margin-left: 10px
 }
+
+.stepsListItem {
+    margin-top: 1em
+}
+
+.stepImage {
+    width:95%; 
+    border-radius: 10px;
+    margin: 5px
+}
+
+.commentBody {
+    width: 100%;
+    overflow: hidden;
+    height: fit-content;
+}
+
+.recipeDifficulty {
+    float:right;
+}
+

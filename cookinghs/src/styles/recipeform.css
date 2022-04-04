@@ -24,3 +24,23 @@
     object-fit:cover; 
     margin: auto;
 }
+
+.imageLabel {
+    cursor: pointer;
+    height: fit-content;
+    margin-bottom: -6px;
+}
+
+.imageButton {
+    padding: 2px;
+    width: fit-content
+}
+
+.imageInput {
+    display: none
+}
+
+.difficultyInput {
+    display:flex;
+    align-items: center
+}
