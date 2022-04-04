@@ -8,6 +8,7 @@ let app = express();
 let User = require("../models/user")
 app.use(express.urlencoded())
 app.use(express.json())
+
 const cloudinary = require('cloudinary');
 cloudinary.config({
     cloud_name: 'yongdk1',
@@ -33,11 +34,13 @@ http://localhost:5000/api/users/search
 -Update user _id's info: route #7
 -Remove user _id: route #8
 -Log user _id in (create their session): route #9
+
 -Add a single recipe to a user's recipes list: route #10
 -Add a single recipe to a user's bookmarked list: route #11
 -Update the current session: route #12
 -Add an imagefile to a user's profile pic: route #13
 -Remove a recipe from a user's bookmarked recipes: route #14
+
 
 */
 
@@ -116,7 +119,9 @@ router.route("/session").get((req, res) => { //#4
         res.status(422).send("Please send an array of attributes you want")
     }
     const toSend = {}
+
     let fail = false
+
     query.forEach(element => {
         if(req.session.hasOwnProperty(element)){
             toSend[element] = req.session[element]
@@ -177,7 +182,6 @@ router.route("/:id").patch((req, res) => {//#7
     })
 })
 
-
 //deletes user with _id equal to the one passed
 //Also very simple :)
 router.route("/:id").delete((req, res) => {//#8
@@ -214,7 +218,6 @@ router.route("/login/:id").get((req, res) => {//#9
                 req.session.skillLevel = user.skillLevel;
                 req.session.profilePic = user.profilePic;
                 req.session.save()
-                console.log(req.session)
                 res.status(200).send("session updated!")
             }
         })
@@ -325,7 +328,6 @@ router.route("/bookmarked/:id/:recipeid").delete((req, res) => {//#14
         }
     })
 })
-
 
 module.exports = router;
 

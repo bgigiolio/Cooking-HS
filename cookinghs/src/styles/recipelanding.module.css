@@ -1,3 +1,7 @@
+.landingContainer{
+    margin-left: 0px;
+}
+
 .searchBar{
     margin-top: 15px;
     width: 20vw;
@@ -16,7 +20,8 @@
 .topCategories{
     display: flex;
     justify-content: space-between;
-    /* margin-left: 15vw; */
+    margin-left: 21vw;
+    margin-right: 5.5vw;
 }
 
 .categoryButton{
@@ -39,8 +44,9 @@
 }
 
 .addBtn{
-    font-size: 42px;
-    margin-top: 17px;
+    font-size: 40px;
+    margin-top: 13px;
+    margin-left: 20px;
     display: flex;
     justify-content: flex-start;
 }
@@ -48,4 +54,174 @@
 .addBtn:hover{
     cursor: pointer;
     color: lightgray;
+}
+
+.mainFilterSection{
+    float: left;
+    width: 18vw;
+    min-height: calc(100vh - 56px);
+    border-right: 0.5px solid rgb(211, 209, 209);
+    margin-right: 20px;
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26); */
+    box-shadow: 10px 0 5px -2px rgb(235, 233, 233);
+    border-radius: 7px;
+    overflow: scroll;
+    padding-left: 2vw;
+    padding-right: 2vw;
+}
+
+.filterHeader{
+    /* text-align: center; */
+    margin-left: 0.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+    /* display: flex;
+    justify-content: space-between; */
+    margin-top: 17px;
+}
+
+.courseFilter{
+    margin-bottom: 15px;
+}
+
+.radioButton{
+    margin-bottom: 0.3rem;
+}
+
+.twoRadioButtons3{
+    display: flex;
+    /* justify-content: space-between; */
+
+}
+
+.radioButtonDessert{
+    margin-bottom: 0.3rem;
+    margin-left: 0.9rem;
+}
+
+.twoRadioButtons2{
+    display: flex;
+
+}
+
+.radioButtonEntree{
+    margin-bottom: 0.3rem;
+    margin-left: 0.8rem;
+}
+
+.twoRadioButtons1{
+    display: flex;
+
+}
+
+.radioButtonAllRecipes{
+    margin-bottom: 0.3rem;
+    margin-left: 3rem;
+}
+
+.CheckBoxCuisineOther{
+    margin-left: 2.02rem;
+}
+
+.CheckBoxCuisineIndian{
+    margin-left: 2.67rem;
+}
+
+.CheckBoxCuisineItalian{
+    margin-left: 3.35rem;
+}
+
+input{
+    margin-right: 3px;
+}
+
+.DifficultySlider{
+    margin-top: 1rem;
+    color: lightgray
+}
+
+.DifficultySlider.MuiSlider-thumb{
+    width: 1rem;
+    height: 1rem;
+
+}
+
+.ingredientCategoryHeader{
+    margin-top: 1rem;
+    font-size: medium;
+    margin-bottom: 0px;
+    font-weight: 500;
+
+}
+
+.CheckBoxIngredients{
+    display: flex;
+}
+
+.CheckBoxIngredientsBeef{
+    margin-left: 3rem;
+}
+
+.CheckBoxIngredientsFish{
+    margin-left: 4.55rem;
+}
+
+.CheckBoxIngredientsCarrot{
+    margin-left: 1.8rem;
+}
+
+.CheckBoxIngredientsPotato{
+    margin-left: 3.28rem;
+}
+
+.CheckBoxIngredientsOnion{
+    margin-left: 3.27rem;
+}
+
+.CheckBoxIngredientsGinger{
+    margin-left: 4rem;
+}
+
+.CheckBoxIngredientsRice{
+    margin-left: 2.25rem;
+}
+
+.addHeader{
+    display: flex;
+    margin-top: 2.1rem;
+    margin-left: 0.5rem;
+
+}
+
+.addHeader:hover{
+    color: black;
+    cursor: default;
+}
+
+.addDiv{
+    display: flex;
+}
+
+.sortDropDown{
+    display: flex;
+    justify-content: end;
+    margin-right:5.5vw;
+}
+
+.sortButton:focus{
+    background-color: rgb(183, 194, 197)
+
+}
+
+.secondaryHead{
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.TodayCook{
+    margin-left: 2.8rem;
+    margin-top: 1rem;
+    font-size: larger;
+
 }

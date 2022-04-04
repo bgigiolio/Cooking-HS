@@ -22,20 +22,32 @@ cloudinary.config({
     api_secret: '_AKSaIR7ptxuEh_CTmQdjFDaaOc'
 });
 
-{
+router.get('/api/recipes', mongoChecker, async (req, res) => {
+	try{
+		var recipes = await Recipe.find()
+        res.send(recipes)
+
+	} catch(error){
+		log(error)
+        res.status(500).send("Internal Server Error")
+
+	}
+
+
+}),
+
 	/*
 	Query Parameters:
 	1. course: (string), ideally a valid course type
-	2. cuisine: (string), could be Italian, Asian etc [currently case sensitive, first letter caps!!]
-	3. difficulty: (string), 2 comma separated numbers b/w 0 and 5 in the form: (lower limit, upper limit) INCLUSIVE
+	2. cuisine: (string), comma separated list, could be Italian, Asian etc [currently case sensitive, first letter caps!!]
+	3. difficulty: (string), 1 number bw 0 and 5, gives recipes <= that difficulty level
 	4. cooktime: (string), 1 number representing minutes, returns all recipes that take less than this amount
 	5. title [primarily for the search bar]: (string), returns all recipes with the corresponding string
-	5. ingredients: (string), comma separated words, returns recipes that have ANY of the ingredients specified
+	6. ingredients: [String], comma separated array, returns recipes that have ANY of the ingredients specified
 
 	Note: The query itself has an "AND" relationship between all its parameters
 	*/
-}
-router.get('/api/recipes', mongoChecker, async (req, res) => {
+router.get('/api/recipes/filters', mongoChecker, async (req, res) => {
 	try {
 		let q = req.query;
 		// console.log(q);
@@ -43,28 +55,70 @@ router.get('/api/recipes', mongoChecker, async (req, res) => {
 		// cuisine query 
 		if(q.hasOwnProperty("cuisine")){
 			// do something
-			q["cuisine"] = {$regex: q.cuisine, $options: "i"}
+			// q["cuisine"] = {$regex: q.cuisine, $options: "i"}
+			// if an empty array is being passedd, do nothing!!
+			var flag = q['cuisine'].length == 0
+			if(flag){
+				delete q["cuisine"];
+			}
+			// TODO: FIX
+			else if(q['cuisine'].includes("Other")){
+				delete q["cuisine"];
+
+			}
+
+			else{
+				q['cuisine'] = q['cuisine'].split(",")
+				q["cuisine"] = {$in: q["cuisine"]}
+
+			}
+			// if(q["cuisine"].includes("Other")){
+			// 	// query for everything thats not asian, french, .... 
+			// }
 		}
 
 		// course query (entree, main, dessert etc)
 		if(q.hasOwnProperty("course")){
 			// do something
+			console.log("course:", q['course'].length)
+			// its the empty character
+			if(q['course'].length == 2){
+				q['course'] = ""
+				console.log("if stmt: ", q['course'])
+      }
 			q["course"] = {$regex: q.course, $options: "i"}
 		}
 
 		// difficulty query (0-5)
 		if(q.hasOwnProperty("difficulty")){
-			var diff = q["difficulty"].split(",")
-			diff[0] = parseInt(diff[0]);
-			diff[1] = parseInt(diff[1]);
-			q["difficulty"] = {$gte: diff[0], $lte: diff[1]}
+			var diff = q["difficulty"]
+			// diff[0] = parseInt(diff[0]);
+			// diff[1] = parseInt(diff[1]);
+			q["difficulty"] = {$lte: diff}
 		}
 
 		// cooktime query (in minutes)
 		if(q.hasOwnProperty("cooktime")){
-			var time = parseInt(q['cooktime']);
-			console.log(time);
-			q["cooktime"] = {$lte: time}
+			if(q["cooktime"] === ">60"){
+				var time = q['cooktime'].slice(1,q["cooktime"].length);
+				console.log(time)
+				q["cooktime"] = {$gte: time}
+
+			}
+			
+			else{
+				var time = parseInt(q['cooktime']);
+				console.log(time);
+				if(time === 500){
+					delete q['cooktime']
+				}
+				else{
+					q["cooktime"] = {$lte: time}
+
+				}
+			
+
+			}
 		}
 
 		// recipe title query: used in the searchbar!!!
@@ -77,6 +131,7 @@ router.get('/api/recipes', mongoChecker, async (req, res) => {
 		if(q.hasOwnProperty("ingredients")){
 			// turn ingredients into a list
 			var ings = q["ingredients"].split(",")
+			// var ings = q["ingredients"]
 			var ingredient_querys = []
 			for (let index = 0; index < ings.length; index++) {
 				let ing_query = {
@@ -90,18 +145,53 @@ router.get('/api/recipes', mongoChecker, async (req, res) => {
 			var final_ings = {
 				$or: ingredient_querys
 			}
+			console.log(ingredient_querys)
 			q["ingredients"] = { $elemMatch: final_ings }
 		}
+
+		// if(q.hasOwnProperty("cuisine")){
+		// 	// turn ingredients into a list
+		// 	var cuisines = q["cuisine"].split(",")
+		// 	var cuisine_querys = []
+		// 	for (let index = 0; index < cuisines.length; index++) {
+		// 		let cus_query = {$regex: cuisines[index], $options: "i"}
+					
+		// 		cuisine_querys.push(cus_query)
+		// 	}
+
+		// 	// ingredients object with an or to query the ingredients list
+		// 	var final_cus = {
+		// 		$or: cuisine_querys
+		// 	}
+		// 	q["cuisine"] = { cuisine_querys }
+		// }
 		
 		// "get" the recipes
-		var recipes = await Recipe.find(q).exec()
+		if(q.hasOwnProperty("sort")){
+			// sort by date
+			if(q["sort"].length == 6){
+				delete q["sort"];
+				var recipes = await Recipe.find(q).sort([['difficulty', -1]]).exec()
+			}
+			else{
+				delete q["sort"];
+				var recipes = await Recipe.find(q).sort([['date', -1]]).exec()
+			}
+		}
+		else{
+			var recipes = await Recipe.find(q).sort([['date', -1]]).exec()
+
+		}
+		console.log("recipes", recipes);
+		console.log(q);
 
         res.send(recipes)
     } catch(error) {
         log(error)
         res.status(500).send("Internal Server Error")
     }
-})
+}),
+
 
 // post single recipe - called by write page, fork page
 router.post('/api/recipes', mongoChecker, async (req, res) => {
@@ -132,8 +222,7 @@ router.post('/api/recipes', mongoChecker, async (req, res) => {
 			res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
 		}
 	}
-})
-
+}),
 // get single recipe - called by recipe single page
 router.get('/api/recipes/:id', mongoChecker, async (req, res) => {
     const id = req.params.id
@@ -156,7 +245,7 @@ router.get('/api/recipes/:id', mongoChecker, async (req, res) => {
 		log(error)
 		res.status(500).send('Internal Server Error')  // server error
     }
-})
+}),
 
 // delete an entire recipe - called by delete recipe page
 router.delete('/api/recipes/:id', mongoChecker, async (req, res) => {
@@ -178,7 +267,7 @@ router.delete('/api/recipes/:id', mongoChecker, async (req, res) => {
 		log(error)
 		res.status(500).send() // server error, could not delete.
 	}
-})
+}),
 
 // edit an entire recipe - called by edit recipe page
 router.put('/api/recipes/:id', mongoChecker, async (req, res) => {
@@ -203,7 +292,8 @@ router.put('/api/recipes/:id', mongoChecker, async (req, res) => {
 		} else {
 			res.status(400).send('Bad Request') // bad request for changing the student.
 		}
-	}
-})
+  }
+}),
+
 
 module.exports = router

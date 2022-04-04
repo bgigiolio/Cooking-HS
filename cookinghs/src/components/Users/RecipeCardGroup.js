@@ -20,4 +20,5 @@ const RecipeCardGroup = ( recipes ) => {
     )
 }
 
+
 export default RecipeCardGroup;

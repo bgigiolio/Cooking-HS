@@ -12,6 +12,9 @@ import { baseUrl } from '../../../shared/baseUrl';
 const {SHA256} = require('crypto-js'); // new!!
 // const bcrypt = require('bcryptjs') // new!!
 
+const {SHA256} = require('crypto-js'); // new!!
+// const bcrypt = require('bcryptjs') // new!!
+
 class LoginMain extends React.Component {
     state = {
         tabVal: 0,
@@ -56,7 +59,6 @@ class LoginMain extends React.Component {
                 passHash : SHA256(user.password).toString()
               }}).then(async (response) => {
                 const res = response.data
-                console.log(res)
                 if(res.length !== 0){
                     let route = "/recipes"
                     if (res[0].admin){
@@ -114,7 +116,6 @@ class LoginMain extends React.Component {
             valid = -5
         }
         if (valid === 1){
-            axios.post(baseUrl + 'api/users', 
             {
                 username : sUser.username,
                 passHash : SHA256(sUser.password).toString(),

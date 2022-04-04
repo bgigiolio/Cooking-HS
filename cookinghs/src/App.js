@@ -17,7 +17,7 @@ import FlagDesc from './components/Admin/FlagDesc';
 import defaultProfile from './defaultProfile.png'
 import PublicUser from './components/Users/publicUser'
 import { baseUrl } from './shared/baseUrl';
-import { getRecipes } from './redux/recipePage/recipe-actions';
+import { getRecipes, getFilteredRecipes } from './redux/recipePage/recipe-actions';
 import { getUsers } from './redux/users/user-actions';
 import { getComments } from './redux/comments/comment-actions';
 import { getReports } from './redux/reports/report-actions';
@@ -26,11 +26,14 @@ const mapStateToProps = state => {
   return {
     Recipes: state.Recipes,
     Users: state.Users,
+    Comments: state.Comments
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   getRecipes: () => {dispatch(getRecipes())},
+  // landing page filtering
+  getFilteredRecipes: () => {dispatch(getFilteredRecipes())},
   getUsers: () => {dispatch(getUsers())},
   getComments: () => {dispatch(getComments())},
   getReports: () => {dispatch(getReports())}
@@ -54,7 +57,6 @@ class App extends React.Component {
     .catch(function (error) {
       this.state.currentUser = null
     })
-
   }
 
   state = {
@@ -66,12 +68,15 @@ class App extends React.Component {
   componentDidMount() {
     console.log("app mounting")
     this.props.getRecipes();
+    // landing
+    this.props.getFilteredRecipes();
     this.props.getUsers();
     this.props.getComments();
     this.props.getReports();
   }
   logout(){
     axios.get(baseUrl + 'api/users/logout') //WIll need to change on deploy
+
     this.setState({
       currentUser: null
     }, () => console.log(this.state.currentUser))
@@ -81,6 +86,7 @@ class App extends React.Component {
       currentUser : user,
       profilePic : user.profilePic
     }, () => console.log(this.state.currentUser))
+
   }
   
   render() {
@@ -120,7 +126,7 @@ class App extends React.Component {
               <Route exact path="/recipes/:id/forkrecipe" element={<WriteWrapper flag={"fork"} recipes={this.props.Recipes} user={this.state.currentUser}/>}/>
               <Route exact path="/recipes/:id" element={<RecipeBrowser recipes={this.props.Recipes} users={this.props.Users} currentUser={this.state.currentUser}/>}/>
               <Route exact path="/users/:id" element={<PublicUser profilePic = {this.state.profilePic}/>} />
-              <Route exact path="/recipes" element={<RecipeBrowser recipes={this.props.Recipes} users={this.props.Users}/>}/>
+              <Route exact path="/recipes" element={<RecipeBrowser recipes={this.props.Recipes} users={this.props.Users} comments={this.props.Comments}/>}/>
               <Route exact path="/*" element={<Landing />}/>
             </Routes>
           </ScrollToTop>
