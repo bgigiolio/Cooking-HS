@@ -2,11 +2,8 @@ import React from 'react';
 import RecipesPageCardGroup from './RecipesPageCardGroup';
 import SearchBar from "material-ui-search-bar";
 import styles from '../../styles/recipelanding.module.css';
-
-import { Button, Card, Input } from 'reactstrap';
 // import { Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import axios from "axios";
 import { Slider } from '@mui/material';
 import { getFilteredRecipes, updateCookTime, updateCourse, updateSort } from "../../redux/recipePage/recipe-actions"
 import { connect } from "react-redux";
@@ -130,6 +127,7 @@ class RecipeLanding extends React.Component {
     onSortChange(e){
         console.log(e.target.value)
         var s = e.target.value;
+        console.log("s")
         var d = this.state.marks[this.props.difficulty[this.props.difficulty.length-1]].label
         var c = this.props.cuisines
         var ings = this.props.ingredients
@@ -269,7 +267,7 @@ class RecipeLanding extends React.Component {
             // call delete and remove filter
             var c = e.target.value;
            
-            var q_cuisines = this.props.cuisines.filter((cuisine) => cuisine != c);
+            var q_cuisines = this.props.cuisines.filter((cuisine) => cuisine !== c);
 
             this.setState({selectedCuisine: this.state.selectedCuisine.filter(function(cuisine) { 
                 return cuisine !== e.target.value 
@@ -286,7 +284,8 @@ class RecipeLanding extends React.Component {
                             () => {
                                 // console.log(" i updated the params and heres the state now: ", this.state)
                                 // console.log("value retention check!!!!: ", cuisines)
-                                this.state.selectedCuisine = this.props.cuisines;
+                                this.setState({selectedCuisine: this.props.cuisines});
+                                // this.state.selectedCuisine = this.props.cuisines;
                             })})
                         
                         // checkboxes need to be on!!!
@@ -320,11 +319,7 @@ class RecipeLanding extends React.Component {
                             console.log(" i updated the params and heres the state now: ", this.state)
                             console.log("value retention check!!!!: ", cuisines)
                             // change to setstate
-                            this.state.selectedCuisine = cuisines;
-                            for(var i = 0; i < cuisines.length; i++){
-                                // mark the buttons checked?
-
-                            }
+                            this.setState({selectedCuisine: cuisines});
                         })
                     })
                 
@@ -332,36 +327,6 @@ class RecipeLanding extends React.Component {
             })
 
         }
-
-
-
-
-
-        // if(!this.state.selectedCuisine.includes(e.target.value)){
-            // this.setState({params: {course: newEl}}, () => {
-            //     this.props.getFilteredRecipes(this.state.params);
-            //     console.log("this print should be before")
-            //   }); 
-            // { ...state, recipes: state.recipes.concat(recipe)}
-
-            // ISSUE: STATE IS LOST ON FETCH CALL
-            
-        // }
-        // else{
-            // }
-
-          
-
-        // STEPS: update state for params to include or uninclude the thing based on if it was already there in state
-        // call the props function for updated query results
-        // mark appropriate buttons as on
-
-        // this.setState({params: {cuisine: [...this.state.params.cuisine]}}, () => {
-
-        //     this.props.getFilteredRecipes(this.state.params).then(
-        //         () => {
-
-        
       
     }
 
@@ -376,7 +341,7 @@ class RecipeLanding extends React.Component {
         if(this.props.ingredients.includes(e.target.value)){
             // call delete and remove filter
             var c = e.target.value;
-            var q_ingredients = this.props.ingredients.filter((ingredient) => ingredient != c);
+            var q_ingredients = this.props.ingredients.filter((ingredient) => ingredient !== c);
 
             this.setState({selectedIngredients: this.state.selectedIngredients.filter(function(ingredient) { 
                 return ingredient !== e.target.value 
@@ -393,7 +358,7 @@ class RecipeLanding extends React.Component {
                             () => {
                                 // console.log(" i updated the params and heres the state now: ", this.state)
                                 // console.log("value retention check!!!!: ", cuisines)
-                                this.state.selectedIngredients = this.props.ingredients;
+                                this.setState({selectedIngredients: this.props.ingredients})
                             })})
                         
                         // checkboxes need to be on!!!
@@ -427,7 +392,7 @@ class RecipeLanding extends React.Component {
                         () => {
                             console.log(" i updated the params and heres the state now: ", this.state)
                             // change to setstate
-                            this.state.selectedIngredients = ingredients;
+                            this.setState({selectedIngredients: ingredients})
                         })
                     })
                 
@@ -968,7 +933,7 @@ class RecipeLanding extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu>
                 <DropdownItem onClick={this.onSortChange} className={styles.sortButton} value='Date'>Date (Most Recent)</DropdownItem>
-                <DropdownItem onClick={this.onSortChange} className={styles.sortButton} value='Rating'>Ratings (High to Low)</DropdownItem>
+                <DropdownItem onClick={this.onSortChange} className={styles.sortButton} value='Difficulty'>Difficulty (High to Low)</DropdownItem>
                 </DropdownMenu>
                 </Dropdown>
 
