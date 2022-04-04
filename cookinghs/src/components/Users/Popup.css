@@ -4,3 +4,7 @@
 #succText{
     color:green;
 }
+.uploadImage{
+    max-height: 20px;
+    max-width: 20px;
+}

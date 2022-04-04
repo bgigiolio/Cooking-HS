@@ -22,7 +22,7 @@ class PublicUser extends React.Component {
     })
     }
     state = {
-        currentUser: {fullName: "", username: "null", recipes : [], bookmarked : []},
+        currentUser: {fullName: "", username: "null", recipes : [], bookmarked : [], profilePic : this.props.profilePic},
         loaded: true,
         popup: false
         // recipes: this.props.Recipes.recipes.filter((recipe) => recipe.author === this.state.currentUser._id)
@@ -34,7 +34,7 @@ class PublicUser extends React.Component {
 
             return(
                 <div id='container'>
-                    <img id="profilePic" src={profilePic}/>
+                    <img id="profilePic" src={this.state.currentUser.profilePic}/>
                     <img id="foodBanner" src={foodBanner}/>
                     {/** The name, username will depend on info from backend per user */}
                     <h1 id="name">{this.state.currentUser.fullName}</h1>

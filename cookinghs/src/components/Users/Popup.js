@@ -4,6 +4,7 @@ import {Modal, Box, Button, TextField} from '@mui/material';
 // import Box from '@mui/material/Box';
 import styles from './Popup.css';
 import axios from 'axios'; // new!!
+import {Label, Input} from 'reactstrap'
 const {SHA256} = require('crypto-js');
 
 const boxMode = {
@@ -31,6 +32,7 @@ export default class Popup extends Component {
         username : this.props.currentUser.username,
         fullName : this.props.currentUser.fullName,
         email : this.props.currentUser.email,
+        picture : this.props.currentUser.profilePic,
         password : "",
         failText : "",
         succText : ""
@@ -101,6 +103,26 @@ export default class Popup extends Component {
             })
         }
     }
+
+    handleImageChange = e => {
+        const target = e.target;
+        const file = target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file)
+        reader.onloadend = () => {
+            axios.patch('http://localhost:5000/api/users/image/' + this.props.currentUser._id, {imagefile: reader.result})
+            .then( async (result) => {
+                this.setState({
+                    picture : result
+                })
+            }).catch((error) => {
+                this.setState({
+                    failText : "Image invalid/too large",
+                    succText : ""
+                })
+            })
+        }
+    }
     render() {
         return (
             <Modal
@@ -126,7 +148,31 @@ export default class Popup extends Component {
                     <Button variant="contained" name="password" style={buttonMode} onClick={this.update.bind(this)}>Update</Button>
                     <h2 id="failText">{this.state.failText}</h2>
                     <h2 id="succText">{this.state.succText}</h2>
+
+                    Profile Picture:
                     <br/>
+                    <Button type="button" style={{padding: "2px", width: "fit-content"}}>
+                            <Label
+                            for="image"
+                            style={{cursor: "pointer", height:"fit-content", marginBottom:"-6px"}}
+                            >
+                            <img src={this.state.picture}
+                                alt=''
+                                id='uploadImage'
+                                style={styles.uploadImage}
+                            />
+                            </Label>
+                            <Input
+                                id="image"
+                                name="image"
+                                type="file"
+                                accept="image/*"
+                                style={{display: 'none'}}
+                                onChange={this.handleImageChange.bind(this)}
+                            />
+                        </Button>
+                        <br/>
+                        <br/>
                     <Button variant="contained" onClick={this.click.bind(this)}>Exit</Button>
                 </Box>
             </Modal>

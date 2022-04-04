@@ -45,6 +45,7 @@ class App extends React.Component {
       want : ["_id", "username", "admin", "fullName", "email", "profilePic"]
     }}).then( async (response) => {
       this.state.currentUser = response.data
+      this.state.profilePic = response.data.profilePic
       console.log(this.state.currentUser)
     }).catch(function (error) {
       this.state.currentUser = null

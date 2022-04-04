@@ -25,7 +25,7 @@ class Users extends React.Component {
     })
     }
     state = {
-        currentUser: {fullName: "", username: "null", recipes : [], bookmarked : []},
+        currentUser: {fullName: "", username: "null", recipes : [], bookmarked : [], profilePic : this.props.profilePic},
         loaded: true,
         popup: false
         // recipes: this.props.Recipes.recipes.filter((recipe) => recipe.author === this.state.currentUser._id)
@@ -57,7 +57,9 @@ class Users extends React.Component {
                     >
                         Edit Profile
                     </Button>
-                    <img id="profilePic" src={profilePic}/>
+                    <div id="circle">
+                        <img id="profilePic" src={this.state.currentUser.profilePic}/>
+                    </div>
                     <img id="foodBanner" src={foodBanner}/>
                     {/** The name, username will depend on info from backend per user */}
                     <h1 id="name">{this.state.currentUser.fullName}</h1>

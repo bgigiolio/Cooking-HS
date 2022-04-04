@@ -8,6 +8,12 @@ let app = express();
 let User = require("../models/user")
 app.use(express.urlencoded())
 app.use(express.json())
+const cloudinary = require('cloudinary');
+cloudinary.config({
+    cloud_name: 'yongdk1',
+    api_key: '545953548539613',
+    api_secret: '_AKSaIR7ptxuEh_CTmQdjFDaaOc'
+});
 
 /*
 User route guide!!!
@@ -27,6 +33,10 @@ http://localhost:5000/api/users/search
 -Update user _id's info: route #7
 -Remove user _id: route #8
 -Log user _id in (create their session): route #9
+-Add a single recipe to a user's recipes list: route #10
+-Add a single recipe to a user's bookmarked list: route #11
+-Update the current session: route #12
+-Add an imagefile to a user's profile pic: route #13
 
 */
 
@@ -237,7 +247,12 @@ router.route("/bookmarked/:id/:recipeid").patch((req, res) => {//#11
             res.status(404).send("user not found")
         }else{
             result.bookmarked.push(req.params.recipeid)
-            result.save().then(() => res.status(200).send(result))
+            result.save().then(() => { 
+                res.status(200).send(result)
+                if(req.params.id === req.session._id){
+                    req.session.bookmarked = result.bookmarked
+                }
+            })
             .catch((error) => res.status(500).send(error))
         }
     })
@@ -254,6 +269,43 @@ router.route("/session/update").patch((req, res) => {//#12
     }
     console.log(req.session)
     res.status(200).send("session updated!")
+})
+
+//Takes in an image in the body, uploads it to cloudinary, and updates
+//the corresponding user with the new url
+//Usage:
+//body->
+//{imagefile: <image data>}
+router.route("/image/:id").patch( async (req, res) => {//#13
+    console.log("uploading image!")
+    const imageStr = req.body.imagefile
+    let imageurl = "https://res.cloudinary.com/yongdk1/image/upload/v1649020580/cookinghs/defaultProfile_hfixae.png";
+    if (imageStr !== null) {
+        const uploadedResponse = await cloudinary.uploader
+        .upload(imageStr, {
+            upload_preset: "cookinghs"
+        })
+        // .then(() => {
+            console.log(uploadedResponse)
+            imageurl = uploadedResponse.url
+            User.findByIdAndUpdate(req.params.id, {profilePic : imageurl}, {new: true}, 
+                (error, result) => {
+                if(error){
+                    console.log(error)
+                    res.status(500).send(error)
+                }else if(result === null){
+                    res.status(404).send("user not found")
+                }else{
+                    if(req.params.id === req.session._id){
+                        req.session.profilePic = imageurl
+                    }
+                    res.status(200).send(result.profilePic)
+                }
+            // })
+        })
+    }else{
+        res.status(422).send("invalid image")
+    }
 })
 
 
