@@ -5,6 +5,7 @@ import RecipeCardGroup from './RecipeCardGroup';
 import UserProgress from './UserProgress';
 import { Button } from 'reactstrap';
 import Popup from './Popup';
+import { baseUrl } from '../../shared/baseUrl';
 import axios from 'axios'; // new!!
 //I would need to import these images based on the users from the backend later
 import foodBanner from "./images/foodBanner.jpeg";
@@ -13,7 +14,7 @@ class Users extends React.Component {
     constructor(props) {
         super(props);
 
-        axios.get('http://localhost:5000/api/users/session', {params :{
+        axios.get(baseUrl + 'api/users/session', {params :{
             want : ["_id", "username", "admin", "fullName", "email", "profilePic", "recipes", "bookmarked"]
         }}).then( async (response) => {
             this.state.currentUser = response.data

@@ -5,6 +5,7 @@ import {Modal, Box, Button, TextField} from '@mui/material';
 import styles from './Popup.css';
 import axios from 'axios'; // new!!
 import {Label, Input} from 'reactstrap'
+import { baseUrl } from '../../shared/baseUrl';
 const {SHA256} = require('crypto-js');
 
 const boxMode = {
@@ -72,7 +73,7 @@ export default class Popup extends Component {
             })
         }
         if(name !== "password"){
-            axios.patch("http://localhost:5000/api/users/" + this.props.currentUser._id, null, {params :{
+            axios.patch(baseUrl + "api/users/" + this.props.currentUser._id, null, {params :{
                 [name] : this.state[name]
             }}).then(async (response) => {
                 this.setState({
@@ -80,7 +81,7 @@ export default class Popup extends Component {
                     failText : ""
                 })
                 console.log(response)
-                axios.patch("http://localhost:5000/api/users/session/update", null, {params : {
+                axios.patch(baseUrl + "api/users/session/update", null, {params : {
                     [name] : this.state[name]
                 }})
             }).catch((error) => {
@@ -89,7 +90,7 @@ export default class Popup extends Component {
                 })
             })
         }else{
-            axios.patch("http://localhost:5000/api/users/" + this.state.currentUser._id, null, {params :{
+            axios.patch(baseUrl + "api/users/" + this.state.currentUser._id, null, {params :{
                 passHash : SHA256(this.state.password).toString()
             }}).then(async (response) => {
                 this.setState({
@@ -110,7 +111,7 @@ export default class Popup extends Component {
         const reader = new FileReader();
         reader.readAsDataURL(file)
         reader.onloadend = () => {
-            axios.patch('http://localhost:5000/api/users/image/' + this.props.currentUser._id, {imagefile: reader.result})
+            axios.patch(baseUrl + 'api/users/image/' + this.props.currentUser._id, {imagefile: reader.result})
             .then( async (result) => {
                 this.setState({
                     picture : result

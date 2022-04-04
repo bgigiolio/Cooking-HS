@@ -7,6 +7,7 @@ import axios from 'axios'; // new!!
 import Login from "./../Login";
 import Signup from "./../Signup";
 import './styles.css';
+import { baseUrl } from '../../../shared/baseUrl';
 
 const {SHA256} = require('crypto-js'); // new!!
 // const bcrypt = require('bcryptjs') // new!!
@@ -50,7 +51,7 @@ class LoginMain extends React.Component {
             valid: false
         }, () =>console.log("valid login: " + this.state.valid));
         if(this.state.tabVal === 0){
-            axios.get(this.state.host + 'api/users', {params :{
+            axios.get(baseUrl + 'api/users', {params :{
                 username : user.username,
                 passHash : SHA256(user.password).toString()
               }}).then(async (response) => {
@@ -113,7 +114,7 @@ class LoginMain extends React.Component {
             valid = -5
         }
         if (valid === 1){
-            axios.post(this.state.host + 'api/users', 
+            axios.post(baseUrl + 'api/users', 
             {
                 username : sUser.username,
                 passHash : SHA256(sUser.password).toString(),

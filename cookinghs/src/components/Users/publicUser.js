@@ -5,6 +5,7 @@ import RecipeCardGroup from './RecipeCardGroup';
 import UserProgress from './UserProgress';
 import { useParams } from 'react-router-dom';
 import axios from 'axios'; // new!!
+import { baseUrl } from '../../shared/baseUrl';
 //I would need to import these images based on the users from the backend later
 import foodBanner from "./images/foodBanner.jpeg";
 
@@ -12,7 +13,7 @@ class PublicUser extends React.Component {
     constructor(props) {
         super(props);
         const { id } = this.props.params;
-        axios.get('http://localhost:5000/api/users/' + id)
+        axios.get(baseUrl + 'api/users/' + id)
         .then( async (response) => {
             this.state.currentUser = response.data
             // console.log(this.state.currentUser)

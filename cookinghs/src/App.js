@@ -5,6 +5,7 @@ import { Navbar, NavbarBrand, Nav, NavItem, NavLink, NavbarToggler, Collapse } f
 import axios from 'axios'; // new!!
 import './App.css';
 
+
 import LoginMain from './components/Login/LoginMain/index';
 import AdminPage from './components/Admin/index';
 import Landing from './components/Landing';
@@ -43,13 +44,17 @@ class App extends React.Component {
     this.updateCurrentUser = this.updateCurrentUser.bind(this);
     axios.get(baseUrl + 'api/users/session', {params :{
       want : ["_id", "username", "admin", "fullName", "email", "profilePic"]
-    }}).then( async (response) => {
+    }}).then( (response) => {
       this.state.currentUser = response.data
       this.state.profilePic = response.data.profilePic
       console.log(this.state.currentUser)
-    }).catch(function (error) {
+      this.forceUpdate();
+    })
+    .then( () => this.forceUpdate())
+    .catch(function (error) {
       this.state.currentUser = null
     })
+
   }
 
   state = {
@@ -67,7 +72,7 @@ class App extends React.Component {
   }
   logout(){
     console.log("running logout")
-    axios.get('http://localhost:5000/' + 'api/users/logout') //WIll need to change on deploy
+    axios.get(baseUrl + 'api/users/logout') //WIll need to change on deploy
     this.setState({
       currentUser: null
     }, () => console.log(this.state.currentUser))
@@ -75,18 +80,13 @@ class App extends React.Component {
   updateCurrentUser(user){
     console.log(this)
     this.setState({
-      currentUser : user
+      currentUser : user,
+      profilePic : user.profilePic
     }, () => console.log(this.state.currentUser))
-    // import(this.state.currentUser.profilePic)
-    // .then((profilePic) => {
-    //   console.log(profilePic)
-    //   this.setState({
-    //     profilePic : profilePic
-    //   }, () => console.log(this.state.profilePic))
-    // }))
   }
   
   render() {
+    console.log(this.state.profilePic)
     return(
       <div id="container">
         <BrowserRouter>

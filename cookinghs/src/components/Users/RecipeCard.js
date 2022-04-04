@@ -8,11 +8,12 @@ import {deleteRecipe} from "../../redux/UserPage/UserRecipes/UserRecipes-actions
 import {connect} from 'react-redux';
 import RecipeBrowser from '../recipeView/RecipeBrowserComponent';
 import axios from 'axios'; // new!!
+import { baseUrl } from '../../shared/baseUrl';
 
 class RecipeCard extends React.Component {
     constructor(props){
         super(props)
-        axios.get("http://localhost:5000/api/recipes/" + this.props.recipeData)
+        axios.get(baseUrl + "api/recipes/" + this.props.recipeData)
         .then((response) => {
             this.state.image = response.data.image
             this.state.title = response.data.title
@@ -27,7 +28,7 @@ class RecipeCard extends React.Component {
         deleted: false
     }
     deleteRecipe(){
-        axios.delete("http://localhost:500/api/recipes/" + this.props.recipeData)
+        axios.delete(baseUrl + "api/recipes/" + this.props.recipeData)
         .then(this.forceUpdate())
     }
     render(){
