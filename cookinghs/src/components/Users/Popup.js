@@ -154,12 +154,11 @@ export default class Popup extends Component {
                     <Button type="button" style={{padding: "2px", width: "fit-content"}}>
                             <Label
                             for="image"
-                            style={{cursor: "pointer", height:"fit-content", marginBottom:"-6px"}}
+                            style={{cursor: "pointer", height:"60px", width:"60px", marginBottom:"6px", borderRadius: "50%"}}
                             >
                             <img src={this.state.picture}
                                 alt=''
                                 id='uploadImage'
-                                style={styles.uploadImage}
                             />
                             </Label>
                             <Input
