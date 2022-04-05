@@ -64,6 +64,8 @@ By clicking on `Recipes` in the navigation bar:
   * Navigate to the user who created this recipe by clicking on their username
   * Change the servings for the recipe to adjust the ingredients needed
   *  Viewing the comments to the recipe (you can view more by clicking the "Load More Reviews" buttons) 
+  *  Sort by "Date" or "Difficulty"
+  *  Filter by "Course" (ex. Appetizer, Dessert, etc...), "Cuisine" (ex. Indian, Italian, etc...), Max Difficulty, Max CookTime, and by Ingredients
  * However, this page, also include several other actions that you can do only logged-in as a user:
    * You may fork the recipe. In other words, you can create a copy of the recipe and add your own spin to it. A timeline will be shown to demonstrate the fork history for users to view. This fork history is rendered as a list and you can see an example for the recipe "Slow Cooker Philadelphia Pulled Pork Roll".
    * You can report the recipe.
