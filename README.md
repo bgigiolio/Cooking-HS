@@ -40,9 +40,22 @@ Of course, additional users can be made thorough the sign-up page.
 * `yarn start` for local web server
 * `node server.js` for database
 
-# Website Components (How to use the application)
+# Website Components
 
-## Login
+## The role of users
+The core of the web application are the recipes. Users are able to search for recipes according
+to name, cuisine, or even ingredients. These recipes include a list of ingredients with their
+desired quantities, recipe calorie count, nutritional information of the dish, and a step-by-step
+guide on how to make the dish. Advanced cooks can share recipes and teach cooking methods
+with friends and strangers alike, while newer cooks can follow along their recipes while learning
+how to perform basic cooking tasks such as mincing garlic and chopping vegetables. Cooks can
+also create “forks” of existing recipes to include improvements in ingredients, seasonings, or
+even entire steps. Lastly, users are able to vote for the recipes that they think are best, as well
+as leave feedback and comments.
+
+## How to use the application & how the users would go about using all the features of your website
+
+### Login
 By clicking on `Login` in the navigation bar:
 * The login page is for both users and admins to log into our website
 * You can use the credentials from the 'Credentials' section to log into as a user or an admin, or sign up for a new user
@@ -51,12 +64,12 @@ By clicking on `Login` in the navigation bar:
 * Logging into the website as a admin will lead them to the admin page
 * You can also sign up for a new account, and then log in with that account with those new credentials
 
-## Landing
+### Landing
 By clicking on `CookingHS` in the navigation bar:
 * The landing page is the home page that will introduce everyone to our website with captivating visuals
 * We have a button `Let's get Cooking` which leads you to the recipe page
 
-## Recipes
+### Recipes
 By clicking on `Recipes` in the navigation bar:
 * This page allows you to view all the recipes where each recipe card has a sneak-peek of all the details you can find when you click on that card.
 * There is "+ Add a Recipe" button that allows you to add a new recipe. By cliking on the "+", you will have the option to add a new recipe by adding in a custom image, the recipe name, recipe description, nutritional or other details, ingredients, steps, and difficulty.
@@ -73,7 +86,7 @@ By clicking on `Recipes` in the navigation bar:
    * You can report a comment.
    * You can bookmark the recipe.
 
-## Users
+### Users
 By clicking on `Users` in the navigation bar:
 * This page is meant for a user to view their own profile or the profile of another user
 * Each user will have a set of recipes that they have made on the user page
@@ -85,22 +98,11 @@ By clicking on `Users` in the navigation bar:
   * Master Chef: The number of recipes made by the user is above 60
 * Once the backend is setup, this page will be used to represent many different users 
 
-## Admin
+### Admin
 By logging into the admin user through the `Login` in the navigation bar (you can only see `Admin` in the navigation bar when you're logged in as an admin user):
 * Use the admin credentials in the "Credentials" section to access this page
 * This page allows admin to view all users, view all recipes, and manage reports
 * You can also delete users or recipes (assuming the admin is a respsonsible individual)
 * For each report, you can view further details on that report or delete it
 
-# The role of users
-The core of the web application are the recipes. Users are able to search for recipes according
-to name, cuisine, or even ingredients. These recipes include a list of ingredients with their
-desired quantities, recipe calorie count, nutritional information of the dish, and a step-by-step
-guide on how to make the dish. Advanced cooks can share recipes and teach cooking methods
-with friends and strangers alike, while newer cooks can follow along their recipes while learning
-how to perform basic cooking tasks such as mincing garlic and chopping vegetables. Cooks can
-also create “forks” of existing recipes to include improvements in ingredients, seasonings, or
-even entire steps. Lastly, users are able to vote for the recipes that they think are best, as well
-as leave feedback and comments.
-
-# How the users would go about using all the features of your website
+# Overview of the routes in your Express server
