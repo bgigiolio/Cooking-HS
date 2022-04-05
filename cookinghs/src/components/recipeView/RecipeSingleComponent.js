@@ -172,7 +172,9 @@ function RecipeSingle(props) {
             <ReportModal
                 toggle={toggleReport}
                 isOpen={reportModal}
-                recipeId={props.id}
+                chosenRecipe={chosenRecipe}
+                recipeid={chosenRecipe._id}
+                chosenComment={chosenComment}
                 recipeTitle={chosenRecipe.title}
                 reportId={reportId}
                 currentUser={props.currentUser}

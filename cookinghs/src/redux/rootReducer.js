@@ -8,6 +8,7 @@ import { RecipesReducer } from './recipePage/recipe-reducer';
 import RecipesPageReducer from './RecipesPage/RecipesPage-reducer';
 import { UsersReducer } from './users/user-reducer';
 import { CommentsReducer } from './comments/comment-reducer';
+import { ReportsReducer } from './reports/report-reducer';
 
 const rootReducer = combineReducers({
     AdminUsers: AdminUsersReducer,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
     Recipes: RecipesReducer,
     RecipesPage: RecipesPageReducer,
     Users: UsersReducer,
-    Comments: CommentsReducer
+    Comments: CommentsReducer,
+    Reports: ReportsReducer
 });
 
 export default rootReducer;

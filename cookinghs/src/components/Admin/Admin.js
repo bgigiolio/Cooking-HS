@@ -3,6 +3,7 @@ import UserCardGroup from './UserCardGroup';
 import styles from "./Admin.module.css";
 import RecipeCardGroup from './RecipeCardGroup';
 import Flags from "./Flags";
+import { connect } from 'react-redux';
 import { baseUrl } from '../../shared/baseUrl';
 import axios from 'axios'; // new!!
 import { Button } from 'reactstrap';
@@ -32,13 +33,14 @@ class Admin extends React.Component {
         if(this.state.admin){
             return(
                 <div className={styles.AdminContainer}>
-                    <h3 className={styles.h3}>Admin Profile</h3>
-                    <h4 className={styles.h4}>Users</h4>
-                    <UserCardGroup className={styles.user_card_group}/>
-                    <h4 className={styles.h4}>Recipes</h4>
-                    <RecipeCardGroup className={styles.recipe_card_group}/>
-                    <h4 className={styles.h4}>Flags</h4>
-                    <Flags/>
+                <h3 className={styles.h3}>Admin Profile</h3>
+                <h4 className={styles.h4}>Flags</h4>
+                <Flags
+                    reports={this.props.Reports.reports} 
+                    users={this.props.users}
+                    recipes={this.props.recipes}
+                    comments={this.props.comments}
+                />
                 </div>
             )
         }else{
@@ -46,12 +48,16 @@ class Admin extends React.Component {
             <div className={styles.AdminContainer}>
                 <h1>Only cookHS admins may access this page!</h1>
                 <br/>
-                <Button color="success" className={styles.refresh} onClick={this.adminCheck.bind(this)}>Verify Admin Status</Button>
-
             </div>
             )
         }
     }
 }
 
-export default Admin;
+const mapStateToProps = state => {
+    return {
+        Reports: state.Reports,
+    }
+}
+
+export default connect(mapStateToProps, null)(Admin);
