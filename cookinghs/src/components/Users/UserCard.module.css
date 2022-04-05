@@ -27,3 +27,14 @@
     overflow-y:hidden;
     overflow-x:hidden;
 }
+.del{
+    float:left;
+    background-color: rgba(255, 70, 70, 0.932);
+}
+.edit{
+    float:right;
+    background-color: rgb(142, 215, 142);
+}
+#toBuf{
+    margin-right: 15px;
+}
