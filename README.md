@@ -1,15 +1,12 @@
 # Team38's CookingHS
 
-
-instructions for how to run your app locally after cloning your repo
-
 Heroku Deployed Link: https://cookinghs.herokuapp.com/
 
 
 # Installation Requirements
 * Node version: 16.13.1
-* Run `yarn install` inside the "team38/cookinghs/" folder (TODO: may need to update this)
-* Run `yarn install` inside the "team38/cookinghs/backend" folder (TODO: may need to update this)
+* Run `yarn install` inside the "team38/cookinghs/" folder
+* Run `yarn install` inside the "team38/cookinghs/client" folder
 
 # Credentials
 User Credentials
@@ -22,13 +19,23 @@ Admin Credentials
 
 Of course, additional users can be made thorough the sign-up page.
 
-(TODO) which requests to make to the server to create an admin user 
-PATCH /api/users/:id
-with query: {admin: true}
+The requests to make to the server to create an admin user:
+* PATCH /api/users/:id 
+* with query: {admin: true}
 
 # Important Commands
 * `yarn start` for local web server
 * `node server.js` for database
+
+# Instructions on running app
+
+## Running locally
+* Go into "team38/cookinghs/client/src/shared/basedUrl.js" and comment out line 3 or `export const baseUrl = "https://cookinghs.herokuapp.com/"` line and uncomment line 1 or `// export const baseUrl = "http://localhost:5000/"`
+* `yarn start` in "team38/cookinghs/" folder
+* `node server.js` in "team38/cookinghs/" folder
+
+## Running via deployed link
+* You can access the deployed website via the following link: https://cookinghs.herokuapp.com/
 
 # Website Components
 
