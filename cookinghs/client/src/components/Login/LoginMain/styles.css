@@ -1,0 +1,52 @@
+.tabs {
+    overflow: hidden;
+    border: 1px solid #69c5ff;
+    background-color: azure;
+}
+.tab button{
+    background-color: inherit;
+    float: right;
+    padding: 14px 16px;
+}
+
+.tab button:hover{
+    background-color: #b6e3ff;
+}
+
+.tab button.active {
+    background-color: #69c5ff;
+}
+
+/* body{
+    /* background-image: url("background.jpeg"); */
+    /* background-color: #cccccc;
+    background-repeat: no-repeat;
+    background-size: cover; */
+
+/* } */
+#TabsHolder{
+    background-color: #ffffff;
+    float: right;
+    margin-top: 20px;
+    /* margin-bottom: 100px; */
+    margin-bottom: 100px;
+    height: 80%;
+    min-height: 550px;
+    margin-right: 50px;
+    min-width: 400px;
+
+    /* width: 50%; */
+    border: 1px solid grey;
+    border-radius: 0.3rem;
+    /* text-align: center; */
+    box-shadow: 0.01rem 0.01rem 0.5em rgb(0 0 0 / 2%);
+}
+
+#LoginMain{
+    height: 100%;
+    overflow: hidden;
+    background-image: url("background.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: calc(100vh - 57px);
+}
