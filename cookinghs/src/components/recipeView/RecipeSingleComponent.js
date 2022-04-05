@@ -114,7 +114,7 @@ function RecipeSingle(props) {
         return (
             <li className='stepsListItem' key={index}>
                 <span>{step.step}</span>
-                {step.stepimage ? <img src = {step.stepimage} className="stepImage"/> : null}
+                {step.stepimage ? <img alt="" src = {step.stepimage} className="stepImage"/> : null}
             </li>
         )
     });
