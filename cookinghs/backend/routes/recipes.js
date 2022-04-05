@@ -166,7 +166,7 @@ router.get('/api/recipes/filters', mongoChecker, async (req, res) => {
 		if(q.hasOwnProperty("sort")){
 			// sort by date
 			if(q["sort"].length == 10){
-				delete q["cuisine"];
+				delete q["sort"];
 				var recipes = await Recipe.find(q).sort([['difficulty', -1]]).exec()
 			}
 			else{
