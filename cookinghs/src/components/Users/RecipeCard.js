@@ -46,9 +46,8 @@ class RecipeCard extends React.Component {
                     {this.props.recipeData.description !== undefined ? this.props.recipeData.description.slice(0, 100) + "..." : null}
                         {/* This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. */}
                     </CardText>
-                    <Button onClick={() => this.props.deleteRecipe(this.props.recipeData._id)}>
-                        Delete Recipe
-                    </Button>
+                    {this.props.del ? <Button onClick={() => this.props.deleteRecipe(this.props.recipeData._id)}>Delete Recipe</Button> : null}
+                    
                 </CardBody>
                 <Routes>
                 <Route exact path="/recipes/:id" element={<RecipeBrowser/>}/>

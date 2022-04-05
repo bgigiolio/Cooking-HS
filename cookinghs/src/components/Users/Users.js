@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styles from './Users.css';
 import RecipeCardGroup from './RecipeCardGroup';
+import RecipeCardGroupLegacy from './RecipeCardGroupLegacy';
 import UserProgress from './UserProgress';
 import { Button, Container } from 'reactstrap';
 import Popup from './Popup';
@@ -27,7 +28,8 @@ class Users extends React.Component {
     state = {
         currentUser: {fullName: "", username: "null", recipes : [], bookmarked : [], profilePic : this.props.profilePic},
         loaded: true,
-        popup: false
+        popup: false,
+        bookmarked : []
     }
 
 
@@ -74,7 +76,9 @@ class Users extends React.Component {
                     <br/>
 
                     {this.state.currentUser.bookmarked.length !== 0 ? <h4 className="title">Bookmarked Recipes</h4> : null}
-                    {/* {RecipeCardGroup(this.state.currentUser.bookmarked)} */}
+                    <Container>
+                        <RecipeCardGroupLegacy recipes={this.state.currentUser.bookmarked} />
+                    </Container>
                     <br/>
                 </div>
             )
