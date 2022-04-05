@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import {Modal, Box, Button, TextField} from '@mui/material';
+import {Modal, Box} from '@mui/material';
 // import Modal from '@mui/material/Modal';
 // import Box from '@mui/material/Box';
 import styles from './Popup.css';
 import axios from 'axios'; // new!!
-import {Label, Input} from 'reactstrap'
+import {Label, Input, Button} from 'reactstrap'
 import { baseUrl } from '../../shared/baseUrl';
+import editPic from './images/edit.png'
 const {SHA256} = require('crypto-js');
 
 const boxMode = {
@@ -13,17 +14,16 @@ const boxMode = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    minWidth: 400,
+    minWidth: "60%",
     minHeight: 500,
-    bgcolor: 'background.paper',
+    bgcolor: '#FCFCF7',
     borderRadius: 1,
     // border: '1px solid #000',
     boxShadow: 24,
     p:4,
 }
 const buttonMode = {
-    height: '56px',
-    marginLeft: '5px'
+    // marginLeft: '5px'
 }
 export default class Popup extends Component {
     componentDidMount(){
@@ -130,37 +130,22 @@ export default class Popup extends Component {
             onClose={this.click.bind(this)}
             >
                 <Box sx={boxMode}>
+                    <div id="top">
+                    </div>
                     <h1>Edit Profile</h1>
                     <br/>
-                    <TextField  label="Username" name="username" value={this.state.username} onInput={this.recieve.bind(this)}></TextField>
-                    <Button variant="contained" name="username" style={buttonMode} onClick={this.update.bind(this)}>Update</Button>
-                    <br/>
-                    <br/>
-                    <TextField  label="Full Name" name="fullName" value={this.state.fullName} onInput={this.recieve.bind(this)}></TextField>
-                    <Button variant="contained" name="fullName" style={buttonMode} onClick={this.update.bind(this)}>Update</Button>
-                    <br/>
-                    <br/>
-                    <TextField  label="Email" name="email" value={this.state.email} onInput={this.recieve.bind(this)}></TextField>
-                    <Button variant="contained" name="email" style={buttonMode} onClick={this.update.bind(this)}>Update</Button>
-                    <br/>
-                    <br/>
-                    <TextField  label="Password" name="password" value={this.state.password} onInput={this.recieve.bind(this)} type="password"></TextField>
-                    <Button variant="contained" name="password" style={buttonMode} onClick={this.update.bind(this)}>Update</Button>
-                    <h2 id="failText">{this.state.failText}</h2>
-                    <h2 id="succText">{this.state.succText}</h2>
-
-                    Profile Picture:
-                    <br/>
-                    <Button type="button" style={{padding: "2px", width: "fit-content"}}>
+                    <div id="buttonSpot">
+                    <Button type="button" style={{padding: "0px", width: "180px", height: "180px", borderRadius: "50%"}}>
                             <Label
                             for="image"
-                            style={{cursor: "pointer", height:"60px", width:"60px", marginBottom:"6px", borderRadius: "50%"}}
+                            style={{cursor: "pointer", height:"180px", width:"180px", borderRadius: "50%"}}
                             >
                             <img src={this.state.picture}
                                 alt=''
                                 id='uploadImage'
                             />
                             </Label>
+                            {/* <img src={editPic} id="edit"/> */}
                             <Input
                                 id="image"
                                 name="image"
@@ -170,9 +155,34 @@ export default class Popup extends Component {
                                 onChange={this.handleImageChange.bind(this)}
                             />
                         </Button>
+                        </div>
+                    <div class="grid-container">
+                        <div class="grid-item">
+                            <small id="lab">Username</small><br/>
+                            <Input className="input" label="Username" name="username" value={this.state.username} onInput={this.recieve.bind(this)}></Input>
+                            <Button variant="contained" name="username" style={buttonMode} onClick={this.update.bind(this)}>Update</Button>
+                        </div>
+                        <div id="fullName" class="grid-item">
+                            <small id="lab">Full Name</small><br/>
+                            <Input className="input" label="Full Name" name="fullName" value={this.state.fullName} onInput={this.recieve.bind(this)}></Input>
+                            <Button variant="contained" name="fullName" style={buttonMode} onClick={this.update.bind(this)}>Update</Button>
+                        </div>
+                        <div id="email" class="grid-item">
+                        <small id="lab">Email</small><br/>
+                            <Input className="input" label="Email" name="email" value={this.state.email} onInput={this.recieve.bind(this)}></Input>
+                            <Button variant="contained" name="email" style={buttonMode} onClick={this.update.bind(this)}>Update</Button>
+                        </div>
+                        <div id="password" class="grid-item">
+                        <small id="lab">Password</small><br/>
+                            <Input className="input" label="Password" name="password" value={this.state.password} onInput={this.recieve.bind(this)} type="password"></Input>
+                            <Button variant="contained" name="password" style={buttonMode} onClick={this.update.bind(this)}>Update</Button>
+                        </div>
+                    </div>
+                    <h2 id="failText">{this.state.failText}</h2>
+                    <h2 id="succText">{this.state.succText}</h2>
                         <br/>
                         <br/>
-                    <Button variant="contained" onClick={this.click.bind(this)}>Exit</Button>
+                    <Button variant="contained" onClick={this.click.bind(this)} id="exit">Exit</Button>
                 </Box>
             </Modal>
         );
