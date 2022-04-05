@@ -5,6 +5,7 @@ import { Fraction } from 'fractional';
 import { Link } from 'react-router-dom';
 import '../../styles/recipeview.css';
 import '../../styles/colorpalette.css';
+import '../../styles/defaults.css'
 import ReviewModal from '../recipeModals/ReviewModalComponent';
 import ReportModal from '../recipeModals/ReportModalComponent';
 import StarRating from './StarRatingComponent';
@@ -43,11 +44,12 @@ function RecipeSingle(props) {
         const timelineView = line.map((step, index) => {
             const parentRecipe = recipes.filter(recipe => recipe._id === step)[0]
             const parentTitle = parentRecipe.title
+            const parentAuthor = props.users.filter((user) => user._id === parentRecipe.author)[0].fullName
             const parentDeleted = parentRecipe.deleted
             const link = '../recipes/' + step
             return (
                 <li key={index}>
-                    {index !== line.length - 1 ? <Link to={link}>{parentTitle}<span>{parentDeleted ? <span>(Deleted)</span> : null}</span></Link> : <>{parentTitle} (Current)</>}
+                    {index !== line.length - 1 ? parentDeleted ? <span>{parentTitle} by {parentAuthor} (Deleted)</span> : <><Link className='linkStyle' to={link}>{parentTitle}</Link> by {parentAuthor} </> : <>{parentTitle} (Current)</>}
                 </li>
             )
         })

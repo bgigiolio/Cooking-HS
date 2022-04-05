@@ -229,11 +229,11 @@ function WriteRecipe(props) {
         if (valid) {
             if (props.flag === "fork" || props.flag === "new") {
                 props.postRecipe(recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.difficulty, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image, recipe.imagefile)
-                // handleRedirect()
+                handleRedirect()
             }
             else if (props.flag === "edit") {
                 props.putRecipe(recipe._id, recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.difficulty, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image, recipe.imagefile)
-                // handleRedirect()
+                handleRedirect()
             }
         }
         else {
