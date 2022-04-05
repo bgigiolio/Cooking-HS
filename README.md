@@ -7,15 +7,23 @@ the roles of users
 how the users would go about using all the features of your website. 
 
 overview of the routes in your Express server
+
 what they are used for in your app
+
 what data they expect to be sent
+
 what they would return. 
 
 instructions for how to run your app locally after cloning your repo
+
 where to run npm install
+
 commands to start the local web server and database (for example, using the commands we used in lecture)
+
 which requests to make to the server to create an admin user 
+
 (normal users can generally be made using the signup functionality of your app, but that should be in your instructions as well)
+
 It should be clear to the grader how to setup your app locally.
 
 # Installation Requirements
