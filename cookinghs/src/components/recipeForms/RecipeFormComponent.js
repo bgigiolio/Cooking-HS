@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Form, FormGroup, Label, Input, FormText, FormFeedback, Row, Col, Button } from 'reactstrap';
 import '../../styles/recipeform.css'
 
@@ -147,7 +147,7 @@ function RecipeForm(props) {
                             {step.stepimage ? 
                                 <img src={step.stepimage}
                                     alt=''
-                                    id='uploadImage'
+                                    id='formUploadImage'
                                 /> :
                                 <span>Add Image</span>
                             }
@@ -256,7 +256,7 @@ function RecipeForm(props) {
                             >
                             <img src={props.imagefile || props.tempimage}
                                 alt=''
-                                id='uploadImage'
+                                id='formUploadImage'
                             />
                             </Label>
                             <Input
