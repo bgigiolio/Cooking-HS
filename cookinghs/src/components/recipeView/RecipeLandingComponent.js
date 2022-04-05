@@ -664,6 +664,7 @@ class RecipeLanding extends React.Component {
                         <div className={styles.CheckBoxCuisine}>
                             <label>
                                 <input
+                                className={styles.CheckBoxCuisineInput}
                                 type="checkbox"
                                 value="American"
                                 checked={this.props.cuisines.includes("American")}
