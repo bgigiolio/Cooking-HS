@@ -1,25 +1,13 @@
 # Team38's CookingHS
 
-how to use the application
-
-the roles of users
-
-how the users would go about using all the features of your website. 
-
-
-overview of the routes in your Express server
-
-what they are used for in your app
-
-what data they expect to be sent
-
-what they would return. 
 
 instructions for how to run your app locally after cloning your repo
 
+Heroku Deployed Link: https://cookinghs.herokuapp.com/
+
 
 # Installation Requirements
-* Node version: 16.14.0
+* Node version: 16.13.1
 * Run `yarn install` inside the "team38/cookinghs/" folder (TODO: may need to update this)
 * Run `yarn install` inside the "team38/cookinghs/backend" folder (TODO: may need to update this)
 
@@ -35,6 +23,8 @@ Admin Credentials
 Of course, additional users can be made thorough the sign-up page.
 
 (TODO) which requests to make to the server to create an admin user 
+PATCH /api/users/:id
+with query: {admin: true}
 
 # Important Commands
 * `yarn start` for local web server
@@ -86,7 +76,7 @@ By clicking on `Recipes` in the navigation bar:
    * You can report a comment.
    * You can bookmark the recipe.
 
-### Users
+### Users (TODO)
 By clicking on `Users` in the navigation bar:
 * This page is meant for a user to view their own profile or the profile of another user
 * Each user will have a set of recipes that they have made on the user page
@@ -98,7 +88,7 @@ By clicking on `Users` in the navigation bar:
   * Master Chef: The number of recipes made by the user is above 60
 * Once the backend is setup, this page will be used to represent many different users 
 
-### Admin
+### Admin (TODO)
 By logging into the admin user through the `Login` in the navigation bar (you can only see `Admin` in the navigation bar when you're logged in as an admin user):
 * Use the admin credentials in the "Credentials" section to access this page
 * This page allows admin to view all users, view all recipes, and manage reports
@@ -106,3 +96,25 @@ By logging into the admin user through the `Login` in the navigation bar (you ca
 * For each report, you can view further details on that report or delete it
 
 # Overview of the routes in your Express server
+. is the baseURL which could be `https://cookinghs.herokuapp.com/` if using the deployed version or `http://localhost:3000/` if using the local version
+
+* ./
+  * Description: Landing page
+  * Input:
+  * Return Value:
+* ./recipes
+  * All recipes
+* ./recipes/:id
+  * Individual recipe page
+* ./recipes/newrecipe
+  * Adding a new recipe
+* ./login/*
+  * Login or signup
+* ./users 
+  * the login-ed user profile
+* ./users/:id
+  * individual user profile
+* ./admin
+  * overall admin dashboard
+* ./admin:id
+  * a specific details page for a report from the admin page
