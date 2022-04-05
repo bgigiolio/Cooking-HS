@@ -224,6 +224,7 @@ h1 {
 
 .card-col{
     padding: 0px;
+    text-align: -webkit-center;
 }
 
 .stepsListItem {
