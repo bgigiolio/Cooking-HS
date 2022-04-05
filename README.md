@@ -60,12 +60,16 @@ By clicking on `CookingHS` in the navigation bar:
 By clicking on `Recipes` in the navigation bar:
 * This page allows you to view all the recipes where each recipe card has a sneak-peek of all the details you can find when you click on that card.
 * There is "+ Add a Recipe" button that allows you to add a new recipe. By cliking on the "+", you will have the option to add a new recipe by adding in a custom image, the recipe name, recipe description, nutritional or other details, ingredients, steps, and difficulty.
-* If you click on a recipe (like "Original Mongolian Chicken" for example), it will send you to a page with similar details to what we can see when we want to add a recipe (i.e. recipe name, recipe description, nutritional or other details, ingredients, steps, and difficulty). We can also see the rating of the recipe in the form of stars. There are some actions that any user can do (even without being logged in) like navigating to the user who created this recipe by clicking on their username, changing the servings for the recipe to adjust the ingredients needed, and viewing the comments to the recipe (you can view more by clicking the "Load More Reviews" buttons) However, this page, also include several other actions that you can do only logged-in as a user:
-  * You may fork the recipe. In other words, you can create a copy of the recipe and add your own spin to it. A timeline will be shown to demonstrate the fork history for users to view. This fork history is rendered as a list and you can see an example for the recipe "Slow Cooker Philadelphia Pulled Pork Roll".
-  * You can report the recipe.
-  * You can add a rating or review to the recipe.
-  * You can report a comment.
-  * You can bookmark the recipe.
+* If you click on a recipe (like "Original Mongolian Chicken" for example), it will send you to a page with similar details to what we can see when we want to add a recipe (i.e. recipe name, recipe description, nutritional or other details, ingredients, steps, and difficulty). We can also see the rating of the recipe in the form of stars. There are some actions that any user can do (even without being logged in) like the following:
+  * Navigate to the user who created this recipe by clicking on their username
+  * Change the servings for the recipe to adjust the ingredients needed
+  *  Viewing the comments to the recipe (you can view more by clicking the "Load More Reviews" buttons) 
+ * However, this page, also include several other actions that you can do only logged-in as a user:
+   * You may fork the recipe. In other words, you can create a copy of the recipe and add your own spin to it. A timeline will be shown to demonstrate the fork history for users to view. This fork history is rendered as a list and you can see an example for the recipe "Slow Cooker Philadelphia Pulled Pork Roll".
+   * You can report the recipe.
+   * You can add a rating or review to the recipe.
+   * You can report a comment.
+   * You can bookmark the recipe.
 
 ## Users
 By clicking on `Users` in the navigation bar:
