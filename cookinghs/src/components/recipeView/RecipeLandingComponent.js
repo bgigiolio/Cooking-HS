@@ -2,7 +2,7 @@ import React from 'react';
 import RecipesPageCardGroup from './RecipesPageCardGroup';
 import SearchBar from "material-ui-search-bar";
 import styles from '../../styles/recipelanding.module.css';
-// import { Button } from 'reactstrap';
+import { Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Slider } from '@mui/material';
 import { getFilteredRecipes, updateCookTime, updateCourse, updateSort } from "../../redux/recipePage/recipe-actions"
@@ -113,8 +113,53 @@ class RecipeLanding extends React.Component {
         this.onCuisineChange = this.onCuisineChange.bind(this);
         this.onIngredientChange = this.onIngredientChange.bind(this)
         this.toggle = this.toggle.bind(this)
+        this.clearAll = this.clearAll.bind(this)
       }
 
+
+    clearAll(e){
+        // 1. set all states to default
+        // 1.1 the props
+        // this.props.cuisines = []
+        // this.props.ingredients = []
+        // this.props.difficulty = [4]
+        // this.props.cooktime = []
+        // this.props.course = [""]
+        // this.props.sort = ["date"]
+    
+    for(var i = 0; i < this.props.cuisines.length; i++){
+        this.props.removeCuisines(this.props.cuisines[i])
+    }
+
+    for(var j = 0; j < this.props.ingredients.length; j++){
+        this.props.removeIngredients(this.props.ingredients[i])
+    }
+
+    this.props.updateDifficulty(4);
+    this.props.updateCookTime(6);
+    this.props.updateCourse("");
+    this.props.updateSort("Date");
+    
+
+        
+        // 1.2: the states 
+        this.setState({sort: "Date"});
+        this.setState({selectedCourse: null});
+        this.setState({selectedCuisine: []});
+        this.setState({selectedIngredients: []});
+        this.setState({difficulty: "4"});
+        this.setState({cooktime: "0"});
+        this.setState({params: {}}, () => {
+            this.props.getFilteredRecipes(this.state.params).then(
+                console.log("successfully cleared filters")
+            )
+        })
+
+
+
+        // 2. pass in empty query
+        console.log(e.target.value);
+    }
 
     toggle(){
         console.log("toggled!")
@@ -208,6 +253,7 @@ class RecipeLanding extends React.Component {
         var c = this.props.cuisines
         var ings = this.props.ingredients
         var crse = this.props.course[this.props.course.length-1]
+        console.log("error situation: ", this.props.cooktime)
         var ct = this.state.cookingTimeEval[this.props.cooktime[this.props.cooktime.length - 1]].label
         console.log("diff: ", diff);
         this.setState({
@@ -416,8 +462,34 @@ class RecipeLanding extends React.Component {
         return(
             <div className={styles.landingContainer}>
                 <div className={styles.mainFilterSection}>
+
+                    <div className={styles.filterUpstairs}>
+
+                    <div className={styles.filterHeaders}>
+
                     <h5 className={styles.filterHeader}>Filter Recipes</h5>
                     <h6 className={styles.filterSubHeader}>(scroll for more!)</h6>
+
+                    </div>
+
+                    <div className={styles.resetFilters}>
+                        <Button className={styles.clearButton} onClick={this.clearAll}>
+                            <div className={styles.resetBtn}>
+                            <i className="fa-solid fa-arrow-rotate-right"></i>
+
+                            </div>
+                       
+                        Clear
+                        </Button>
+
+                    </div>
+
+
+                    </div>
+
+                    
+                   
+                    
 
                     {/* Course Filter */}
 
@@ -632,7 +704,7 @@ class RecipeLanding extends React.Component {
                     <Slider id="difficulty-slider"
                     // getAriaLabel={() => 'Difficulty Level'}
                     sx={{
-                        color: "lightgray",
+                        color: "#d1c0c4",
                         // height: "5"
                         // width: "10px",
                         '& .MuiSlider-thumb': {
@@ -648,6 +720,7 @@ class RecipeLanding extends React.Component {
                     onChangeCommitted={this.onDifficultyChange}
                     max={4}
                     aria-labelledby="discrete-slider"
+                    key={`slider-${this.props.difficulty[this.props.difficulty.length - 1]}`}
                     defaultValue={this.props.difficulty[this.props.difficulty.length - 1]}
                     // value={this.props.difficulty}
                     marks={this.state.marks}
@@ -669,13 +742,14 @@ class RecipeLanding extends React.Component {
                     <Slider
                     // getAriaLabel={() => 'Difficulty Level'}
                     sx={{
-                        color: "lightgray",
+                        color: "#d1c0c4",
                         '& .MuiSlider-thumb': {
                             width: "1rem",
                             height: "1rem"
                           },
                     }}
                     onChangeCommitted={this.onCookTimeChange}
+                    key={`slider-${this.props.cooktime[this.props.cooktime.length - 1]}`}
                     defaultValue={this.props.cooktime[this.props.cooktime.length - 1]}
                     max={5}
                     aria-labelledby="discrete-slider"
@@ -691,7 +765,7 @@ class RecipeLanding extends React.Component {
 
                     {/* Ingredients Filter */}
                     <div className={styles.courseFilter}>
-                    <h6>Ingredients</h6>
+                    <h6 className={styles.ingHeader}>Ingredients</h6>
 
                     <p className={styles.ingredientCategoryHeader}>Meats</p>
                     <span className={styles.twoRadioButtons1}>
@@ -918,6 +992,7 @@ class RecipeLanding extends React.Component {
                         value={this.state.search}
                         onChange={(newValue) => this.setState({ search: newValue }, () => console.log("logged: ", this.state.search))}
                         onRequestSearch={() => this.handleSearch(this.state.search)}
+                        onCancelSearch={() => this.handleSearch("")}
                         ></SearchBar>
                     </div>
 
@@ -928,7 +1003,7 @@ class RecipeLanding extends React.Component {
                 <div className={styles.sortDropDown}>
 
                 <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                <DropdownToggle caret>
+                <DropdownToggle caret className={styles.dropDownComp}>
                 Filter By
                 </DropdownToggle>
                 <DropdownMenu>

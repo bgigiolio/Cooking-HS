@@ -224,6 +224,12 @@ input{
     margin-right:2rem;
 }
 
+.dropDownComp{
+    background-color: white;
+    color: slategray;
+    border-color: slategray;
+}
+
 .sortButton:focus{
     background-color: rgb(183, 194, 197)
 
@@ -240,4 +246,31 @@ input{
     margin-top: 1rem;
     font-size: larger;
 
+}
+
+.filterUpstairs{
+    display: flex;
+}
+
+.clearButton{
+    width: 4rem;
+    font-size: small;
+    display: flex;
+    padding: 2px;
+    background-color: white;
+    color: slategray;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 28px;
+    margin-left: 14px;
+}
+
+.clearButton:hover{
+    background-color: lightgray;
+    border-color: black;
+    color: black;
+}
+
+.ingHeader{
+    margin-top: 3px;
 }
