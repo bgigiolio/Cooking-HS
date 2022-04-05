@@ -99,22 +99,38 @@ By logging into the admin user through the `Login` in the navigation bar (you ca
 . is the baseURL which could be `https://cookinghs.herokuapp.com/` if using the deployed version or `http://localhost:3000/` if using the local version
 
 * ./
-  * Description: Landing page
-  * Input:
-  * Return Value:
+  * Description: View the Landing page
+  * Input: None
+  * Return Value: None
 * ./recipes
-  * All recipes
+  * Description: All recipes
+  * Input: None
+  * Return Value: Get all recipes
 * ./recipes/:id
-  * Individual recipe page
+  * Description: Individual recipe page
+  * Input: id
+  * Return Value: Get a recipe based on id
 * ./recipes/newrecipe
-  * Adding a new recipe
+  * Description: Adding a new recipe
+  * Input: newRecipe
+  * Return Value: None
 * ./login/*
-  * Login or signup
+  * Description: Login or signup
+  * Input: User info or newUser
+  * Return Value: None
 * ./users 
-  * the login-ed user profile
+  * Description: the login-ed user profile
+  * Input: None
+  * Return Value: Get all users
 * ./users/:id
-  * individual user profile
+  * Description: individual user profile
+  * Input: id
+  * Return Value: Get a user based on id
 * ./admin
-  * overall admin dashboard
+  * Description: Overall admin dashboard (mainly for managing reports)
+  * Input: None
+  * Return Value: Get all the reports
 * ./admin:id
-  * a specific details page for a report from the admin page
+  * Description: A specific details page for a report from the admin page
+  * Input: id
+  * Return Value: Returns the specific details page for a report from the admin page
