@@ -64,6 +64,9 @@ export const RecipesReducer = (
         
         case ActionTypes.RECIPES_LOADING:
             return {...state, isLoading: true, errMess: null, recipes: []}
+
+        case ActionTypes.RECIPES_LOADING_FILTERS:
+            return {...state, isLoading: true, errMess: null}
         
         case ActionTypes.RECIPES_FAILED:
             return {...state, isLoading: false, errMess: action.payload};

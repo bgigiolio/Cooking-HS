@@ -26,6 +26,7 @@ export const getRecipes = () => (dispatch) => {
 // for the filtered landing page recipes
 
 export const getFilteredRecipes = (p={}) => (dispatch) => {
+  dispatch(recipesLoadingFilters(true));
   console.log("filter is called")
   console.log(p);
   if(p === {}){
@@ -67,6 +68,10 @@ export const getFilteredRecipes = (p={}) => (dispatch) => {
 
 export const recipesLoading = () => ({
     type: ActionTypes.RECIPES_LOADING
+});
+
+export const recipesLoadingFilters = () => ({
+  type: ActionTypes.RECIPES_LOADING_FILTERS
 });
 
 export const addRecipes = (recipes) => ({

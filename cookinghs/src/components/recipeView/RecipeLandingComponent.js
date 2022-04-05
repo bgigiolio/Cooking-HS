@@ -274,6 +274,10 @@ class RecipeLanding extends React.Component {
       onCourseChange(e) {
           this.setState({
           selectedCourse: e.target.value
+        }, () => {
+
+
+            
         });
 
         var course = e.target.value;
