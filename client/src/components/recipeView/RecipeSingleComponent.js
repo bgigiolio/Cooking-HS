@@ -197,7 +197,7 @@ function RecipeSingle(props) {
                     <CardBody className="commentBody">
                         {comment.content}
                         <br></br>
-                        {comment.date.slice(0, 11)}
+                        {comment.date.slice(0, 10)}
                     </CardBody>
                 </Card>
                 <br></br>
