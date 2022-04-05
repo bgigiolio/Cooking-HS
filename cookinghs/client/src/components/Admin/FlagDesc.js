@@ -2,18 +2,11 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import styles from "../Admin/Admin.module.css";
 import { Button } from 'reactstrap';
-import {RECIPES} from '../../shared/RecipeList';
 import { Link } from 'react-router-dom';
 
 const FlagDesc = (props) => {
     const location = useLocation();
     const {flag_info} = location.state
-    // console.log(
-    //     Object.entries(RECIPES)
-    //     .map( ([key, value]) => `My key is ${key} and my value is ${value}` )
-    //   )
-    // console.log(flag_info)
-    var recipeID = matchRecipeFromTitle(flag_info.recipe)
 
     return(
         <div className={styles.container}>
@@ -45,18 +38,7 @@ const FlagDesc = (props) => {
     )
 
 }
-const matchRecipeFromTitle = (title) => {
-    // in case the recipes aren't found, it goes to 0, the main page :)
-    var ret = 0;
-    Object.entries(RECIPES).map( ([key, value]) => {
-        if(value.title === title){
-            ret = key
-        }
-    })
-    return ret;
-    
 
-}
 export default FlagDesc;
 
 
