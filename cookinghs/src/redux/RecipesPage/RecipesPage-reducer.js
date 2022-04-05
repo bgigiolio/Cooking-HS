@@ -1,5 +1,4 @@
 import * as actionTypes from "./RecipesPage-types";
-import { RECIPES } from '../../shared/RecipeList';
 
 // const INITIAL_STATE = {
 //     recipes: RECIPES};

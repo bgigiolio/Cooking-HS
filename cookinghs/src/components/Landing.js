@@ -1,8 +1,7 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
+import { Routes, Route, Link, Navigate } from 'react-router-dom';
 import styles from "../styles/Landing.module.css";
-import SearchBar from "material-ui-search-bar";
-import {Card, CardImg, Button} from 'reactstrap';
+import {Button} from 'reactstrap';
 import RecipeBrowser from './recipeView/RecipeBrowserComponent';
 
 class Landing extends React.Component {

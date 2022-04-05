@@ -1,10 +1,8 @@
-import {Label, Input, Button} from 'reactstrap'
+import {Input, Button} from 'reactstrap'
 import React from 'react';
 import './styles.css';
 import axios from 'axios'; // new!!
-import RecipeBrowser from '../../recipeView/RecipeBrowserComponent';
-import AdminPage from '../../Admin/index'
-import {Routes, Route, Link, useParams} from 'react-router-dom';
+import { Link, useParams} from 'react-router-dom';
 import { Navigate } from 'react-router';
 import { baseUrl } from '../../../shared/baseUrl';
 

@@ -46,7 +46,7 @@ export const getFilteredRecipes = (p={}) => (dispatch) => {
   }
   // dispatch(recipesLoading(true));
   else{
-    return fetch(baseUrl + 'api/recipes/filters' + '?' + new URLSearchParams(p).toString(), {
+    return fetch(baseUrl + 'api/recipes/filters?' + new URLSearchParams(p).toString(), {
       credentials: 'same-origin'
     }).then(response => {
       if (response.ok) {

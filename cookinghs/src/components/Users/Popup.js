@@ -1,12 +1,8 @@
 import React, { Component } from "react";
 import {Modal, Box} from '@mui/material';
-// import Modal from '@mui/material/Modal';
-// import Box from '@mui/material/Box';
-import styles from './Popup.css';
 import axios from 'axios'; // new!!
 import {Label, Input, Button} from 'reactstrap'
 import { baseUrl } from '../../shared/baseUrl';
-import editPic from './images/edit.png'
 const {SHA256} = require('crypto-js');
 
 const boxMode = {

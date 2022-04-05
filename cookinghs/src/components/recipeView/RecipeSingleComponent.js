@@ -19,6 +19,11 @@ function RecipeSingle(props) {
     const chosenRecipe = props.chosenRecipe;
     let chosenComment = []
     let bookmarked = false
+
+    //check if user is logged in
+    //get state of bookmarked?
+    //render the icon accordingly
+
     let averageRating = 0
     let averageRatingString = ""
     if (!props.Comments.isLoading) {
