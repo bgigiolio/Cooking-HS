@@ -45,9 +45,9 @@ function WriteRecipe(props) {
                         }
                     ],
                     steps: [
-                        '',
-                        '',
-                        ''
+                        {step: ''},
+                        {step: ''},
+                        {step: ''}
                     ],
                     course: 'Main',
                     cuisine: '',
@@ -93,7 +93,6 @@ function WriteRecipe(props) {
                 }
             )
         }
-        
     }
 
     const handleIngredientChange = (index, e) => {
@@ -116,11 +115,32 @@ function WriteRecipe(props) {
         const target = e.target;
         const value = target.value;
         let steps = [...recipe.steps];
-        steps[index] = value;
+        steps[index] = {
+            ...steps[index],
+            step: value
+        };
         setRecipe({
             ...recipe,
             steps: steps
         })
+    }
+
+    const handleStepImage = (index, e) => {
+        const target = e.target;
+        const file = target.files[0];
+        let steps = [...recipe.steps];
+        const reader = new FileReader();
+        reader.readAsDataURL(file)
+        reader.onloadend = () => {
+            steps[index] = {
+                ...steps[index],
+                stepimage: reader.result
+            }
+            setRecipe({
+                ...recipe,
+                steps: steps
+            })
+        }
     }
 
     const removeIngredient = (index, e) => {
@@ -178,9 +198,14 @@ function WriteRecipe(props) {
             else {
                 ingredient.quantity = ''
             }
+            ingredient.name = ingredient.name.toLowerCase()
+            if (ingredient.unit !== "" && ingredient.unit !== undefined) {
+                console.log(ingredient.name)
+                ingredient.unit = ingredient.unit.toLowerCase()
+            }
         })
         //remove empty steps
-        checkedRecipe.steps = checkedRecipe.steps.filter((step) => step.trim() !== '')
+        checkedRecipe.steps = checkedRecipe.steps.filter((step) => step.step.trim() !== "");
 
         return checkedRecipe
     }
@@ -203,15 +228,12 @@ function WriteRecipe(props) {
         const valid = checkForm(recipe)
         if (valid) {
             if (props.flag === "fork" || props.flag === "new") {
-                const result = await props.postRecipe(recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.difficulty, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image, recipe.imagefile)
-                console.log(result)
-                if (result) {
-                    handleRedirect()
-                }
+                props.postRecipe(recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.difficulty, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image, recipe.imagefile)
+                handleRedirect()
             }
             else if (props.flag === "edit") {
                 props.putRecipe(recipe._id, recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.difficulty, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image, recipe.imagefile)
-                // handleRedirect()
+                handleRedirect()
             }
         }
         else {
@@ -255,18 +277,32 @@ function WriteRecipe(props) {
     return(
         <div className='container' id='formContainer'>
             {props.flag === "fork" ? forkRecipe() : props.flag === "edit" ? editRecipe() : newRecipe()}
-            <RecipeForm 
+            {props.flag === "edit" ? AUTHOR === chosenRecipe.author ? <RecipeForm 
                 {...recipe} 
                 handleSubmit = {handleSubmit}
                 handleInputChange = {handleInputChange}
                 handleImageChange = {handleImageChange}
                 handleIngredientChange = {handleIngredientChange}
                 handleStepChange = {handleStepChange}
+                handleStepImage = {handleStepImage}
                 addIngredient = {addIngredient}
                 removeIngredient = {removeIngredient}
                 addStep = {addStep}
                 removeStep = {removeStep}
-            />
+            /> : <h2>You are not authorised to make edits to this recipe</h2> : <RecipeForm 
+            {...recipe} 
+            handleSubmit = {handleSubmit}
+            handleInputChange = {handleInputChange}
+            handleImageChange = {handleImageChange}
+            handleIngredientChange = {handleIngredientChange}
+            handleStepChange = {handleStepChange}
+            handleStepImage = {handleStepImage}
+            addIngredient = {addIngredient}
+            removeIngredient = {removeIngredient}
+            addStep = {addStep}
+            removeStep = {removeStep}
+        />}
+            
         </div>
     )
 }

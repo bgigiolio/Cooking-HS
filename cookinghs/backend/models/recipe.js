@@ -1,14 +1,4 @@
 const mongoose = require('mongoose')
-const { imageSchema } = require('./image')
-
-const IngredientsSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    quantity: Number,
-    unit: String
-})
 
 const RecipeSchema = new mongoose.Schema({
     author: {
@@ -32,8 +22,15 @@ const RecipeSchema = new mongoose.Schema({
         required: true,
     },
     description: String,
-    ingredients: [IngredientsSchema],
-    steps: [String],
+    ingredients: [{
+        name: {type: String, required: true},
+        quantity: Number,
+        unit: String
+    }],
+    steps: [{
+        step: {type: String, required: true},
+        stepimage: String
+    }],
     course: String,
     cuisine: String,
     preptime: Number,

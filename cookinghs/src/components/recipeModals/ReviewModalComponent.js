@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Form, Label, Input, Col } from 'reactstrap';
+import Rating from '@mui/material/Rating';
 
 function ReviewModal(props) {
     const [rating, setRating] = useState(5);
@@ -31,38 +32,24 @@ function ReviewModal(props) {
             <ModalBody>
                 <Form>
                     <FormGroup row>
+                        
                         <Col md={12}>
                             <FormGroup row>
                                 <Label
                                     for="rating"
                                     md={6}
                                 >
-                                    Your Rating (out of 5)
+                                    Your Rating
                                 </Label>
                                 <Col md={6}>
-                                    <Input
-                                        id="rating"
-                                        name="rating"
-                                        type="select"
-                                        value={rating}
-                                        onChange={(e) => {setRating(e.target.value)}}
-                                    >
-                                        <option>
-                                        1
-                                        </option>
-                                        <option>
-                                        2
-                                        </option>
-                                        <option>
-                                        3
-                                        </option>
-                                        <option>
-                                        4
-                                        </option>
-                                        <option>
-                                        5
-                                        </option>                            
-                                    </Input>
+                                <Rating
+                                    name="simple-controlled"
+                                    style={{marginTop: "9px"}}
+                                    value={rating}
+                                    onChange={(event, newValue) => {
+                                        setRating(newValue);
+                                    }}
+                                />
                                 </Col>
                             </FormGroup>
                             <FormGroup>

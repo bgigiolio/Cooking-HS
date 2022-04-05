@@ -2,27 +2,25 @@ import React from "react";
 import { connect } from "react-redux";
 import RecipeCard from "./RecipeCard";
 import {Row, Col} from "reactstrap";
+import axios from "axios";
 
-const RecipeCardGroup = ({ recipes }) => {
+const RecipeCardGroup = ( props ) => {
+    const recipes = props.recipes.filter((recipe) => !recipe.deleted)
     return (
-        <div>
-            <Row xs={4}>
-            {recipes.map((recipe) => (
-                <Col>
-                <RecipeCard key={recipe.id} recipeData={recipe}/>
-                </Col>
-            ))}
-            </Row>
-
-        </div>
+        <>
+          { 
+            props.isLoading ? null:
+                <Row md={4}>
+                {recipes.map((recipe) => (
+                    <Col>
+                        <RecipeCard recipeData = {recipe} del = {props.del}/>
+                    </Col>
+                ))}
+                </Row>
+          }
+        </>
     )
 }
 
-const mapStateToProps = state => {
-    return {
-        recipes: state.Recipes.recipes
-    }
 
-}
-
-export default connect(mapStateToProps)(RecipeCardGroup);
+export default RecipeCardGroup;

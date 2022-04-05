@@ -3,7 +3,7 @@
     background-size: cover;
     overflow: hidden;
     max-width: 100%;
-    min-height: calc(100vh - 56px);
+    height: calc(100vh - 57px);
 
 }
 
@@ -40,6 +40,11 @@ display: flex;
     background-color: white;
     color: grey;
     border-radius: 20px;
+}
+
+.landingButton:hover{
+  background-color: #cfa5ae;
+  border-color: white;
 }
 
 .search{

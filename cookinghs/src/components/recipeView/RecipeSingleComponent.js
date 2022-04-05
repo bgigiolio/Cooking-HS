@@ -5,6 +5,7 @@ import { Fraction } from 'fractional';
 import { Link } from 'react-router-dom';
 import '../../styles/recipeview.css';
 import '../../styles/colorpalette.css';
+import '../../styles/defaults.css'
 import ReviewModal from '../recipeModals/ReviewModalComponent';
 import ReportModal from '../recipeModals/ReportModalComponent';
 import StarRating from './StarRatingComponent';
@@ -17,14 +18,16 @@ function RecipeSingle(props) {
     const chosenRecipe = props.chosenRecipe;
     let chosenComment = []
     let averageRating = 0
+    let averageRatingString = ""
     if (!props.Comments.isLoading) {
         chosenComment = props.Comments.comments.filter((comment) => comment.recipeid === chosenRecipe._id)
         if (chosenComment.length) {
             chosenComment.map((comment) => averageRating += comment.rating)
             averageRating /= chosenComment.length
+            averageRatingString = averageRating.toFixed(2)
         }
         else {
-            averageRating = "No ratings yet"
+            averageRatingString = "No ratings yet"
         }
     }
     const [servingSize, setServingSize] = useState(chosenRecipe.servings);
@@ -39,11 +42,14 @@ function RecipeSingle(props) {
         }
         line.reverse()
         const timelineView = line.map((step, index) => {
-            const parentTitle = recipes.filter(recipe => recipe._id === step)[0].title
+            const parentRecipe = recipes.filter(recipe => recipe._id === step)[0]
+            const parentTitle = parentRecipe.title
+            const parentAuthor = props.users.filter((user) => user._id === parentRecipe.author)[0].fullName
+            const parentDeleted = parentRecipe.deleted
             const link = '../recipes/' + step
             return (
                 <li key={index}>
-                    {index !== line.length - 1 ? <Link to={link}>{parentTitle}</Link> : <>{parentTitle} (Current)</>}
+                    {index !== line.length - 1 ? parentDeleted ? <span>{parentTitle} by {parentAuthor} (Deleted)</span> : <><Link className='linkStyle' to={link}>{parentTitle}</Link> by {parentAuthor} </> : <>{parentTitle} (Current)</>}
                 </li>
             )
         })
@@ -73,8 +79,8 @@ function RecipeSingle(props) {
                 if (quantity%1 === 0){
                     amount = new Fraction(quantity).toString();
                 }
-                else if (quantity*3%1 === 0) {
-                    amount = (quantity*3).toString();
+                else if (quantity*3%1 === 0 || quantity*3%1 > 0.999) {
+                    amount = Math.round(quantity*3).toString();
                     amount = new Fraction(amount.concat('/3')).toString()
                 }
                 else {
@@ -106,8 +112,9 @@ function RecipeSingle(props) {
 
     const stepsView = chosenRecipe.steps.map((step, index) => {
         return (
-            <li className='stepsList' key={index}>
-                <span>{step}</span>
+            <li className='stepsListItem' key={index}>
+                <span>{step.step}</span>
+                {step.stepimage ? <img src = {step.stepimage} className="stepImage"/> : null}
             </li>
         )
     });
@@ -141,7 +148,7 @@ function RecipeSingle(props) {
                             <i id={reportId} className="reportIcon fa-solid fa-triangle-exclamation"></i>
                         </Button>
                     </CardHeader>
-                    <CardBody style={{width: "100%", overflow:"hidden", height: "fit-content"}}>
+                    <CardBody className="commentBody">
                         {comment.content}
                         <br></br>
                         {comment.date}
@@ -178,30 +185,39 @@ function RecipeSingle(props) {
             <ListGroup>
                 <ListGroupItem>
                     <Row>
-                        <Col md={10}>
+                        <Col md={9}>
                             <h1>{chosenRecipe.title}</h1>
                         </Col>
-                        <Col md={2}>
+                        <Col md={3} style={{textAlign: "right"}}>
                             <Button 
-                                onClick={toggleReport}
+                                onClick={() => alert("bookmark")}
+                                color="primary"
+                                outline
+                                className="headerButton"
+                            >
+                                <i class="fa-regular fa-bookmark"></i>
+                            </Button>
+                            <Button 
+                                onClick={() => toggleReport}
                                 color="danger"
                                 outline
+                                className="headerButton"
                             >
                                 <i id='reportIcon0' className="fa-solid fa-triangle-exclamation"></i>
                             </Button>
                             <Link to="./forkrecipe" state={{chosenRecipe: chosenRecipe}}>
-                                <Button color="secondary" outline id="forkButton">
+                                <Button color="secondary" outline>
                                     <i className="fa-solid fa-code-fork"></i>
                                 </Button>
                             </Link>
                         </Col>
                     </Row>
                     <div id='averageStarRating'>
-                    <StarRating rating={averageRating}/> <span id="averageRating">{averageRating}</span>
+                    <StarRating rating={averageRating}/> <span id="averageRating">{averageRatingString}</span>
                     </div>
                     {/* link to author user profile here */}
-                    {chosenRecipe.author ? <span> By <span className='userLink'>{props.users.filter((user) => user._id === chosenRecipe.author)[0].fullName}</span></span> : null}
-                    {chosenRecipe.difficulty ? <span style={{float: "right"}}> Difficulty: {chosenRecipe.difficulty}/10 </span> : null}
+                    {chosenRecipe.author ? <span> By <Link className='linkStyle' to={"/users/"+chosenRecipe.author}>{props.users.filter((user) => user._id === chosenRecipe.author)[0].fullName}</Link></span> : null}
+                    {chosenRecipe.difficulty ? <span className="recipeDifficulty"> Difficulty: {chosenRecipe.difficulty}/10 </span> : null}
                 </ListGroupItem>
                 <ListGroupItem>
                     {timeline(chosenRecipe.parent)}
