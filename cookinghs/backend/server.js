@@ -31,8 +31,12 @@ const bodyParser = require('body-parser')
 app.use(bodyParser.json({limit: '50mb'}))
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
 
-const publicPath = path.join(__dirname, '..', 'public');
+const publicPath = path.join(__dirname, '..', 'build');
 app.use(express.static(publicPath))
+
+app.get("/", function(req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+})
 
 // Add model routes here vvv
 const userRouter = require("./routes/users")
@@ -50,7 +54,6 @@ app.get('*', (req, res) => {
     res.status(404).send("404 Error: We cannot find the page you are looking for.");
     // you could also send back a fancy 404 webpage here.
 });
-
 
 const port = process.env.PORT || 5000
 app.listen(port, () => {
