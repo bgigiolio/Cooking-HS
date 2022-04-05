@@ -297,6 +297,9 @@ function RecipeForm(props) {
                         Main
                         </option>
                         <option>
+                        Entree
+                        </option>
+                        <option>
                         Side
                         </option>
                         <option>
@@ -304,6 +307,9 @@ function RecipeForm(props) {
                         </option>
                         <option>
                         Dessert
+                        </option>
+                        <option>
+                        Beverage
                         </option>
                     </Input>
                 </Col>
