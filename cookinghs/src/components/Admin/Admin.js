@@ -1,12 +1,9 @@
 import React from 'react';
-import UserCardGroup from './UserCardGroup';
 import styles from "./Admin.module.css";
-import RecipeCardGroup from './RecipeCardGroup';
 import Flags from "./Flags";
 import { connect } from 'react-redux';
 import { baseUrl } from '../../shared/baseUrl';
 import axios from 'axios'; // new!!
-import { Button } from 'reactstrap';
 
 class Admin extends React.Component {
     constructor(props){

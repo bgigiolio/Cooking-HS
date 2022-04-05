@@ -82,7 +82,6 @@ function WriteRecipe(props) {
 
     const handleImageChange = e => {
         const target = e.target;
-        const name = target.name;
         const file = target.files[0];
         const reader = new FileReader();
         reader.readAsDataURL(file)
@@ -216,7 +215,7 @@ function WriteRecipe(props) {
         if (recipe.title === '') {return false}
         recipe.ingredients.map((ingredient) => {
             if (ingredient.name === '') {return false}
-            if (ingredient.quantity !== '' && ingredient.quantity === NaN) {console.log('bad quantity'); return false}
+            if (ingredient.quantity !== '' && isNaN(ingredient.quantity)) {console.log('bad quantity'); return false}
         })
         recipe.steps.map((step) => {if (step === ''){return false}})
         return true

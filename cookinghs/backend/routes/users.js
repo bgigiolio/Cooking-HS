@@ -250,10 +250,10 @@ router.route("/bookmarked/:id/:recipeid").patch((req, res) => {//#11
         }else{
             result.bookmarked.push(req.params.recipeid)
             result.save().then(() => { 
-                res.status(200).send(result)
                 if(req.params.id === req.session._id){
                     req.session.bookmarked = result.bookmarked
                 }
+                res.status(200).send(result)
             })
             .catch((error) => res.status(500).send(error))
         }
@@ -317,7 +317,9 @@ router.route("/bookmarked/:id/:recipeid").delete((req, res) => {//#14
         }else if(result === null){
             res.status(404).send("user not found")
         }else{
-            result.bookmarked.filter(id => id === req.params.recipeid);
+            result.bookmarked = result.bookmarked.filter(id => id !== req.params.recipeid);
+            console.log(req.params.recipeid)
+            console.log(result)
             result.save().then(() => { 
                 res.status(200).send(result)
                 if(req.params.id === req.session._id){

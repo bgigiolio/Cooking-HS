@@ -26,6 +26,7 @@ export const getRecipes = () => (dispatch) => {
 // for the filtered landing page recipes
 
 export const getFilteredRecipes = (p={}) => (dispatch) => {
+  dispatch(recipesLoadingFilters(true));
   console.log("filter is called")
   console.log(p);
   if(p === {}){
@@ -46,7 +47,7 @@ export const getFilteredRecipes = (p={}) => (dispatch) => {
   }
   // dispatch(recipesLoading(true));
   else{
-    return fetch(baseUrl + 'api/recipes/filters' + '?' + new URLSearchParams(p).toString(), {
+    return fetch(baseUrl + 'api/recipes/filters?' + new URLSearchParams(p).toString(), {
       credentials: 'same-origin'
     }).then(response => {
       if (response.ok) {
@@ -67,6 +68,10 @@ export const getFilteredRecipes = (p={}) => (dispatch) => {
 
 export const recipesLoading = () => ({
     type: ActionTypes.RECIPES_LOADING
+});
+
+export const recipesLoadingFilters = () => ({
+  type: ActionTypes.RECIPES_LOADING_FILTERS
 });
 
 export const addRecipes = (recipes) => ({

@@ -1,11 +1,8 @@
-import { Button } from 'reactstrap';
-import { Card } from 'reactstrap';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import { CardBody, CardTitle, CardText, CardImg } from 'reactstrap';
 import React from 'react';
+import { Card } from 'reactstrap';
+import { Routes, Route, Link } from 'react-router-dom';
+import { CardBody, CardTitle, CardText, CardImg } from 'reactstrap';
 import styles from './UserCard.module.css';
-import {deleteRecipe} from "../../redux/UserPage/UserRecipes/UserRecipes-actions";
-import {connect} from 'react-redux';
 import RecipeBrowser from '../recipeView/RecipeBrowserComponent';
 import axios from 'axios'; // new!!
 import { baseUrl } from '../../shared/baseUrl';
@@ -37,7 +34,7 @@ class RecipeCardLegacy extends React.Component {
                         top
                         className={styles.user_img}
                     />
-                    <CardBody className={styles.body}>
+                    <CardBody className={styles.body} style={{width: "100%"}}>
                         <CardTitle tag="h5">
                             <Link to={"/recipes/" + this.props.recipeData}>{this.state.title}</Link>
                         </CardTitle>

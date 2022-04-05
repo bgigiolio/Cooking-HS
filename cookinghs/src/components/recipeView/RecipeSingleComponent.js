@@ -11,12 +11,30 @@ import ReportModal from '../recipeModals/ReportModalComponent';
 import StarRating from './StarRatingComponent';
 import { postComment } from '../../redux/comments/comment-actions';
 import { postReport } from '../../redux/reports/report-actions';
+import axios from 'axios'; // new!!
+import { baseUrl } from '../../shared/baseUrl';
 
+function useForceUpdate(){
+    const [value, setValue] = useState(0); // integer state
+    return () => setValue(value => ++value); // update the state to force render
+}
 
 function RecipeSingle(props) {
+    const forceUpdate = useForceUpdate();
     const recipes = props.recipes
     const chosenRecipe = props.chosenRecipe;
     let chosenComment = []
+    let loggedIn = false;
+    let bookmarked = false
+    if(props.currentUser !== null && props.currentUser.hasOwnProperty("_id")){
+        loggedIn = true;
+        axios.get(baseUrl + "api/users/session", {params: {want : ["bookmarked"]}})
+        .then((response) => {
+            if(response.data.bookmarked.filter(entry => entry === chosenRecipe._id).length != 0){
+                bookmarked = true
+            }
+        }).then(() => forceUpdate)
+    }
     let averageRating = 0
     let averageRatingString = ""
     if (!props.Comments.isLoading) {
@@ -114,10 +132,37 @@ function RecipeSingle(props) {
         return (
             <li className='stepsListItem' key={index}>
                 <span>{step.step}</span>
-                {step.stepimage ? <img src = {step.stepimage} className="stepImage"/> : null}
+                {step.stepimage ? <img alt="" src = {step.stepimage} className="stepImage"/> : null}
             </li>
         )
     });
+
+    const bookmark = () => {
+        console.log(bookmarked)
+        if(!bookmarked){
+            console.log("bookmarking!")
+            let id = ""
+            axios.get(baseUrl + "api/users/session", {params: {want : ["_id"]}})
+            .then( async (response) => {
+                id = response.data._id
+                axios.patch(baseUrl + "api/users/bookmarked/" + id + "/" + chosenRecipe._id)
+                .then( () => {
+                    bookmarked = true
+                }).then(() => alert('Bookmarked!'))
+            })
+        }else{
+            console.log("un bookmarking!")
+            let id = ""
+            axios.get(baseUrl + "api/users/session", {params: {want : ["_id"]}})
+            .then( async (response) => {
+                id = response.data._id
+                axios.delete(baseUrl + "api/users/bookmarked/" + id + "/" + chosenRecipe._id)
+                .then( () => {
+                    bookmarked = false
+                }).then(() => alert('Unbookmarked!'))
+            })
+        }
+    }
 
     const [reportModal, setReportModal] = useState(false);
     const [reportId, setReportId] = useState();
@@ -189,14 +234,15 @@ function RecipeSingle(props) {
                             <h1>{chosenRecipe.title}</h1>
                         </Col>
                         <Col md={3} style={{textAlign: "right"}}>
-                            <Button 
-                                onClick={() => alert("bookmark")}
+                            {loggedIn ?<Button 
+                                onClick={bookmark}
                                 color="primary"
                                 outline
-                                className="headerButton"
-                            >
-                                <i class="fa-regular fa-bookmark"></i>
-                            </Button>
+                                className="headerButton">
+                                {bookmarked ? <i class="fa-solid fa-bookmark"></i> : <i class="fa-regular fa-bookmark"></i>}
+                            </Button> 
+                            : null}
+
                             <Button 
                                 onClick={() => toggleReport}
                                 color="danger"

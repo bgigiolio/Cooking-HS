@@ -274,6 +274,10 @@ class RecipeLanding extends React.Component {
       onCourseChange(e) {
           this.setState({
           selectedCourse: e.target.value
+        }, () => {
+
+
+            
         });
 
         var course = e.target.value;
@@ -664,6 +668,7 @@ class RecipeLanding extends React.Component {
                         <div className={styles.CheckBoxCuisine}>
                             <label>
                                 <input
+                                className={styles.CheckBoxCuisineInput}
                                 type="checkbox"
                                 value="American"
                                 checked={this.props.cuisines.includes("American")}

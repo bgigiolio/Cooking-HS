@@ -1,15 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styles from './Users.css';
 import RecipeCardGroup from './RecipeCardGroup';
 import UserProgress from './UserProgress';
-import { Button, Container } from 'reactstrap';
-import Popup from './Popup';
+import { Container } from 'reactstrap';
 import { baseUrl } from '../../shared/baseUrl';
 import axios from 'axios'; // new!!
 //I would need to import these images based on the users from the backend later
 import foodBanner from "./images/foodBanner.jpeg";
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 
 class PublicUsers extends React.Component {
@@ -43,14 +41,13 @@ class PublicUsers extends React.Component {
     render() {
         const currentUserRecipes = this.props.Recipes.recipes.filter((recipe) => recipe.author === this.state.currentUser._id)
         console.log(currentUserRecipes)
-        const {profilePic} = this.props
 
         return(
             <div id='container'>
                 <div id="circle">
-                    <img id="profilePic" src={this.state.currentUser.profilePic}/>
+                    <img alt="" id="profilePic" src={this.state.currentUser.profilePic}/>
                 </div>
-                <img id="foodBanner" src={foodBanner}/>
+                <img alt="" id="foodBanner" src={foodBanner}/>
                 {/** The name, username will depend on info from backend per user */}
                 <h1 id="name">{this.state.currentUser.fullName}</h1>
                 <p id="username">{"@" + this.state.currentUser.username}</p>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styles from './Users.css';
 import RecipeCardGroup from './RecipeCardGroup';
 import RecipeCardGroupLegacy from './RecipeCardGroupLegacy';
 import UserProgress from './UserProgress';
@@ -44,9 +43,9 @@ class Users extends React.Component {
 
 
     render() {
+        console.log(this.state.currentUser)
         const currentUserRecipes = this.props.Recipes.recipes.filter((recipe) => recipe.author === this.state.currentUser._id)
         console.log(currentUserRecipes)
-        const {profilePic} = this.props
         if(this.state.currentUser.fullName !== ""){
 
             return(
@@ -60,9 +59,9 @@ class Users extends React.Component {
                         Edit Profile
                     </Button>
                     <div id="circle">
-                        <img id="profilePic" src={this.state.currentUser.profilePic}/>
+                        <img alt="" id="profilePic" src={this.state.currentUser.profilePic}/>
                     </div>
-                    <img id="foodBanner" src={foodBanner}/>
+                    <img alt="" id="foodBanner" src={foodBanner}/>
                     {/** The name, username will depend on info from backend per user */}
                     <h1 id="name">{this.state.currentUser.fullName}</h1>
                     <p id="username">{"@" + this.state.currentUser.username}</p>
