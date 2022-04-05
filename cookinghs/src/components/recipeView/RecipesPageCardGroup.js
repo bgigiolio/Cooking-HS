@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import '../../styles/recipeview.css';
 import '../../styles/colorpalette.css';
 import { connect } from "react-redux";
-import { setInitialRecipes } from "../../redux/RecipesPage/RecipesPage-actions";
 
 
 const RecipesPageCardGroup = ({ recipes, users, comments, all_recipes }) => {
@@ -102,12 +101,6 @@ const RecipesPageCardGroup = ({ recipes, users, comments, all_recipes }) => {
         )
     }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        setInitialRecipes: (recipes) => dispatch(setInitialRecipes(recipes)),
-    }
-  }
-
 const mapStateToProps = state => {
     return {
         recipes: state.Recipes.filtered_recipes
@@ -115,4 +108,4 @@ const mapStateToProps = state => {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RecipesPageCardGroup);
+export default connect(mapStateToProps)(RecipesPageCardGroup);
