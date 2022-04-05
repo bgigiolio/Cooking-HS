@@ -263,7 +263,7 @@ function RecipeSingle(props) {
                     </div>
                     {/* link to author user profile here */}
                     {chosenRecipe.author ? <span> By <Link className='linkStyle' to={"/users/"+chosenRecipe.author}>{props.users.filter((user) => user._id === chosenRecipe.author)[0].fullName}</Link></span> : null}
-                    {chosenRecipe.difficulty ? <span className="recipeDifficulty"> Difficulty: {chosenRecipe.difficulty}/10 </span> : null}
+                    {chosenRecipe.difficulty ? <span className="recipeDifficulty"> Difficulty: {chosenRecipe.difficulty}/5 </span> : null}
                 </ListGroupItem>
                 <ListGroupItem>
                     {timeline(chosenRecipe.parent)}

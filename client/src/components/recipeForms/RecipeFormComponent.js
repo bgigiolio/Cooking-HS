@@ -398,14 +398,14 @@ function RecipeForm(props) {
                         name="difficulty"
                         type="range"
                         min='1'
-                        max='10'
+                        max='5'
                         step='1'
                         value={props.difficulty}
                         onChange={props.handleInputChange}
                     />
                 </Col>
                 <Label md={2}>
-                    {props.difficulty}/10
+                    {props.difficulty}/5
                 </Label>
             </FormGroup>
             <div className="spacer" />
