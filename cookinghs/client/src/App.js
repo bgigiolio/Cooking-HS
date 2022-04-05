@@ -88,7 +88,7 @@ class App extends React.Component {
     }, () => console.log(this.state.currentUser))
 
   }
-  
+
   render() {
     return(
       <div id="container">
@@ -99,6 +99,11 @@ class App extends React.Component {
             <Collapse className='navItems' isOpen={this.state.isOpen} navbar>
                     <Nav  navbar>
 
+                        <NavItem>
+                            {(this.state.currentUser !== null && this.state.currentUser.admin)
+                            ? <NavLink><Link to="/admin">Admin</Link></NavLink>
+                            : null}
+                        </NavItem>
                         <NavItem>
                             <NavLink><Link to="/recipes">Recipes</Link></NavLink>
                         </NavItem>
@@ -118,7 +123,7 @@ class App extends React.Component {
           <ScrollToTop>
             <Routes>
               <Route exact path="/login/*" element={<LoginMain currentUser={this.state.currentUser} updateCurrentUser={this.updateCurrentUser}/>}/>
-              <Route exact path="/admin/:id" element={<FlagDesc />}/>
+              <Route exact path="/admin/:id" element={<FlagDesc comments={this.props.Comments} users={this.props.Users} recipes={this.props.Recipes}/>}/>
               <Route exact path="/admin" element={<AdminPage users={this.props.Users} recipes={this.props.Recipes} comments={this.props.Comments} />}/>  
               <Route exact path="/users/:id" element={<PublicUser profilePic = {this.state.profilePic}/>} />
               <Route exact path="/users" element={<Users currentUser={this.state.currentUser} profilePic = {this.state.profilePic}/>}/>

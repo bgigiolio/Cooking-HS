@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import styles from "../Admin/Admin.module.css";
+import { Button } from 'reactstrap';
 import {RECIPES} from '../../shared/RecipeList';
 const FlagDesc = (props) => {
     const location = useLocation();
@@ -11,13 +12,29 @@ const FlagDesc = (props) => {
     //   )
     // console.log(flag_info)
     var recipeID = matchRecipeFromTitle(flag_info.recipe)
+
     return(
         <div className={styles.container}>
             <h3 className={styles.reportHeading}>Report ID {flag_info._id}</h3>
             <div>
-                <p className={styles.reportDesc}><span className={styles.strong}>User who made the report:</span> {flag_info.reporter_user}</p>
-                <p className={styles.reportDesc}><span className={styles.strong}>Reported User:</span> {flag_info.reported_user}</p>
-                <p className={styles.reportDesc}><span className={styles.strong}>Item:</span> {flag_info.item}</p>
+                <div className={styles.button_center}>
+                    {(props.users.isLoading)
+                    ? null
+                    : <Button outline color="primary" className={styles.reportDesc}><span className={styles.strong}>User who made the report:</span> <Link to={`/users/${flag_info.reporter_user}`}>{flag_info.reporter_user} / {props.users.users.filter((user) => user._id === flag_info.reporter_user)[0].fullName} </Link> </Button>
+                    }
+                </div>
+                <div className={styles.button_center}>
+                    {(props.users.isLoading)
+                    ? null
+                    : <Button outline color="success" className={styles.reportDesc}><span className={styles.strong}>Reported User:</span> <Link to={`/users/${flag_info.reported_user}`}> {flag_info.reported_user} / {props.users.users.filter((user) => user._id === flag_info.reported_user)[0].fullName} </Link> </Button>
+                    }
+                </div>
+                <div className={styles.button_center}>
+                    {(props.comments.isLoading) || props.recipes.isLoading
+                    ? null
+                    : <Button outline color="warning"><span className={styles.strong}>Item:</span> <Link to={(flag_info.item_type === "recipe")? `/recipes/${flag_info.item}` : `/recipes/${props.comments.comments.filter((comment) => comment._id === flag_info.item)[0].recipeid}`}>{flag_info.item} / {props.recipes.recipes.filter((recipe) => recipe._id === ((flag_info.item_type === "recipe")? flag_info.item : (props.comments.comments.filter((comment) => comment._id === flag_info.item))[0].recipeid))[0].title} </Link></Button>
+                    }
+                </div>
                 <p className={styles.reportDesc}><span className={styles.strong}>Item Type:</span> {flag_info.item_type}</p>
                 <p className={styles.reportDesc}><span className={styles.strong}>Category:</span> {flag_info.category}</p>
                 <p className={styles.reportDesc}><span className={styles.strong}>Context:</span> {flag_info.context}</p>
