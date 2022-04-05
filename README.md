@@ -100,10 +100,6 @@ By logging into the admin user through the `Login` in the navigation bar (you ca
 # Overview of the routes in your Express server
 . is the baseURL which could be `https://cookinghs.herokuapp.com/` if using the deployed version or `http://localhost:3000/` if using the local version
 
-* ./
-  * Description: View the landing page
-  * Input: None
-  * Return Value: None
 * ./recipes
   * Description: View all the recipes 
   * Input: None
@@ -116,12 +112,8 @@ By logging into the admin user through the `Login` in the navigation bar (you ca
   * Description: Post a new recipe
   * Input: NewRecipe
   * Return Value: None
-* ./login/*
-  * Description: Input login information or post a new user through the Signup Page
-  * Input: Login info or NewUser
-  * Return Value: None
 * ./api/users
-  * Visit /routes/users.js for in depth descriptions of each route and its usage
+  * Visit /routes/users.js for in depth descriptions of each user route and its usage
 * ./admin
   * Description: Get all the reports in the admin dashboard page (admin dashboard mainly for managing reports)
   * Input: None
