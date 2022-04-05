@@ -81,24 +81,24 @@ By clicking on `Recipes` in the navigation bar:
    * You can report a comment.
    * You can bookmark the recipe.
 
-### Users (TODO)
-By clicking on `Users` in the navigation bar:
+### Users
+By clicking on the profile button (circle) in the navigation bar:
 * This page is meant for a user to view their own profile or the profile of another user
-* Each user will have a set of recipes that they have made on the user page
-* The user also has the option to delete any of the recipes they have made
+* Each user will have a set of recipes that they have made on their profile (they can edit or delete these recipes)
+* Each user will also have a set of recipes they have bookmarked or liked for future reference
+* The user can edit their own profile (they can update their profile picture, username, name, email, and password)
 * Each user also has a functional progress bar that measures their skill level. Their progress is measured by the number of recipes they have made. The progress will fill {number of recipes made by user}/100 of the progress bar or will completely fill the progress bar if the number of recipes made by user is greater than or equal to 100. Here are the skill levels that could be assigned to a user:
   * Beginner: The number of recipes made by the user is between 0 and 10 inclusive
   * Intermediate: The number of recipes made by the user is between 11 and 30 inclusive
   * Advanced: The number of recipes made by the user is between 31 and 60 inclusive
   * Master Chef: The number of recipes made by the user is above 60
-* Once the backend is setup, this page will be used to represent many different users 
 
-### Admin (TODO)
+### Admin
 By logging into the admin user through the `Login` in the navigation bar (you can only see `Admin` in the navigation bar when you're logged in as an admin user):
 * Use the admin credentials in the "Credentials" section to access this page
-* This page allows admin to view all users, view all recipes, and manage reports
-* You can also delete users or recipes (assuming the admin is a respsonsible individual)
-* For each report, you can view further details on that report or delete it
+* This page allows admin to manage and view all reports
+* For each report, you can view further details on that report or resolve it 
+* The further details section will have further routes to the specific users being referenced in the report, and the recipe being referenced as well
 
 # Overview of the routes in your Express server
 . is the baseURL which could be `https://cookinghs.herokuapp.com/` if using the deployed version or `http://localhost:3000/` if using the local version
