@@ -1,4 +1,4 @@
-import React, { useState, useStateCallback } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { List, ListGroup, ListGroupItem, Card, CardBody, CardHeader, Button, Input, Label, FormGroup, Col, Row } from 'reactstrap';
 import { Fraction } from 'fractional';
@@ -19,13 +19,13 @@ function RecipeSingle(props) {
     const chosenRecipe = props.chosenRecipe;
     let chosenComment = []
     let loggedIn = false;
-    const [bookmarked, useBookmarked] = useStateCallback(false)
+    let bookmarked = false
     if(props.currentUser.hasOwnProperty("_id")){
         loggedIn = true;
         axios.get(baseUrl + "api/users/session", {params: {want : ["bookmarked"]}})
         .then((response) => {
             if(response.data.bookmarked.filter(entry => entry === chosenRecipe._id).length != 0){
-                useBookmarked(true)
+                bookmarked = true
             }
         })
     }
@@ -141,7 +141,7 @@ function RecipeSingle(props) {
                 id = response.data._id
                 axios.patch(baseUrl + "api/users/bookmarked/" + id + "/" + chosenRecipe._id)
                 .then( () => {
-                    useBookmarked(true)
+                    bookmarked = true
                 })
             })
         }else{
@@ -152,7 +152,7 @@ function RecipeSingle(props) {
                 id = response.data._id
                 axios.delete(baseUrl + "api/users/bookmarked/" + id + "/" + chosenRecipe._id)
                 .then( () => {
-                    useBookmarked(false)
+                    bookmarked = false
                 })
             })
         }
