@@ -15,6 +15,8 @@ class Admin extends React.Component {
                 <Flags
                     reports={this.props.Reports.reports} 
                     users={this.props.users}
+                    recipes={this.props.recipes}
+                    comments={this.props.comments}
                 />
             </div>
         )
