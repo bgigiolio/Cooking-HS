@@ -70,7 +70,7 @@ class Users extends React.Component {
     
                     {this.state.currentUser.recipes.length !== 0 ? <h4 className="title">My Recipes</h4> : null}
                     <Container>
-                        <RecipeCardGroup isLoading={this.props.Recipes.isLoading} recipes={currentUserRecipes} />
+                        <RecipeCardGroup isLoading={this.props.Recipes.isLoading} recipes={currentUserRecipes} del={true}/>
                     </Container>
                     
                     <br/>
