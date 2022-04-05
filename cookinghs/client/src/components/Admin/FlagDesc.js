@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 import styles from "../Admin/Admin.module.css";
 import { Button } from 'reactstrap';
 import {RECIPES} from '../../shared/RecipeList';
+import { Link } from 'react-router-dom';
+
 const FlagDesc = (props) => {
     const location = useLocation();
     const {flag_info} = location.state

@@ -167,6 +167,7 @@ function RecipeSingle(props) {
     const [reportModal, setReportModal] = useState(false);
     const [reportId, setReportId] = useState();
     const toggleReport = (e) => {
+        console.log("report button clicked")
         const targetId = Number(e.target.id.slice(-1));
         setReportId(targetId);
         setReportModal(!reportModal); 
@@ -235,16 +236,15 @@ function RecipeSingle(props) {
                         </Col>
                         <Col md={3} style={{textAlign: "right"}}>
                             {loggedIn ?<Button 
-                                onClick={bookmark}
+                                onClick={() => bookmark}
                                 color="primary"
                                 outline
                                 className="headerButton">
                                 {bookmarked ? <i class="fa-solid fa-bookmark"></i> : <i class="fa-regular fa-bookmark"></i>}
                             </Button> 
                             : null}
-
                             <Button 
-                                onClick={() => toggleReport}
+                                onClick={(e) => {toggleReport(e)}}
                                 color="danger"
                                 outline
                                 className="headerButton"
