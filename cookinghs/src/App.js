@@ -119,13 +119,13 @@ class App extends React.Component {
             <Routes>
               <Route exact path="/login/*" element={<LoginMain currentUser={this.state.currentUser} updateCurrentUser={this.updateCurrentUser}/>}/>
               <Route exact path="/admin/:id" element={<FlagDesc />}/>
-              <Route exact path="/admin" element={<AdminPage />}/>  
+              <Route exact path="/admin" element={<AdminPage users={this.props.Users} recipes={this.props.Recipes} comments={this.props.Comments} />}/>  
+              <Route exact path="/users/:id" element={<PublicUser profilePic = {this.state.profilePic}/>} />
               <Route exact path="/users" element={<Users currentUser={this.state.currentUser} profilePic = {this.state.profilePic}/>}/>
               <Route exact path="/recipes/newrecipe" element={<WriteWrapper flag={"new"} recipes={this.props.Recipes} user={this.state.currentUser}/>}/>
               <Route exact path="/recipes/:id/editrecipe" element={<WriteWrapper flag={"edit"} recipes={this.props.Recipes} user={this.state.currentUser}/>}/>
               <Route exact path="/recipes/:id/forkrecipe" element={<WriteWrapper flag={"fork"} recipes={this.props.Recipes} user={this.state.currentUser}/>}/>
               <Route exact path="/recipes/:id" element={<RecipeBrowser recipes={this.props.Recipes} users={this.props.Users} currentUser={this.state.currentUser}/>}/>
-              <Route exact path="/users/:id" element={<PublicUser profilePic = {this.state.profilePic}/>} />
               <Route exact path="/recipes" element={<RecipeBrowser recipes={this.props.Recipes} users={this.props.Users} comments={this.props.Comments}/>}/>
               <Route exact path="/*" element={<Landing />}/>
             </Routes>

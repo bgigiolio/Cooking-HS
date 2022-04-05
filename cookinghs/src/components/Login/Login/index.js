@@ -1,4 +1,4 @@
-import { Button, TextField } from '@mui/material';
+import {Label, Input, Button} from 'reactstrap'
 import React from 'react';
 import './styles.css';
 import axios from 'axios'; // new!!
@@ -39,6 +39,9 @@ class Login extends React.Component {
                 want : ["_id", "username", "admin", "fullName", "email", "profilePic"]
               }}).then( async (response) => {
                   this.props.updateCurrentUser(response.data)
+                  this.setState({
+                    redirect : true
+                }, () => console.log("redirecting"))
               })
         })
         
@@ -48,9 +51,6 @@ class Login extends React.Component {
             console.log("pressed")
             if(this.props.valid){
                 this.validLogIn();
-                this.setState({
-                    redirect : true
-                }, () => console.log("redirecting"))
             }else{
                 this.failedLogin();
             }
@@ -68,15 +68,15 @@ class Login extends React.Component {
                 <br/>
                 <br/>
                 <h2>Login</h2>
-                <br/>
-                <TextField id="LoginUsername" label="Username" name="username" placeholder="Username" value={username} onInput={recieveInput} onKeyUp={this.handleKey}></TextField><br/>
-                <br/>
-                <TextField type="password" id="LoginPassword" label="Password" name="password" placeholder="Password" value={password} onInput={recieveInput} onKeyUp={this.handleKey}></TextField><br/><br/>
+                Username
+                <Input id="LoginUsername" label="Username" name="username" placeholder="Username" value={username} onInput={recieveInput} onKeyUp={this.handleKey}></Input><br/>
+                Password
+                <Input type="password" id="LoginPassword" label="Password" name="password" placeholder="Password" value={password} onInput={recieveInput} onKeyUp={this.handleKey}></Input><br/>
 
                     {valid ? 
                     // <Link to="/recipes">Log In</Link>
-                    <Button to={routeTo} onClick={this.validLogIn} component={Link} variant="contained">Log In</Button>: 
-                    <Button variant="contained"
+                    <Button id="log" to={routeTo} onClick={this.validLogIn} component={Link} variant="contained">Log In</Button>: 
+                    <Button id="log" variant="contained"
                             onClick={this.failedLogin}>
                                 Log In
                     </Button>}

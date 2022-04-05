@@ -1,20 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styles from './Users.css';
 import RecipeCardGroup from './RecipeCardGroup';
 import UserProgress from './UserProgress';
-import { useParams } from 'react-router-dom';
-import axios from 'axios'; // new!!
+import { Container } from 'reactstrap';
 import { baseUrl } from '../../shared/baseUrl';
+import axios from 'axios'; // new!!
 //I would need to import these images based on the users from the backend later
 import foodBanner from "./images/foodBanner.jpeg";
+import { useParams } from 'react-router-dom';
 
-class PublicUser extends React.Component {
+
+class PublicUsers extends React.Component {
     constructor(props) {
         super(props);
-        const { id } = this.props.params;
-        axios.get(baseUrl + 'api/users/' + id)
-        .then( async (response) => {
+        const id = this.props.params.id
+        axios.get(baseUrl + 'api/users/' + id).then( async (response) => {
             this.state.currentUser = response.data
             this.forceUpdate()
         }).catch(function (error) {
@@ -25,44 +25,55 @@ class PublicUser extends React.Component {
         currentUser: {fullName: "", username: "null", recipes : [], bookmarked : [], profilePic : this.props.profilePic},
         loaded: true,
         popup: false
-        // recipes: this.props.Recipes.recipes.filter((recipe) => recipe.author === this.state.currentUser._id)
     }
-    render() {
-        const {profilePic} = this.props
-        if(this.state.currentUser.fullName !== ""){
 
-            return(
-                <div id='container'>
-                    <img id="profilePic" src={this.state.currentUser.profilePic}/>
-                    <img id="foodBanner" src={foodBanner}/>
-                    {/** The name, username will depend on info from backend per user */}
-                    <h1 id="name">{this.state.currentUser.fullName}</h1>
-                    <p id="username">{"@" + this.state.currentUser.username}</p>
-                    <UserProgress/>
-    
-                    {this.state.currentUser.recipes.length !== 0 ? <h4 className="title">{this.state.currentUser.fullName + "'s recipes"}</h4> : <h4 className="title">{this.state.currentUser.fullName + " has no recipes!"}</h4>}
-                    {RecipeCardGroup(this.state.currentUser.recipes)}
-                    <br/>
-                </div>
-            )
-        }else{
-            return(                
-            <div id='container'>
-            <h1 id="name">You are not currently logged in!</h1>
-        </div>)
+
+    editProfile() {
+        this.setState({
+            popup: !this.state.popup
+        })
+        if(this.state.popup === true){
+            window.location.reload(false);
         }
+    }
+
+
+    render() {
+        const currentUserRecipes = this.props.Recipes.recipes.filter((recipe) => recipe.author === this.state.currentUser._id)
+        console.log(currentUserRecipes)
+
+        return(
+            <div id='container'>
+                <div id="circle">
+                    <img alt="" id="profilePic" src={this.state.currentUser.profilePic}/>
+                </div>
+                <img alt="" id="foodBanner" src={foodBanner}/>
+                {/** The name, username will depend on info from backend per user */}
+                <h1 id="name">{this.state.currentUser.fullName}</h1>
+                <p id="username">{"@" + this.state.currentUser.username}</p>
+                <UserProgress recipes = {this.state.currentUser.recipes}/>
+
+                {this.state.currentUser.recipes.length !== 0 ? <h4 className="title">{this.state.currentUser.fullName + "'s Recipes"}</h4> : null}
+                <Container>
+                    <RecipeCardGroup isLoading={this.props.Recipes.isLoading} recipes={currentUserRecipes} del={false}/>
+                </Container>
+                
+                <br/>
+            </div>
+        )
     }
 }
 
-// const mapStateToProps = state => {
-//     return {
-//       Recipes: state.Recipes,
-//     }
-//   }
-
-export default (props) => (
-    <PublicUser
+const mapStateToProps = state => {
+    return {
+      Recipes: state.Recipes,
+    }
+}
+const PublicUsersFunc = (props) => (
+    <PublicUsers
         {...props}
         params={useParams()}
     />
 );
+
+export default connect(mapStateToProps, null)(PublicUsersFunc);

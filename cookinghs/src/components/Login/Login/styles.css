@@ -8,3 +8,12 @@ body{
 #failedLogin{
     color: rgb(255, 0, 0);
 }
+#LoginUsername{
+    width: 70%
+}
+#LoginPassword{
+    width: 70%
+}
+#log{
+    background-color: rgb(73, 130, 254);
+}

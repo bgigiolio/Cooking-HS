@@ -5,17 +5,20 @@ import { Fraction } from 'fractional';
 import { Link } from 'react-router-dom';
 import '../../styles/recipeview.css';
 import '../../styles/colorpalette.css';
+import '../../styles/defaults.css'
 import ReviewModal from '../recipeModals/ReviewModalComponent';
 import ReportModal from '../recipeModals/ReportModalComponent';
 import StarRating from './StarRatingComponent';
 import { postComment } from '../../redux/comments/comment-actions';
 import { postReport } from '../../redux/reports/report-actions';
-
+import axios from 'axios'; // new!!
+import { baseUrl } from '../../shared/baseUrl';
 
 function RecipeSingle(props) {
     const recipes = props.recipes
     const chosenRecipe = props.chosenRecipe;
     let chosenComment = []
+    let bookmarked = false
     let averageRating = 0
     let averageRatingString = ""
     if (!props.Comments.isLoading) {
@@ -43,11 +46,12 @@ function RecipeSingle(props) {
         const timelineView = line.map((step, index) => {
             const parentRecipe = recipes.filter(recipe => recipe._id === step)[0]
             const parentTitle = parentRecipe.title
+            const parentAuthor = props.users.filter((user) => user._id === parentRecipe.author)[0].fullName
             const parentDeleted = parentRecipe.deleted
             const link = '../recipes/' + step
             return (
                 <li key={index}>
-                    {index !== line.length - 1 ? <Link to={link}>{parentTitle}<span>{parentDeleted}</span></Link> : <>{parentTitle} (Current)</>}
+                    {index !== line.length - 1 ? parentDeleted ? <span>{parentTitle} by {parentAuthor} (Deleted)</span> : <><Link className='linkStyle' to={link}>{parentTitle}</Link> by {parentAuthor} </> : <>{parentTitle} (Current)</>}
                 </li>
             )
         })
@@ -112,10 +116,30 @@ function RecipeSingle(props) {
         return (
             <li className='stepsListItem' key={index}>
                 <span>{step.step}</span>
-                {step.stepimage ? <img src = {step.stepimage} className="stepImage"/> : null}
+                {step.stepimage ? <img alt="" src = {step.stepimage} className="stepImage"/> : null}
             </li>
         )
     });
+
+    const bookmark = () => {
+        if(!bookmarked){
+            let id = ""
+            axios.get(baseUrl + "api/users/session", {params: {want : ["_id"]}})
+            .then( async (response) => {
+                id = response.data._id
+                axios.patch(baseUrl + "api/users/bookmarked/" + id + "/" + chosenRecipe._id)
+                .then(bookmarked = true)
+            })
+        }else{
+            let id = ""
+            axios.get(baseUrl + "api/users/session", {params: {want : ["_id"]}})
+            .then( async (response) => {
+                id = response.data._id
+                axios.delete(baseUrl + "api/users/bookmarked/" + id + "/" + chosenRecipe._id)
+                .then(bookmarked = false)
+            })
+        }
+    }
 
     const [reportModal, setReportModal] = useState(false);
     const [reportId, setReportId] = useState();
@@ -170,7 +194,9 @@ function RecipeSingle(props) {
             <ReportModal
                 toggle={toggleReport}
                 isOpen={reportModal}
-                recipeId={props.id}
+                chosenRecipe={chosenRecipe}
+                recipeid={chosenRecipe._id}
+                chosenComment={chosenComment}
                 recipeTitle={chosenRecipe.title}
                 reportId={reportId}
                 currentUser={props.currentUser}
@@ -181,19 +207,28 @@ function RecipeSingle(props) {
             <ListGroup>
                 <ListGroupItem>
                     <Row>
-                        <Col md={10}>
+                        <Col md={9}>
                             <h1>{chosenRecipe.title}</h1>
                         </Col>
-                        <Col md={2}>
+                        <Col md={3} style={{textAlign: "right"}}>
                             <Button 
-                                onClick={toggleReport}
+                                onClick={bookmark}
+                                color="primary"
+                                outline
+                                className="headerButton"
+                            >
+                                <i class="fa-regular fa-bookmark"></i>
+                            </Button>
+                            <Button 
+                                onClick={() => toggleReport}
                                 color="danger"
                                 outline
+                                className="headerButton"
                             >
                                 <i id='reportIcon0' className="fa-solid fa-triangle-exclamation"></i>
                             </Button>
                             <Link to="./forkrecipe" state={{chosenRecipe: chosenRecipe}}>
-                                <Button color="secondary" outline id="forkButton">
+                                <Button color="secondary" outline>
                                     <i className="fa-solid fa-code-fork"></i>
                                 </Button>
                             </Link>
@@ -203,7 +238,7 @@ function RecipeSingle(props) {
                     <StarRating rating={averageRating}/> <span id="averageRating">{averageRatingString}</span>
                     </div>
                     {/* link to author user profile here */}
-                    {chosenRecipe.author ? <span> By <span className='userLink'>{props.users.filter((user) => user._id === chosenRecipe.author)[0].fullName}</span></span> : null}
+                    {chosenRecipe.author ? <span> By <Link className='linkStyle' to={"/users/"+chosenRecipe.author}>{props.users.filter((user) => user._id === chosenRecipe.author)[0].fullName}</Link></span> : null}
                     {chosenRecipe.difficulty ? <span className="recipeDifficulty"> Difficulty: {chosenRecipe.difficulty}/10 </span> : null}
                 </ListGroupItem>
                 <ListGroupItem>

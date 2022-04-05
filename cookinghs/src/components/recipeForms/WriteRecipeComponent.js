@@ -229,11 +229,11 @@ function WriteRecipe(props) {
         if (valid) {
             if (props.flag === "fork" || props.flag === "new") {
                 props.postRecipe(recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.difficulty, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image, recipe.imagefile)
-                // handleRedirect()
+                handleRedirect()
             }
             else if (props.flag === "edit") {
                 props.putRecipe(recipe._id, recipe.author, recipe.parent, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.difficulty, recipe.course, recipe.cuisine, recipe.preptime, recipe.cooktime, recipe.servings, recipe.image, recipe.imagefile)
-                // handleRedirect()
+                handleRedirect()
             }
         }
         else {
@@ -277,7 +277,7 @@ function WriteRecipe(props) {
     return(
         <div className='container' id='formContainer'>
             {props.flag === "fork" ? forkRecipe() : props.flag === "edit" ? editRecipe() : newRecipe()}
-            <RecipeForm 
+            {props.flag === "edit" ? AUTHOR === chosenRecipe.author ? <RecipeForm 
                 {...recipe} 
                 handleSubmit = {handleSubmit}
                 handleInputChange = {handleInputChange}
@@ -289,7 +289,20 @@ function WriteRecipe(props) {
                 removeIngredient = {removeIngredient}
                 addStep = {addStep}
                 removeStep = {removeStep}
-            />
+            /> : <h2>You are not authorised to make edits to this recipe</h2> : <RecipeForm 
+            {...recipe} 
+            handleSubmit = {handleSubmit}
+            handleInputChange = {handleInputChange}
+            handleImageChange = {handleImageChange}
+            handleIngredientChange = {handleIngredientChange}
+            handleStepChange = {handleStepChange}
+            handleStepImage = {handleStepImage}
+            addIngredient = {addIngredient}
+            removeIngredient = {removeIngredient}
+            addStep = {addStep}
+            removeStep = {removeStep}
+        />}
+            
         </div>
     )
 }
