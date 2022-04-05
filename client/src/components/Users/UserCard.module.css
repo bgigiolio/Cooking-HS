@@ -29,11 +29,19 @@
 }
 .del{
     float:left;
+    width: 44%;
     background-color: rgba(255, 70, 70, 0.932);
+    position: absolute;
+    bottom: 3%;
+    left: 5%;
 }
 .edit{
     float:right;
+    width: 44%;
     background-color: rgb(142, 215, 142);
+    position: absolute;
+    bottom: 3%;
+    right: 5%;
 }
 #toBuf{
     margin-right: 15px;
