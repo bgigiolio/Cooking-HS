@@ -1,25 +1,31 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Loading } from '../LoadingComponent';
 import WriteRecipe from './WriteRecipeComponent';
 import '../../styles/recipeview.css';
 import '../../styles/colorpalette.css';
+import '../../styles/defaults.css';
+import { Container } from 'reactstrap';
+
 
 function WriteWrapper(props) {
     const { id } = useParams()
     if (props.recipes.isLoading) {
         return(
-            <div className='container relativeContainer' id='recipeContainer'>
+            <Container>
                 <Loading />
-            </div>
+            </Container>
         )
     }
 
     else if (!props.user) {
         return(
-            <div className='container relativeContainer' id='recipeContainer'>
-                Please log in or sign up to be able to post recipes!
-            </div>
+            <Container >
+                <div className="text-align-center">
+                    <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_ktwnwv5m.json" background="transparent"  speed="1"  style={{width: "100%", height: "440px", marginTop: "20px", zIndex: "0"}} loop autoplay></lottie-player>
+                    <h1>Please <Link to="/login" className="linkStyle">login</Link> to be able to post recipes!</h1>
+                </div>
+            </Container>
         )
     }
 

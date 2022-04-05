@@ -47,7 +47,7 @@ function RecipeSingle(props) {
             const link = '../recipes/' + step
             return (
                 <li key={index}>
-                    {index !== line.length - 1 ? <Link to={link}>{parentTitle}<span>{parentDeleted}</span></Link> : <>{parentTitle} (Current)</>}
+                    {index !== line.length - 1 ? <Link to={link}>{parentTitle}<span>{parentDeleted ? <span>(Deleted)</span> : null}</span></Link> : <>{parentTitle} (Current)</>}
                 </li>
             )
         })
@@ -181,19 +181,28 @@ function RecipeSingle(props) {
             <ListGroup>
                 <ListGroupItem>
                     <Row>
-                        <Col md={10}>
+                        <Col md={9}>
                             <h1>{chosenRecipe.title}</h1>
                         </Col>
-                        <Col md={2}>
+                        <Col md={3} style={{textAlign: "right"}}>
                             <Button 
-                                onClick={toggleReport}
+                                onClick={() => alert("bookmark")}
+                                color="primary"
+                                outline
+                                className="headerButton"
+                            >
+                                <i class="fa-regular fa-bookmark"></i>
+                            </Button>
+                            <Button 
+                                onClick={() => toggleReport}
                                 color="danger"
                                 outline
+                                className="headerButton"
                             >
                                 <i id='reportIcon0' className="fa-solid fa-triangle-exclamation"></i>
                             </Button>
                             <Link to="./forkrecipe" state={{chosenRecipe: chosenRecipe}}>
-                                <Button color="secondary" outline id="forkButton">
+                                <Button color="secondary" outline>
                                     <i className="fa-solid fa-code-fork"></i>
                                 </Button>
                             </Link>
@@ -203,7 +212,7 @@ function RecipeSingle(props) {
                     <StarRating rating={averageRating}/> <span id="averageRating">{averageRatingString}</span>
                     </div>
                     {/* link to author user profile here */}
-                    {chosenRecipe.author ? <span> By <span className='userLink'>{props.users.filter((user) => user._id === chosenRecipe.author)[0].fullName}</span></span> : null}
+                    {chosenRecipe.author ? <span> By <Link className='linkStyle' to={"/users/"+chosenRecipe.author}>{props.users.filter((user) => user._id === chosenRecipe.author)[0].fullName}</Link></span> : null}
                     {chosenRecipe.difficulty ? <span className="recipeDifficulty"> Difficulty: {chosenRecipe.difficulty}/10 </span> : null}
                 </ListGroupItem>
                 <ListGroupItem>

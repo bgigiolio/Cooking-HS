@@ -19,7 +19,7 @@ function RecipeBrowser(props) {
 
     else if (id) {
         const recipes = props.recipes.recipes
-        let chosenRecipe = recipes.filter(recipe => recipe._id === id)[0]
+        const chosenRecipe = recipes.filter(recipe => recipe._id === id)[0]
 
         return(
             <div className='container relativeContainer' id='recipeContainer'>

@@ -58,6 +58,7 @@
     max-width: 720px;
     margin: auto;
     position: relative;
+    margin-top: 4px
 }
 
 h1 {
@@ -70,7 +71,7 @@ h1 {
     right: 16px
 }
 
-.userLink {
+.linkStyle {
     color: blue;
     text-decoration: underline;
 }
@@ -203,10 +204,6 @@ h1 {
     height: 130px;
 }
 
-#forkButton {
-    margin-left: 10px
-}
-
 .fork-span{
     margin: 5px;
 }
@@ -233,4 +230,8 @@ h1 {
 
 .recipeDifficulty {
     float:right;
+}
+
+.headerButton {
+    margin-right: 5px
 }

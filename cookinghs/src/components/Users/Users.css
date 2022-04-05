@@ -6,7 +6,7 @@
     position: absolute;
     width: 120px;
     top: 380px;
-    right: 0px;
+    right: 20px;
 }
 
 #foodBanner {
@@ -22,7 +22,6 @@
     margin-top: 100px;
     text-align: center;
 }
-
 
 #profilePic {
     width: 300px;
