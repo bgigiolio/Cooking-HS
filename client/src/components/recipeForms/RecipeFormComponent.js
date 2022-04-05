@@ -160,6 +160,7 @@ function RecipeForm(props) {
                             className="imageInput"
                             onChange={(e) => props.handleStepImage(index, e)}
                         />
+                        {step.stepimage ? <Button type="button" onClick={e => props.removeStepImage(index,e)}>Remove Image</Button> : null}
                     </Col>
                     <Col md={1}>
                     {

@@ -142,6 +142,18 @@ function WriteRecipe(props) {
         }
     }
 
+    const removeStepImage = (index, e) => {
+        let steps = [...recipe.steps];
+        steps[index] = {
+            ...steps[index],
+            stepimage: null
+        }
+        setRecipe({
+            ...recipe,
+            steps: steps
+        })
+    }
+
     const removeIngredient = (index, e) => {
         let newIngredients = recipe.ingredients;
         newIngredients.splice(index, 1);
