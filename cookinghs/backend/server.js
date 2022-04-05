@@ -30,6 +30,10 @@ const {Recipe} = require('./models/recipe')
 const bodyParser = require('body-parser')
 app.use(bodyParser.json({limit: '50mb'}))
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
+
+const publicPath = path.join(__dirname, '..', 'public');
+app.use(express.static(publicPath))
+
 // Add model routes here vvv
 const userRouter = require("./routes/users")
 app.use("/api/users", userRouter) // Could change this to just /users
