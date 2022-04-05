@@ -144,7 +144,7 @@ function RecipeForm(props) {
                         className="imageLabel"
                         style={{marginTop: "5px", padding: "6px 12px", borderStyle:"solid", borderColor:"grey", borderWidth: "1px", borderRadius: "5px"}}
                         >
-                            {step.stepimage ? 
+                            {step.stepimage && step.stepimage !== null ? 
                                 <img src={step.stepimage}
                                     alt=''
                                     id='formUploadImage'
@@ -160,7 +160,7 @@ function RecipeForm(props) {
                             className="imageInput"
                             onChange={(e) => props.handleStepImage(index, e)}
                         />
-                        {step.stepimage ? <Button type="button" onClick={e => props.removeStepImage(index,e)}>Remove Image</Button> : null}
+                        {step.stepimage ? <Button style={{marginLeft: "5px", marginTop: "-18px"}} type="button" onClick={e => props.removeStepImage(index,e)}>Remove Image</Button> : null}
                     </Col>
                     <Col md={1}>
                     {

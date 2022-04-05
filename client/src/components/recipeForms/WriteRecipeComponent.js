@@ -308,6 +308,7 @@ function WriteRecipe(props) {
             handleIngredientChange = {handleIngredientChange}
             handleStepChange = {handleStepChange}
             handleStepImage = {handleStepImage}
+            removeStepImage = {removeStepImage}
             addIngredient = {addIngredient}
             removeIngredient = {removeIngredient}
             addStep = {addStep}
