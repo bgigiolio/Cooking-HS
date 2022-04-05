@@ -37,7 +37,7 @@ class RecipeCard extends React.Component {
                         top
                         className={styles.user_img}
                     />
-                    <CardBody className={styles.body} style={{width: "100%"}}>
+                    <CardBody className={styles.body}>
                         <CardTitle tag="h5">
                             <Link to={"/recipes/" + this.props.recipeData._id}>{this.props.recipeData.title}</Link>
                         </CardTitle>
@@ -45,8 +45,8 @@ class RecipeCard extends React.Component {
                         {this.props.recipeData.description !== undefined ? this.props.recipeData.description.slice(0, 100) + "..." : null}
                             {/* This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. */}
                         </CardText>
-                        {this.props.del ? <Button onClick={() => this.props.deleteRecipe(this.props.recipeData._id)} className={styles.del}>Delete Recipe</Button> : null}
-                        {this.props.del ? <Button onClick={this.nav} className={styles.edit}>Edit Recipe</Button> : null}
+                        {this.props.del ? <Button onClick={() => this.props.deleteRecipe(this.props.recipeData._id)} className={styles.del}>Delete</Button> : null}
+                        {this.props.del ? <Button onClick={this.nav} className={styles.edit}>Edit</Button> : null}
                         
                     </CardBody>
                     <Routes>

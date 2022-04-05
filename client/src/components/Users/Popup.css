@@ -47,3 +47,15 @@
 #buttonSpot{
     margin-left: 2%;
 }
+#imgButt{
+    padding: 0px;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+}
+#img{
+    cursor: pointer;
+    height:180px;
+    width:180px;
+    border-radius: 50%;
+}
