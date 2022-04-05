@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useStateCallback } from 'react';
 import { connect } from 'react-redux';
 import { List, ListGroup, ListGroupItem, Card, CardBody, CardHeader, Button, Input, Label, FormGroup, Col, Row } from 'reactstrap';
 import { Fraction } from 'fractional';
@@ -18,7 +18,17 @@ function RecipeSingle(props) {
     const recipes = props.recipes
     const chosenRecipe = props.chosenRecipe;
     let chosenComment = []
-    let bookmarked = false
+    let loggedIn = false;
+    const [bookmarked, useBookmarked] = useStateCallback(false)
+    if(props.currentUser.hasOwnProperty("_id")){
+        loggedIn = true;
+        axios.get(baseUrl + "api/users/session", {params: {want : ["bookmarked"]}})
+        .then((response) => {
+            if(response.data.bookmarked.filter(entry => entry === chosenRecipe._id).length != 0){
+                useBookmarked(true)
+            }
+        })
+    }
     let averageRating = 0
     let averageRatingString = ""
     if (!props.Comments.isLoading) {
@@ -122,21 +132,28 @@ function RecipeSingle(props) {
     });
 
     const bookmark = () => {
+        console.log(bookmarked)
         if(!bookmarked){
+            console.log("bookmarking!")
             let id = ""
             axios.get(baseUrl + "api/users/session", {params: {want : ["_id"]}})
             .then( async (response) => {
                 id = response.data._id
                 axios.patch(baseUrl + "api/users/bookmarked/" + id + "/" + chosenRecipe._id)
-                .then(bookmarked = true)
+                .then( () => {
+                    useBookmarked(true)
+                })
             })
         }else{
+            console.log("un bookmarking!")
             let id = ""
             axios.get(baseUrl + "api/users/session", {params: {want : ["_id"]}})
             .then( async (response) => {
                 id = response.data._id
                 axios.delete(baseUrl + "api/users/bookmarked/" + id + "/" + chosenRecipe._id)
-                .then(bookmarked = false)
+                .then( () => {
+                    useBookmarked(false)
+                })
             })
         }
     }
@@ -211,14 +228,15 @@ function RecipeSingle(props) {
                             <h1>{chosenRecipe.title}</h1>
                         </Col>
                         <Col md={3} style={{textAlign: "right"}}>
-                            <Button 
+                            {loggedIn ?<Button 
                                 onClick={bookmark}
                                 color="primary"
                                 outline
-                                className="headerButton"
-                            >
-                                <i class="fa-regular fa-bookmark"></i>
-                            </Button>
+                                className="headerButton">
+                                {bookmarked ? <i class="fa-solid fa-bookmark"></i> : <i class="fa-regular fa-bookmark"></i>}
+                            </Button> 
+                            : null}
+
                             <Button 
                                 onClick={() => toggleReport}
                                 color="danger"
