@@ -34,12 +34,11 @@ function Flags(props) {
             </thead>
             <tbody>
                 {flags.map((flag) =>
-
                    <tr>
                         <td>{props.users.filter((user) => user._id === flag.reported_user)[0].fullName}</td>
                         <td>{props.users.filter((user) => user._id === flag.reported_user)[0].username}</td>
                         <td>{(flag.item_type === "recipe")? 
-                        props.recipes.filter((recipe) => recipe._id === flag.item)[0].title : 
+                        props.recipes.filter((recipe) => recipe._id === flag.item)[0] !== undefined ? props.recipes.filter((recipe) => recipe._id === flag.item)[0].title : null : 
                         props.recipes.filter((recipe) => recipe._id === props.comments.filter((comment) => comment._id === flag.item)[0].recipeid)[0].title}</td>
                         
                         <td>{flag.item_type}</td>
