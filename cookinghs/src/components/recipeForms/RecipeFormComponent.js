@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Form, FormGroup, Label, Input, FormText, FormFeedback, Col, Button } from 'reactstrap';
+import { Form, FormGroup, Label, Input, FormText, FormFeedback, Row, Col, Button } from 'reactstrap';
 import '../../styles/recipeform.css'
 
 function RecipeForm(props) {
@@ -268,9 +268,11 @@ function RecipeForm(props) {
                                 onChange={props.handleImageChange}
                             />
                         </Button>
+                        <Row>
                         <FormText>
                             Give us the tastiest image of your recipe! Use JPEG or PNG.
                         </FormText>
+                        </Row>
                         </Col>
                     </FormGroup>
                 </Col>

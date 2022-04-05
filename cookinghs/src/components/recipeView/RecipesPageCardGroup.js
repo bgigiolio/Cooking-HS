@@ -15,6 +15,23 @@ const RecipesPageCardGroup = ({ recipes, users, comments, all_recipes }) => {
     // console.log("comment print", comments)
     console.log("ALLRECIPE PRINT:", all_recipes)
 
+    const rating = (chosenRecipe) => {
+        let averageRating = 0
+        let averageRatingString = ""
+        if (!comments.isLoading) {
+            const chosenComment = comments.filter((comment) => comment.recipeid === chosenRecipe._id)
+            if (chosenComment.length) {
+                chosenComment.map((comment) => averageRating += comment.rating)
+                averageRating /= chosenComment.length
+                averageRatingString = averageRating.toFixed(2)
+            }
+            else {
+                averageRatingString = "No ratings yet"
+            }
+        }
+        return [averageRating, averageRatingString]
+    }
+
     const starRating = function(rating) {
         return (
             <>
@@ -49,10 +66,10 @@ const RecipesPageCardGroup = ({ recipes, users, comments, all_recipes }) => {
 
     return (
         <div>
-            <Container>
-            <Row>
+            <Container className='card-group-container'>
+            <Row className='card-row'>
             {recipestoRender.map((value) => (
-                <Col lg={4} md={6} key={value._id}>
+                <Col lg={4} md={6} key={value._id} className='card-col'>
                     <Card className="r-card article">
                     <Link to={value._id}>
                         <CardImg src={value.image} alt={value.title} className="recipeImg" top></CardImg>
@@ -70,7 +87,7 @@ const RecipesPageCardGroup = ({ recipes, users, comments, all_recipes }) => {
                             </CardSubtitle>
                         </CardBody>
                         <CardFooter className='extra-info-footer'>
-                            <span>{starRating(value.averageRating)} {comments.filter((comment) => comment.recipeid === value._id).length} ratings 
+                            <span>{starRating(rating(value)[0])} {comments.filter((comment) => comment.recipeid === value._id).length} ratings 
                             <span className='fork-span'> {all_recipes.filter((recipe) => recipe.parent.includes(value._id)).length} fork(s)</span></span>
                             <span></span>
                             <span><i className="fa-solid fa-bookmark bookmark-icon"></i></span>

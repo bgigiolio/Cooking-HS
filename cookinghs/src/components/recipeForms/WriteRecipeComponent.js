@@ -277,7 +277,7 @@ function WriteRecipe(props) {
     return(
         <div className='container' id='formContainer'>
             {props.flag === "fork" ? forkRecipe() : props.flag === "edit" ? editRecipe() : newRecipe()}
-            <RecipeForm 
+            {props.flag === "edit" ? AUTHOR === chosenRecipe.author ? <RecipeForm 
                 {...recipe} 
                 handleSubmit = {handleSubmit}
                 handleInputChange = {handleInputChange}
@@ -289,7 +289,20 @@ function WriteRecipe(props) {
                 removeIngredient = {removeIngredient}
                 addStep = {addStep}
                 removeStep = {removeStep}
-            />
+            /> : <h2>You are not authorised to make edits to this recipe</h2> : <RecipeForm 
+            {...recipe} 
+            handleSubmit = {handleSubmit}
+            handleInputChange = {handleInputChange}
+            handleImageChange = {handleImageChange}
+            handleIngredientChange = {handleIngredientChange}
+            handleStepChange = {handleStepChange}
+            handleStepImage = {handleStepImage}
+            addIngredient = {addIngredient}
+            removeIngredient = {removeIngredient}
+            addStep = {addStep}
+            removeStep = {removeStep}
+        />}
+            
         </div>
     )
 }
