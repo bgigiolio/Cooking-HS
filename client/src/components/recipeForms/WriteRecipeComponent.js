@@ -19,7 +19,7 @@ function WriteRecipe(props) {
                     ...chosenRecipe, 
                     parent: chosenRecipe._id,
                     author: AUTHOR,
-                    tempimage: 'https://res.cloudinary.com/yongdk1/image/upload/v1648748246/recipe-add-photo_ortqgg.png',
+                    tempimage: 'https://res.cloudinary.com/yongdk1/image/upload/v1649193050/cookinghs/recipe-add-photo_ortqgg_ihtymv.png',
                     imagefile: null
                 }
             case "edit":
@@ -55,7 +55,7 @@ function WriteRecipe(props) {
                     cooktime: '',
                     servings: '',
                     difficulty: 5,
-                    tempimage: 'https://res.cloudinary.com/yongdk1/image/upload/v1648748246/recipe-add-photo_ortqgg.png',
+                    tempimage: 'https://res.cloudinary.com/yongdk1/image/upload/v1649193050/cookinghs/recipe-add-photo_ortqgg_ihtymv.png',
                     imagefile: null
                 };
             }
