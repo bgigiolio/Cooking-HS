@@ -4,7 +4,7 @@
 #succText{
     color:green;
 }
-#uploadImage{
+.uploadImage{
     border-radius: 50%;
     object-fit: cover;
     width:190px;

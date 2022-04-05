@@ -144,7 +144,7 @@ function RecipeForm(props) {
                         className="imageLabel"
                         style={{marginTop: "5px", padding: "6px 12px", borderStyle:"solid", borderColor:"grey", borderWidth: "1px", borderRadius: "5px"}}
                         >
-                            {step.stepimage ? 
+                            {step.stepimage && step.stepimage !== null ? 
                                 <img src={step.stepimage}
                                     alt=''
                                     id='formUploadImage'
@@ -160,6 +160,7 @@ function RecipeForm(props) {
                             className="imageInput"
                             onChange={(e) => props.handleStepImage(index, e)}
                         />
+                        {step.stepimage ? <Button style={{marginLeft: "5px", marginTop: "-18px"}} type="button" onClick={e => props.removeStepImage(index,e)}>Remove Image</Button> : null}
                     </Col>
                     <Col md={1}>
                     {
@@ -297,6 +298,9 @@ function RecipeForm(props) {
                         Main
                         </option>
                         <option>
+                        Entree
+                        </option>
+                        <option>
                         Side
                         </option>
                         <option>
@@ -304,6 +308,9 @@ function RecipeForm(props) {
                         </option>
                         <option>
                         Dessert
+                        </option>
+                        <option>
+                        Beverage
                         </option>
                     </Input>
                 </Col>
@@ -398,14 +405,14 @@ function RecipeForm(props) {
                         name="difficulty"
                         type="range"
                         min='1'
-                        max='10'
+                        max='5'
                         step='1'
                         value={props.difficulty}
                         onChange={props.handleInputChange}
                     />
                 </Col>
                 <Label md={2}>
-                    {props.difficulty}/10
+                    {props.difficulty}/5
                 </Label>
             </FormGroup>
             <div className="spacer" />

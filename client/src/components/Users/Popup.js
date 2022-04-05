@@ -3,6 +3,7 @@ import {Modal, Box} from '@mui/material';
 import axios from 'axios'; // new!!
 import {Label, Input, Button} from 'reactstrap'
 import { baseUrl } from '../../shared/baseUrl';
+import styles from './Popup.css'
 const {SHA256} = require('crypto-js');
 
 const boxMode = {
@@ -138,12 +139,12 @@ export default class Popup extends Component {
                             >
                             <img src={this.state.picture}
                                 alt=''
-                                id='uploadImage'
+                                className='uploadImage'
                             />
                             </Label>
                             {/* <img src={editPic} id="edit"/> */}
                             <Input
-                                id="image"
+                                className="uploadImage"
                                 name="image"
                                 type="file"
                                 accept="image/*"

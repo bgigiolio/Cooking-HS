@@ -30,7 +30,7 @@ function ReportModal(props) {
             context: context,
         }
         props.postReport(newReport)
-        .then(props.toggle)
+        props.toggle()
     }
 
     return(

@@ -19,7 +19,7 @@ function WriteRecipe(props) {
                     ...chosenRecipe, 
                     parent: chosenRecipe._id,
                     author: AUTHOR,
-                    tempimage: 'https://res.cloudinary.com/yongdk1/image/upload/v1648748246/recipe-add-photo_ortqgg.png',
+                    tempimage: 'https://res.cloudinary.com/yongdk1/image/upload/v1649193050/cookinghs/recipe-add-photo_ortqgg_ihtymv.png',
                     imagefile: null
                 }
             case "edit":
@@ -55,7 +55,7 @@ function WriteRecipe(props) {
                     cooktime: '',
                     servings: '',
                     difficulty: 5,
-                    tempimage: 'https://res.cloudinary.com/yongdk1/image/upload/v1648748246/recipe-add-photo_ortqgg.png',
+                    tempimage: 'https://res.cloudinary.com/yongdk1/image/upload/v1649193050/cookinghs/recipe-add-photo_ortqgg_ihtymv.png',
                     imagefile: null
                 };
             }
@@ -140,6 +140,18 @@ function WriteRecipe(props) {
                 steps: steps
             })
         }
+    }
+
+    const removeStepImage = (index, e) => {
+        let steps = [...recipe.steps];
+        steps[index] = {
+            ...steps[index],
+            stepimage: null
+        }
+        setRecipe({
+            ...recipe,
+            steps: steps
+        })
     }
 
     const removeIngredient = (index, e) => {
@@ -296,6 +308,7 @@ function WriteRecipe(props) {
             handleIngredientChange = {handleIngredientChange}
             handleStepChange = {handleStepChange}
             handleStepImage = {handleStepImage}
+            removeStepImage = {removeStepImage}
             addIngredient = {addIngredient}
             removeIngredient = {removeIngredient}
             addStep = {addStep}

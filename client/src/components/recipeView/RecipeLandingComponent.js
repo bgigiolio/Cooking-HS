@@ -861,11 +861,11 @@ class RecipeLanding extends React.Component {
                                 <label>
                                     <input
                                     type="checkbox"
-                                    value="Brocolli"
-                                    checked={this.props.ingredients.includes("Brocolli")}
+                                    value="Broccoli"
+                                    checked={this.props.ingredients.includes("Broccoli")}
                                     onChange={this.onIngredientChange}
                                     />
-                                    Brocolli
+                                    Broccoli
                                 </label>
                             </div>
 
@@ -1009,7 +1009,7 @@ class RecipeLanding extends React.Component {
 
                 <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                 <DropdownToggle caret className={styles.dropDownComp}>
-                Filter By
+                Sort By
                 </DropdownToggle>
                 <DropdownMenu>
                 <DropdownItem onClick={this.onSortChange} className={styles.sortButton} value='Date'>Date (Most Recent)</DropdownItem>
