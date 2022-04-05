@@ -861,11 +861,11 @@ class RecipeLanding extends React.Component {
                                 <label>
                                     <input
                                     type="checkbox"
-                                    value="Brocolli"
-                                    checked={this.props.ingredients.includes("Brocolli")}
+                                    value="Broccoli"
+                                    checked={this.props.ingredients.includes("Broccoli")}
                                     onChange={this.onIngredientChange}
                                     />
-                                    Brocolli
+                                    Broccoli
                                 </label>
                             </div>
 
