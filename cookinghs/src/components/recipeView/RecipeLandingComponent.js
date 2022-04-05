@@ -704,7 +704,7 @@ class RecipeLanding extends React.Component {
                     <Slider id="difficulty-slider"
                     // getAriaLabel={() => 'Difficulty Level'}
                     sx={{
-                        color: "lightgray",
+                        color: "#d1c0c4",
                         // height: "5"
                         // width: "10px",
                         '& .MuiSlider-thumb': {
@@ -742,7 +742,7 @@ class RecipeLanding extends React.Component {
                     <Slider
                     // getAriaLabel={() => 'Difficulty Level'}
                     sx={{
-                        color: "lightgray",
+                        color: "#d1c0c4",
                         '& .MuiSlider-thumb': {
                             width: "1rem",
                             height: "1rem"
