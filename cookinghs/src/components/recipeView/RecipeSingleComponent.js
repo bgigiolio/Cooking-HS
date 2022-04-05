@@ -11,12 +11,14 @@ import ReportModal from '../recipeModals/ReportModalComponent';
 import StarRating from './StarRatingComponent';
 import { postComment } from '../../redux/comments/comment-actions';
 import { postReport } from '../../redux/reports/report-actions';
-
+import axios from 'axios'; // new!!
+import { baseUrl } from '../../shared/baseUrl';
 
 function RecipeSingle(props) {
     const recipes = props.recipes
     const chosenRecipe = props.chosenRecipe;
     let chosenComment = []
+    let bookmarked = false
     let averageRating = 0
     let averageRatingString = ""
     if (!props.Comments.isLoading) {
@@ -119,6 +121,26 @@ function RecipeSingle(props) {
         )
     });
 
+    const bookmark = () => {
+        if(!bookmarked){
+            let id = ""
+            axios.get(baseUrl + "api/users/session", {params: {want : ["_id"]}})
+            .then( async (response) => {
+                id = response.data._id
+                axios.patch(baseUrl + "api/users/bookmarked/" + id + "/" + chosenRecipe._id)
+                .then(bookmarked = true)
+            })
+        }else{
+            let id = ""
+            axios.get(baseUrl + "api/users/session", {params: {want : ["_id"]}})
+            .then( async (response) => {
+                id = response.data._id
+                axios.delete(baseUrl + "api/users/bookmarked/" + id + "/" + chosenRecipe._id)
+                .then(bookmarked = false)
+            })
+        }
+    }
+
     const [reportModal, setReportModal] = useState(false);
     const [reportId, setReportId] = useState();
     const toggleReport = (e) => {
@@ -190,7 +212,7 @@ function RecipeSingle(props) {
                         </Col>
                         <Col md={3} style={{textAlign: "right"}}>
                             <Button 
-                                onClick={() => alert("bookmark")}
+                                onClick={bookmark}
                                 color="primary"
                                 outline
                                 className="headerButton"

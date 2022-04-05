@@ -11,7 +11,7 @@ const RecipeCardGroupLegacy = ( props ) => {
             <div>
                 <Row md={4}>
                 {props.recipes.map((recipe) => (
-                    <Col md={{offset: 1 }}>
+                    <Col>
                         <RecipeCardLegacy recipeData = {recipe}/>
                     </Col>
                 ))}

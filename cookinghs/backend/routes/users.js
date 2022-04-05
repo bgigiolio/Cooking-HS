@@ -250,10 +250,10 @@ router.route("/bookmarked/:id/:recipeid").patch((req, res) => {//#11
         }else{
             result.bookmarked.push(req.params.recipeid)
             result.save().then(() => { 
-                res.status(200).send(result)
                 if(req.params.id === req.session._id){
                     req.session.bookmarked = result.bookmarked
                 }
+                res.status(200).send(result)
             })
             .catch((error) => res.status(500).send(error))
         }

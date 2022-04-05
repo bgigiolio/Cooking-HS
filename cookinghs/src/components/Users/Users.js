@@ -43,6 +43,7 @@ class Users extends React.Component {
 
 
     render() {
+        console.log(this.state.currentUser)
         const currentUserRecipes = this.props.Recipes.recipes.filter((recipe) => recipe.author === this.state.currentUser._id)
         console.log(currentUserRecipes)
         const {profilePic} = this.props
