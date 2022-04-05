@@ -119,6 +119,44 @@ class RecipeLanding extends React.Component {
 
     clearAll(e){
         // 1. set all states to default
+        // 1.1 the props
+        // this.props.cuisines = []
+        // this.props.ingredients = []
+        // this.props.difficulty = [4]
+        // this.props.cooktime = []
+        // this.props.course = [""]
+        // this.props.sort = ["date"]
+    
+    for(var i = 0; i < this.props.cuisines.length; i++){
+        this.props.removeCuisines(this.props.cuisines[i])
+    }
+
+    for(var j = 0; j < this.props.ingredients.length; j++){
+        this.props.removeIngredients(this.props.ingredients[i])
+    }
+
+    this.props.updateDifficulty(4);
+    this.props.updateCookTime(6);
+    this.props.updateCourse("");
+    this.props.updateSort("Date");
+    
+
+        
+        // 1.2: the states 
+        this.setState({sort: "Date"});
+        this.setState({selectedCourse: null});
+        this.setState({selectedCuisine: []});
+        this.setState({selectedIngredients: []});
+        this.setState({difficulty: "4"});
+        this.setState({cooktime: "0"});
+        this.setState({params: {}}, () => {
+            this.props.getFilteredRecipes(this.state.params).then(
+                console.log("successfully cleared filters")
+            )
+        })
+
+
+
         // 2. pass in empty query
         console.log(e.target.value);
     }
@@ -215,6 +253,7 @@ class RecipeLanding extends React.Component {
         var c = this.props.cuisines
         var ings = this.props.ingredients
         var crse = this.props.course[this.props.course.length-1]
+        console.log("error situation: ", this.props.cooktime)
         var ct = this.state.cookingTimeEval[this.props.cooktime[this.props.cooktime.length - 1]].label
         console.log("diff: ", diff);
         this.setState({
@@ -681,6 +720,7 @@ class RecipeLanding extends React.Component {
                     onChangeCommitted={this.onDifficultyChange}
                     max={4}
                     aria-labelledby="discrete-slider"
+                    key={`slider-${this.props.difficulty[this.props.difficulty.length - 1]}`}
                     defaultValue={this.props.difficulty[this.props.difficulty.length - 1]}
                     // value={this.props.difficulty}
                     marks={this.state.marks}
@@ -709,6 +749,7 @@ class RecipeLanding extends React.Component {
                           },
                     }}
                     onChangeCommitted={this.onCookTimeChange}
+                    key={`slider-${this.props.cooktime[this.props.cooktime.length - 1]}`}
                     defaultValue={this.props.cooktime[this.props.cooktime.length - 1]}
                     max={5}
                     aria-labelledby="discrete-slider"
@@ -724,7 +765,7 @@ class RecipeLanding extends React.Component {
 
                     {/* Ingredients Filter */}
                     <div className={styles.courseFilter}>
-                    <h6>Ingredients</h6>
+                    <h6 className={styles.ingHeader}>Ingredients</h6>
 
                     <p className={styles.ingredientCategoryHeader}>Meats</p>
                     <span className={styles.twoRadioButtons1}>

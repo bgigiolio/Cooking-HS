@@ -267,6 +267,10 @@ input{
 
 .clearButton:hover{
     background-color: lightgray;
-    border-color: lightgray;
+    border-color: black;
     color: black;
+}
+
+.ingHeader{
+    margin-top: 3px;
 }
