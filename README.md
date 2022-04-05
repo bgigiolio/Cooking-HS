@@ -120,14 +120,8 @@ By logging into the admin user through the `Login` in the navigation bar (you ca
   * Description: Input login information or post a new user through the Signup Page
   * Input: Login info or NewUser
   * Return Value: None
-* ./users 
-  * Description: Get a user profile
-  * Input: None
-  * Return Value: Get the user profile based on who is logged in
-* ./users/:id
-  * Description: Get an individual user profile
-  * Input: id
-  * Return Value: Get a user based on "id"
+* ./api/users
+  * Visit /routes/users.js for in depth descriptions of each route and its usage
 * ./admin
   * Description: Get all the reports in the admin dashboard page (admin dashboard mainly for managing reports)
   * Input: None
