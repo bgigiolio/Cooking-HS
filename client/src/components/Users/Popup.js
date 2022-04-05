@@ -6,6 +6,7 @@ import { baseUrl } from '../../shared/baseUrl';
 import styles from './Popup.css'
 const {SHA256} = require('crypto-js');
 
+//Material UI boxes don't work well with CSS, have to leave this here
 const boxMode = {
     position: 'absolute',
     top: '50%',
@@ -18,9 +19,6 @@ const boxMode = {
     // border: '1px solid #000',
     boxShadow: 24,
     p:4,
-}
-const buttonMode = {
-    // marginLeft: '5px'
 }
 export default class Popup extends Component {
     componentDidMount(){
@@ -132,19 +130,19 @@ export default class Popup extends Component {
                     <h1>Edit Profile</h1>
                     <br/>
                     <div id="buttonSpot">
-                    <Button type="button" style={{padding: "0px", width: "180px", height: "180px", borderRadius: "50%"}}>
+                    <Button type="button" id="imgButt">
                             <Label
                             for="image"
-                            style={{cursor: "pointer", height:"180px", width:"180px", borderRadius: "50%"}}
                             >
                             <img src={this.state.picture}
                                 alt=''
                                 className='uploadImage'
+                                id="img"
                             />
                             </Label>
                             {/* <img src={editPic} id="edit"/> */}
                             <Input
-                                className="uploadImage"
+                                id="image"
                                 name="image"
                                 type="file"
                                 accept="image/*"
@@ -157,22 +155,22 @@ export default class Popup extends Component {
                         <div class="grid-item">
                             <small id="lab">Username</small><br/>
                             <Input className="input" label="Username" name="username" value={this.state.username} onInput={this.recieve.bind(this)}></Input>
-                            <Button variant="contained" name="username" style={buttonMode} onClick={this.update.bind(this)}>Update</Button>
+                            <Button variant="contained" name="username" onClick={this.update.bind(this)}>Update</Button>
                         </div>
                         <div id="fullName" class="grid-item">
                             <small id="lab">Full Name</small><br/>
                             <Input className="input" label="Full Name" name="fullName" value={this.state.fullName} onInput={this.recieve.bind(this)}></Input>
-                            <Button variant="contained" name="fullName" style={buttonMode} onClick={this.update.bind(this)}>Update</Button>
+                            <Button variant="contained" name="fullName"  onClick={this.update.bind(this)}>Update</Button>
                         </div>
                         <div id="email" class="grid-item">
                         <small id="lab">Email</small><br/>
                             <Input className="input" label="Email" name="email" value={this.state.email} onInput={this.recieve.bind(this)}></Input>
-                            <Button variant="contained" name="email" style={buttonMode} onClick={this.update.bind(this)}>Update</Button>
+                            <Button variant="contained" name="email"  onClick={this.update.bind(this)}>Update</Button>
                         </div>
                         <div id="password" class="grid-item">
                         <small id="lab">Password</small><br/>
                             <Input className="input" label="Password" name="password" value={this.state.password} onInput={this.recieve.bind(this)} type="password"></Input>
-                            <Button variant="contained" name="password" style={buttonMode} onClick={this.update.bind(this)}>Update</Button>
+                            <Button variant="contained" name="password"  onClick={this.update.bind(this)}>Update</Button>
                         </div>
                     </div>
                     <h2 id="failText">{this.state.failText}</h2>
