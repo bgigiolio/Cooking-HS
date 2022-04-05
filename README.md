@@ -41,9 +41,8 @@ The requests to make to the server to create an admin user:
 The core of the web application are the recipes. Users are able to search for recipes according
 to name, cuisine, or even ingredients. These recipes include a list of ingredients with their
 desired quantities, recipe calorie count, nutritional information of the dish, and a step-by-step
-guide on how to make the dish. Advanced cooks can share recipes and teach cooking methods
-with friends and strangers alike, while newer cooks can follow along their recipes while learning
-how to perform basic cooking tasks such as mincing garlic and chopping vegetables. Cooks can
+guide on how to make the dish. Users can share recipes and teach cooking methods
+with friends and strangers alike, while newer cooks can follow along other users' recipes. Cooks can
 also create “forks” of existing recipes to include improvements in ingredients, seasonings, or
 even entire steps. Lastly, users are able to vote for the recipes that they think are best, as well
 as leave feedback and comments.
