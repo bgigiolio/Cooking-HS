@@ -6,6 +6,7 @@ const cors = require("cors")
 const express = require('express')
 const app = express();
 const session = require('express-session')
+require("dotenv").config()
 app.use(cors({
     origin: 'http://localhost:3000',
     credentials: true
@@ -31,12 +32,8 @@ const bodyParser = require('body-parser')
 app.use(bodyParser.json({limit: '50mb'}))
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
 
-const publicPath = path.join(__dirname, '..', 'build');
+const publicPath = path.join(__dirname, 'client', 'build');
 app.use(express.static(publicPath))
-
-app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-})
 
 // Add model routes here vvv
 const userRouter = require("./routes/users")
@@ -49,11 +46,9 @@ app.use(require('./routes/comments'))
 app.use(require('./routes/reports'))
 // Add model routes here ^^^
 
-// // 404 route at the bottom for anything not found.
-app.get('*', (req, res) => {
-    res.status(404).send("404 Error: We cannot find the page you are looking for.");
-    // you could also send back a fancy 404 webpage here.
-});
+app.get("*", function(req, res) {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+})
 
 const port = process.env.PORT || 5000
 app.listen(port, () => {
