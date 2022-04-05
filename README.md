@@ -42,7 +42,7 @@ The core of the web application are the recipes. Users are able to search for re
 to name, cuisine, or even ingredients. These recipes include a list of ingredients with their
 desired quantities, recipe calorie count, nutritional information of the dish, and a step-by-step
 guide on how to make the dish. Users can share recipes and teach cooking methods
-with friends and strangers alike, while newer cooks can follow along other users' recipes. Cooks can
+with friends and strangers alike, while newer cooks can follow along other users' recipes. Users can
 also create “forks” of existing recipes to include improvements in ingredients, seasonings, or
 even entire steps. Lastly, users are able to vote for the recipes that they think are best, as well
 as leave feedback and comments.
@@ -53,7 +53,6 @@ as leave feedback and comments.
 By clicking on `Login` in the navigation bar:
 * The login page is for both users and admins to log into our website
 * You can use the credentials from the 'Credentials' section to log into as a user or an admin, or sign up for a new user
-* (TODO) which requests to make to the server to create an admin user 
 * Logging into the website as a user will lead them to the recipes page
 * Logging into the website as a admin will lead them to the admin page
 * You can also sign up for a new account, and then log in with that account with those new credentials
