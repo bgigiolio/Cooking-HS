@@ -28,7 +28,8 @@ The requests to make to the server to create an admin user:
 ## Running locally
 * Make sure to follow the "Installation Requirements" to make sure everything is fully installed on your local computer
 * Go into "team38/cookinghs/client/src/shared/basedUrl.js" and comment out line 3 or `export const baseUrl = "https://cookinghs.herokuapp.com/"` line and uncomment line 1 or `// export const baseUrl = "http://localhost:5000/"`
-* `yarn start` in "team38/cookinghs/" folder for local web server
+* `yarn start` in "team38/cookinghs/" folder to set up the backend
+* `yarn start` in "team38/cookinghs/client" folder for local web server
 * `node server.js` in "team38/cookinghs/" folder for database
 
 ## Running via deployed link
