@@ -2,7 +2,7 @@ import React from 'react';
 import RecipesPageCardGroup from './RecipesPageCardGroup';
 import SearchBar from "material-ui-search-bar";
 import styles from '../../styles/recipelanding.module.css';
-// import { Button } from 'reactstrap';
+import { Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Slider } from '@mui/material';
 import { getFilteredRecipes, updateCookTime, updateCourse, updateSort } from "../../redux/recipePage/recipe-actions"
@@ -113,8 +113,15 @@ class RecipeLanding extends React.Component {
         this.onCuisineChange = this.onCuisineChange.bind(this);
         this.onIngredientChange = this.onIngredientChange.bind(this)
         this.toggle = this.toggle.bind(this)
+        this.clearAll = this.clearAll.bind(this)
       }
 
+
+    clearAll(e){
+        // 1. set all states to default
+        // 2. pass in empty query
+        console.log(e.target.value);
+    }
 
     toggle(){
         console.log("toggled!")
@@ -416,8 +423,34 @@ class RecipeLanding extends React.Component {
         return(
             <div className={styles.landingContainer}>
                 <div className={styles.mainFilterSection}>
+
+                    <div className={styles.filterUpstairs}>
+
+                    <div className={styles.filterHeaders}>
+
                     <h5 className={styles.filterHeader}>Filter Recipes</h5>
                     <h6 className={styles.filterSubHeader}>(scroll for more!)</h6>
+
+                    </div>
+
+                    <div className={styles.resetFilters}>
+                        <Button className={styles.clearButton} onClick={this.clearAll}>
+                            <div className={styles.resetBtn}>
+                            <i className="fa-solid fa-arrow-rotate-right"></i>
+
+                            </div>
+                       
+                        Clear
+                        </Button>
+
+                    </div>
+
+
+                    </div>
+
+                    
+                   
+                    
 
                     {/* Course Filter */}
 
@@ -929,7 +962,7 @@ class RecipeLanding extends React.Component {
                 <div className={styles.sortDropDown}>
 
                 <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                <DropdownToggle caret>
+                <DropdownToggle caret className={styles.dropDownComp}>
                 Filter By
                 </DropdownToggle>
                 <DropdownMenu>
