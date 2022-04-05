@@ -9,16 +9,15 @@ import { baseUrl } from '../../shared/baseUrl';
 import axios from 'axios'; // new!!
 //I would need to import these images based on the users from the backend later
 import foodBanner from "./images/foodBanner.jpeg";
+import { useParams, useSearchParams } from 'react-router-dom';
 
-class Users extends React.Component {
+
+class PublicUsers extends React.Component {
     constructor(props) {
         super(props);
-
-        axios.get(baseUrl + 'api/users/session', {params :{
-            want : ["_id", "username", "admin", "fullName", "email", "profilePic", "recipes", "bookmarked"]
-        }}).then( async (response) => {
+        const id = this.props.params.id
+        axios.get(baseUrl + 'api/users/' + id).then( async (response) => {
             this.state.currentUser = response.data
-            console.log("user loaded from state")
             this.forceUpdate()
         }).catch(function (error) {
             console.log(error)
@@ -72,6 +71,12 @@ const mapStateToProps = state => {
     return {
       Recipes: state.Recipes,
     }
-  }
+}
+const PublicUsersFunc = (props) => (
+    <PublicUsers
+        {...props}
+        params={useParams()}
+    />
+);
 
-export default connect(mapStateToProps, null)(Users);
+export default connect(mapStateToProps, null)(PublicUsersFunc);
