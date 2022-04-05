@@ -23,16 +23,13 @@ The requests to make to the server to create an admin user:
 * PATCH /api/users/:id 
 * with query: {admin: true}
 
-# Important Commands
-* `yarn start` for local web server
-* `node server.js` for database
-
 # Instructions on running app
 
 ## Running locally
+* Make sure to follow the "Installation Requirements" to make sure everything is fully installed on your local computer
 * Go into "team38/cookinghs/client/src/shared/basedUrl.js" and comment out line 3 or `export const baseUrl = "https://cookinghs.herokuapp.com/"` line and uncomment line 1 or `// export const baseUrl = "http://localhost:5000/"`
-* `yarn start` in "team38/cookinghs/" folder
-* `node server.js` in "team38/cookinghs/" folder
+* `yarn start` in "team38/cookinghs/" folder for local web server
+* `node server.js` in "team38/cookinghs/" folder for database
 
 ## Running via deployed link
 * You can access the deployed website via the following link: https://cookinghs.herokuapp.com/
@@ -106,38 +103,38 @@ By logging into the admin user through the `Login` in the navigation bar (you ca
 . is the baseURL which could be `https://cookinghs.herokuapp.com/` if using the deployed version or `http://localhost:3000/` if using the local version
 
 * ./
-  * Description: View the Landing page
+  * Description: View the landing page
   * Input: None
   * Return Value: None
 * ./recipes
-  * Description: All recipes
+  * Description: View all the recipes 
   * Input: None
   * Return Value: Get all recipes
 * ./recipes/:id
-  * Description: Individual recipe page
+  * Description: Get the individual recipe page
   * Input: id
-  * Return Value: Get a recipe based on id
+  * Return Value: Get a recipe based on "id"
 * ./recipes/newrecipe
-  * Description: Adding a new recipe
-  * Input: newRecipe
+  * Description: Post a new recipe
+  * Input: NewRecipe
   * Return Value: None
 * ./login/*
-  * Description: Login or signup
-  * Input: User info or newUser
+  * Description: Input login information or post a new user through the Signup Page
+  * Input: Login info or NewUser
   * Return Value: None
 * ./users 
-  * Description: the login-ed user profile
+  * Description: Get a user profile
   * Input: None
-  * Return Value: Get all users
+  * Return Value: Get the user profile based on who is logged in
 * ./users/:id
-  * Description: individual user profile
+  * Description: Get an individual user profile
   * Input: id
-  * Return Value: Get a user based on id
+  * Return Value: Get a user based on "id"
 * ./admin
-  * Description: Overall admin dashboard (mainly for managing reports)
+  * Description: Get all the reports in the admin dashboard page (admin dashboard mainly for managing reports)
   * Input: None
   * Return Value: Get all the reports
 * ./admin:id
-  * Description: A specific details page for a report from the admin page
+  * Description: Get a specific details page for a report from the admin page
   * Input: id
-  * Return Value: Returns the specific details page for a report from the admin page
+  * Return Value: Returns the specific details page for a report from the admin page based on "id"
