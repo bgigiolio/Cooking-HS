@@ -47,8 +47,8 @@
 
 #recipeContainer {
     display: contents;
-    padding-left: var(--bs-gutter-x, 2rem);
-    padding-right: var(--bs-gutter-x, 2rem);
+    /* padding-left: var(--bs-gutter-x, 2rem);
+    padding-right: var(--bs-gutter-x, 2rem); */
     border-radius: 10px;
     padding-bottom: 50px;
     margin-left: 0px;
@@ -56,7 +56,7 @@
 
 #recipeViewContainer {
     max-width: 720px;
-    margin: auto;
+    /* margin: auto; */
     position: relative;
     margin-top: 4px
 }
@@ -210,6 +210,17 @@ h1 {
 
 .bookmark-icon:hover{
     color: rgb(170, 206, 212);
+}
+
+.card-group-container{
+    margin-right: 0px;
+    margin-left: 0px;
+    max-width: 100vw;
+    padding: 0px;
+}
+
+.card-col{
+    padding: 0px;
 }
 
 .stepsListItem {

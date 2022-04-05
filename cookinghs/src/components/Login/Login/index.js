@@ -4,23 +4,32 @@ import './styles.css';
 import axios from 'axios'; // new!!
 import RecipeBrowser from '../../recipeView/RecipeBrowserComponent';
 import AdminPage from '../../Admin/index'
-import {Routes, Route, Link} from 'react-router-dom';
+import {Routes, Route, Link, useParams} from 'react-router-dom';
+import { Navigate } from 'react-router';
 import { baseUrl } from '../../../shared/baseUrl';
 
 class Login extends React.Component {
+    constructor(props){
+        super(props);
+        this.handleKey = this.handleKey.bind(this)
+        this.validLogIn = this.validLogIn.bind(this)
+        this.failedLogin = this.failedLogin.bind(this)
+    }
     state = {
         failedLoginSeen: false,
         _id: "",
-        host: ""
+        host: "",
+        redirect: false
     }
 
     failedLogin = () => {
+        console.log(this.props)
         this.setState({
             failedLoginSeen: true
         }, () => console.log(this.state.failedLoginSeen))
         axios.get(this.props.host + 'api/users/logout')
         .then(async (response, error) => {
-            this.props.updateUser(null)
+            this.props.updateCurrentUser(null)
         })
     }
     validLogIn = () => {
@@ -34,17 +43,35 @@ class Login extends React.Component {
         })
         
     }
+    handleKey = (e) => {
+        if (e.keyCode === 13) {
+            console.log("pressed")
+            if(this.props.valid){
+                this.validLogIn();
+                this.setState({
+                    redirect : true
+                }, () => console.log("redirecting"))
+            }else{
+                this.failedLogin();
+            }
+          }
+    }
     render() {
         const {username, password, recieveInput, valid, routeTo} = this.props
+        if(this.state.redirect){
+            return(
+            <Navigate to={routeTo}/>
+            )
+        }
         return(
             <div id='Login' className="tabcontent">
                 <br/>
                 <br/>
                 <h2>Login</h2>
                 <br/>
-                <TextField id="LoginUsername" label="Username" name="username" placeholder="Username" value={username} onInput={recieveInput}></TextField><br/>
+                <TextField id="LoginUsername" label="Username" name="username" placeholder="Username" value={username} onInput={recieveInput} onKeyUp={this.handleKey}></TextField><br/>
                 <br/>
-                <TextField type="password" id="LoginPassword" label="Password" name="password" placeholder="Password" value={password} onInput={recieveInput}></TextField><br/><br/>
+                <TextField type="password" id="LoginPassword" label="Password" name="password" placeholder="Password" value={password} onInput={recieveInput} onKeyUp={this.handleKey}></TextField><br/><br/>
 
                     {valid ? 
                     // <Link to="/recipes">Log In</Link>
@@ -59,4 +86,9 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export default (props) => (
+    <Login
+        {...props}
+        params={useParams()}
+    />
+);

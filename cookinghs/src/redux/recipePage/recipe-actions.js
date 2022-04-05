@@ -28,8 +28,7 @@ export const getRecipes = () => (dispatch) => {
 export const getFilteredRecipes = (p={}) => (dispatch) => {
   console.log("filter is called")
   console.log(p);
-  // dispatch(recipesLoading(true));
-  if(p == {}){
+  if(p === {}){
     return fetch(baseUrl + 'api/recipes/filters').then(response => {
       if (response.ok) {
           return response;

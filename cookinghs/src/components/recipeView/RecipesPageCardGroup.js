@@ -66,10 +66,10 @@ const RecipesPageCardGroup = ({ recipes, users, comments, all_recipes }) => {
 
     return (
         <div>
-            <Container>
-            <Row>
+            <Container className='card-group-container'>
+            <Row className='card-row'>
             {recipestoRender.map((value) => (
-                <Col lg={4} md={6} key={value._id}>
+                <Col lg={4} md={6} key={value._id} className='card-col'>
                     <Card className="r-card article">
                     <Link to={value._id}>
                         <CardImg src={value.image} alt={value.title} className="recipeImg" top></CardImg>
