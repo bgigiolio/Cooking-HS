@@ -15,7 +15,7 @@ const {SHA256} = require('crypto-js'); // new!!
 class LoginMain extends React.Component {
     state = {
         tabVal: 0,
-        host: "http://localhost:5000/",
+        host: baseUrl,
         _id: "",
         //Login
         valid: false,
