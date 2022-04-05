@@ -918,6 +918,7 @@ class RecipeLanding extends React.Component {
                         value={this.state.search}
                         onChange={(newValue) => this.setState({ search: newValue }, () => console.log("logged: ", this.state.search))}
                         onRequestSearch={() => this.handleSearch(this.state.search)}
+                        onCancelSearch={() => this.handleSearch("")}
                         ></SearchBar>
                     </div>
 
