@@ -34,7 +34,7 @@ class RecipeCardLegacy extends React.Component {
                         top
                         className={styles.user_img}
                     />
-                    <CardBody className={styles.body}>
+                    <CardBody className={styles.body} style={{width: "100%"}}>
                         <CardTitle tag="h5">
                             <Link to={"/recipes/" + this.props.recipeData}>{this.state.title}</Link>
                         </CardTitle>
