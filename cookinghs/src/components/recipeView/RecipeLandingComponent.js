@@ -665,11 +665,11 @@ class RecipeLanding extends React.Component {
                             <label>
                                 <input
                                 type="checkbox"
-                                value="Western"
-                                checked={this.props.cuisines.includes("Western")}
+                                value="American"
+                                checked={this.props.cuisines.includes("American")}
                                 onChange={this.onCuisineChange}
                                 />
-                                Western
+                                American
                             </label>
                         </div>
 
