@@ -14,12 +14,27 @@ import { postReport } from '../../redux/reports/report-actions';
 import axios from 'axios'; // new!!
 import { baseUrl } from '../../shared/baseUrl';
 
+function useForceUpdate(){
+    const [value, setValue] = useState(0); // integer state
+    return () => setValue(value => ++value); // update the state to force render
+}
+
 function RecipeSingle(props) {
+    const forceUpdate = useForceUpdate();
     const recipes = props.recipes
     const chosenRecipe = props.chosenRecipe;
     let chosenComment = []
-    const [bookmarked, setBookmarked] = useState(props.bookmarked)
-    
+    let loggedIn = false;
+    let bookmarked = false
+    if(props.currentUser !== null && props.currentUser.hasOwnProperty("_id")){
+        loggedIn = true;
+        axios.get(baseUrl + "api/users/session", {params: {want : ["bookmarked"]}})
+        .then((response) => {
+            if(response.data.bookmarked.filter(entry => entry === chosenRecipe._id).length != 0){
+                bookmarked = true
+            }
+        }).then(() => forceUpdate)
+    }
     let averageRating = 0
     let averageRatingString = ""
     if (!props.Comments.isLoading) {
@@ -122,8 +137,7 @@ function RecipeSingle(props) {
         )
     });
 
-    function bookmark() {
-        setBookmarked(!bookmarked)
+    const bookmark = () => {
         console.log(bookmarked)
         if(!bookmarked){
             console.log("bookmarking!")
@@ -132,6 +146,9 @@ function RecipeSingle(props) {
             .then( async (response) => {
                 id = response.data._id
                 axios.patch(baseUrl + "api/users/bookmarked/" + id + "/" + chosenRecipe._id)
+                .then( () => {
+                    bookmarked = true
+                }).then(() => alert('Bookmarked!'))
             })
         }else{
             console.log("un bookmarking!")
@@ -140,6 +157,9 @@ function RecipeSingle(props) {
             .then( async (response) => {
                 id = response.data._id
                 axios.delete(baseUrl + "api/users/bookmarked/" + id + "/" + chosenRecipe._id)
+                .then( () => {
+                    bookmarked = false
+                }).then(() => alert('Unbookmarked!'))
             })
         }
     }
@@ -215,9 +235,8 @@ function RecipeSingle(props) {
                             <h1>{chosenRecipe.title}</h1>
                         </Col>
                         <Col md={3} style={{textAlign: "right"}}>
-                            {props.loggedIn ?
-                            <Button 
-                                onClick={bookmark}
+                            {loggedIn ?<Button 
+                                onClick={() => bookmark}
                                 color="primary"
                                 outline
                                 className="headerButton">
