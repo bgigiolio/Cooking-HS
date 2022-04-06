@@ -98,44 +98,74 @@ By logging into the admin user through the `Login` in the navigation bar (you ca
 * The further details section will have further routes to the specific users being referenced in the report, and the recipe being referenced as well
 
 # Overview of the routes in your Express server
-. is the baseURL which could be `https://cookinghs.herokuapp.com/` if using the deployed version or `http://localhost:3000/` if using the local version
 
-* ./
-  * Description: View the landing page
-  * Input: None
-  * Return Value: None
-* ./recipes
+* /api/recipes
   * Description: View all the recipes 
   * Input: None
   * Return Value: Get all recipes
-* ./recipes/:id
-  * Description: Get the individual recipe page
-  * Input: id
-  * Return Value: Get a recipe based on "id"
-* ./recipes/newrecipe
+* /api/recipes
   * Description: Post a new recipe
-  * Input: NewRecipe
-  * Return Value: None
-* ./login/*
-  * Description: Input login information or post a new user through the Signup Page
-  * Input: Login info or NewUser
-  * Return Value: None
-* ./users 
-  * Description: Get a user profile
-  * Input: None
-  * Return Value: Get the user profile based on who is logged in
-* ./users/:id
-  * Description: Get an individual user profile
+  * Input: New recipe
+  * Return Value: Return the posted recipe
+* /api/recipes/filters
+  * Description: View all the recipes with filters applied
+  * Input: request passes in a query for the specific thing to filter
+  * Return Value: Get all recipes with respect to that filter
+* /api/recipes/:id
+  * Description: Get an individual recipe
   * Input: id
-  * Return Value: Get a user based on "id"
-* ./admin
-  * Description: Get all the reports in the admin dashboard page (admin dashboard mainly for managing reports)
-  * Input: None
-  * Return Value: Get all the reports
-* ./admin:id
-  * Description: Get a specific details page for a report from the admin page
+  * Return Value: Get the recipe based on "id"
+* /api/recipes/:id
+  * Description: Delete an individual recipe
   * Input: id
-  * Return Value: Returns the specific details page for a report from the admin page based on "id"
+  * Return Value: Return the recipe based on "id" who has its deleted property set to be true
+* /api/recipes/:id
+  * Description: Edit an individual recipe
+  * Input: id
+  * Return Value: Return the editied recipe based on "id"
+* ./api/users
+  * Visit /routes/users.js for in depth descriptions of each user route and its usage
+* /api/comments
+  * Description: View all the comments 
+  * Input: None
+  * Return Value: Get all comments
+* /api/comments
+  * Description: Post a new comment 
+  * Input: New comment
+  * Return Value: Returned the posted comment
+* /api/comments/:id
+  * Description: Get an individual comment
+  * Input: id
+  * Return Value: Get the comment based on "id"
+* /api/comments/:id
+  * Description: Delete the individual comment
+  * Input: id
+  * Return Value: Return the comment based on "id" who has its deleted property set to be true
+* /api/comments/:id
+  * Description: Edit the individual comment
+  * Input: id
+  * Return Value: Return the editied comment based on "id"
+* /api/reports
+  * Description: View all the reports 
+  * Input: None
+  * Return Value: Get all reports
+* /api/reports
+  * Description: Post a new report 
+  * Input: New report
+  * Return Value: Returned the posted report
+* /api/reports/:id
+  * Description: Get an individual report
+  * Input: id
+  * Return Value: Get the report based on "id"
+* /api/reports/:id
+  * Description: Delete the individual report
+  * Input: id
+  * Return Value: Return the report based on "id" who has its deleted property set to be true
+* /api/reports/:id
+  * Description: Edit the individual report
+  * Input: id
+  * Return Value: Return the editied report based on "id"
+
 
 # Third-Party Libraries
     "@emotion/react": "latest",
