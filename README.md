@@ -1,4 +1,8 @@
-# Team38's CookingHS
+CookingHS
+Developed as a project at UofT with:
+-zoharehan
+-yongdk1
+-GoodMorningA1i
 
 Heroku Deployed Link: http://cookhs.bgigiolio.com/
 
