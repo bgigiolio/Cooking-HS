@@ -1,6 +1,6 @@
 # Team38's CookingHS
 
-Heroku Deployed Link: https://cookinghs.herokuapp.com/
+Heroku Deployed Link: http://cookhs.bgigiolio.com/
 
 
 # Installation Requirements
@@ -27,12 +27,12 @@ The requests to make to the server to create an admin user:
 
 ## Running locally
 * Make sure to follow the "Installation Requirements" to make sure everything is fully installed on your local computer
-* Go into "team38/cookinghs/client/src/shared/basedUrl.js" and comment out line 3 or `export const baseUrl = "https://cookinghs.herokuapp.com/"` and uncomment line 1 or `// export const baseUrl = "http://localhost:5000/"`
+* Go into "team38/cookinghs/client/src/shared/basedUrl.js" and comment out line 3 or `export const baseUrl = "http://cookhs.bgigiolio.com/"` and uncomment line 1 or `// export const baseUrl = "http://localhost:5000/"`
 * `yarn start` in "team38/cookinghs/" folder to set up the backend
 * `yarn start` in "team38/cookinghs/client" folder for local web server
 
 ## Running via deployed link
-* You can access the deployed website via the following link: https://cookinghs.herokuapp.com/
+* You can access the deployed website via the following link: http://cookhs.bgigiolio.com/
 
 # Website Components
 
